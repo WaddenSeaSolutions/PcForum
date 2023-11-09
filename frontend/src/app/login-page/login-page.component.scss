@@ -1,12 +1,16 @@
 .background {
-
   height: 100%;
   width: 100%;
-  background-image: url("https://th.bing.com/th/id/OIG.z7lRU_ILKXHIC6Hn70HG?pid=ImgGn");
   background-size: cover;
   background-position: center;
-  background-attachment: fixed; /* Optional, makes the background fixed while scrolling */
-  margin: 0; /* Remove default margin to ensure full coverage */
-  padding: 0; /* Remove default padding */
-  overflow: hidden; /* Optional, prevents content from overflowing the background */
+  animation: background 40s infinite ease-in-out;
+}
+
+@keyframes background {
+  0% {background-color: #000000;}
+  20% {background-color: #42111e;}
+  40% {background-color: #5d2547;}
+  60% {background-color: #483569;}
+  80% {background-color: #181c4b;}
+  100% {background-color: #1e4b59;}
 }

@@ -8,23 +8,23 @@ import {Router} from "@angular/router";
   selector: 'login-page',
   template:
     `
-<div class="background">
-  <ion-content style=" position: absolute; top: 40%">
-  <div style="margin-left: 30%; margin-right: 30%">
-    <ion-item>
-      <ion-input style="text-align: center" placeholder="Brugernavn" [formControl]="username"></ion-input>
-    </ion-item>
-    <br>
-    <ion-item>
-      <ion-input style="text-align: center" placeholder="Kodeord" [formControl]="password"></ion-input>
-    </ion-item>
-    <br>
-    <ion-button (click)="login()" style="display: flex">Login</ion-button>
-    <br>
-    <ion-button (click)="registerNewUser()" style="display: flex">Opret Konto</ion-button>
-  </div>
-</ion-content>
-</div>
+      <div class="background"></div>
+      <ion-content style="--background: none; position: absolute; top: 40%">
+        <div style="margin-left: 30%; margin-right: 30%">
+          <ion-item>
+            <ion-input style="text-align: center" placeholder="Brugernavn" [formControl]="username"></ion-input>
+          </ion-item>
+          <br>
+          <ion-item>
+            <ion-input style="text-align: center" placeholder="Kodeord" [formControl]="password"></ion-input>
+          </ion-item>
+          <br>
+          <ion-button (click)="login()" style="display: flex">Login</ion-button>
+          <br>
+          <ion-button (click)="registerNewUser()" style="display: flex">Opret Konto</ion-button>
+        </div>
+      </ion-content>
+
 
 
     `,
@@ -55,6 +55,6 @@ const users = {
 }
 
  async registerNewUser() {
-    this.router.navigate(['register'])
+    await this.router.navigate(['register'])
  }
 }
