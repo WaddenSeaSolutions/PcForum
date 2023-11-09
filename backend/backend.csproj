@@ -6,4 +6,15 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Npgsql" Version="8.0.0-rc.2" />
+      <PackageReference Include="Npgsql.DependencyInjection" Version="8.0.0-rc.2" />
+      <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <Folder Include="Model\" />
+    </ItemGroup>
+
 </Project>
