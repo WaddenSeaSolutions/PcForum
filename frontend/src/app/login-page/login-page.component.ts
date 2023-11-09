@@ -1,14 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
+import {environment} from "../../environments/environment";
+import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-login-page',
+  selector: 'login-page',
   template:
     `
-    <ion-input placeholder="Username" [ngModel]="username"></ion-input>
-    <ion-input placeholder="Password" [ngModel]="password"></ion-input>
-    <ion-button (click)="login()">Login</ion-button>
+<div class="background">
+  <ion-content style=" position: absolute; top: 40%">
+  <div style="margin-left: 30%; margin-right: 30%">
+    <ion-item>
+      <ion-input style="text-align: center" placeholder="Brugernavn" [formControl]="username"></ion-input>
+    </ion-item>
+    <br>
+    <ion-item>
+      <ion-input style="text-align: center" placeholder="Kodeord" [formControl]="password"></ion-input>
+    </ion-item>
+    <br>
+    <ion-button (click)="login()" style="display: flex">Login</ion-button>
+    <br>
+    <ion-button (click)="registerNewUser()" style="display: flex">Opret Konto</ion-button>
+  </div>
+</ion-content>
+</div>
+
+
     `,
   styleUrls: ['./login-page.component.scss'],
 })
@@ -20,9 +38,23 @@ export class LoginPageComponent {
     username: this.username,
     password: this.password,
   })
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
 async login(){
-   // const call = this.http.post()
+    if(this.myFormGroup.valid){
+const users = {
+  username: this.username.value,
+  password: this.password,
+};
+    const response = this.http.post(environment.baseUrl + '/login', users)
+
+    if(response){
+      //Todo go to homepage login
+    }
+    }
 }
+
+ async registerNewUser() {
+    this.router.navigate(['register'])
+ }
 }

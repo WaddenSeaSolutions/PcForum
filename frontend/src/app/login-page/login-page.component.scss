@@ -1,0 +1,12 @@
+.background {
+
+  height: 100%;
+  width: 100%;
+  background-image: url("https://th.bing.com/th/id/OIG.z7lRU_ILKXHIC6Hn70HG?pid=ImgGn");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Optional, makes the background fixed while scrolling */
+  margin: 0; /* Remove default margin to ensure full coverage */
+  padding: 0; /* Remove default padding */
+  overflow: hidden; /* Optional, prevents content from overflowing the background */
+}
