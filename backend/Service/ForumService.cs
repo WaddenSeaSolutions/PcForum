@@ -16,6 +16,10 @@ public class ForumService
     {
         return _forumDal.Register(user);
     }
-    
+
+    public void DeleteUser(int id)
+    {
+        _forumDal.DeleteUser(id);
+    }
     
 }

@@ -28,6 +28,16 @@ public class ForumDAL
             return conn.QueryFirst<User>(sql, new  {username = user.Username, password = user.Password, email = user.Email});
         }
     }
+
+    public void DeleteUser(int id)
+    {
+        var sql = $@"DELETE FROM forum.users WHERE id = @id;";
+
+        using (var conn = _dataSource.OpenConnection())
+        {
+            conn.Execute(sql, new { id });
+        }
+    }
     
 
 }
