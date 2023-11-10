@@ -22,4 +22,9 @@ public class ForumService
         _forumDal.DeleteUser(id);
     }
     
+    public IEnumerable<User> getUserFeed()
+    {
+        return _forumDal.GetUserFeed();
+    }
+    
 }

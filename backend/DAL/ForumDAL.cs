@@ -38,6 +38,21 @@ public class ForumDAL
             conn.Execute(sql, new { id });
         }
     }
+
+    public IEnumerable<User> GetUserFeed()
+    {
+        var sql = $@"SELECT id as {nameof(User.Id)},
+                username as {nameof(User.Username)},
+                password as {nameof(User.Password)},
+                email as {nameof(User.Email)}
+    FROM forum.users;";
+        using (var conn = _dataSource.OpenConnection())
+        {
+            return conn.Query<User>(sql);
+        }
+    }
+
+    
     
 
 }

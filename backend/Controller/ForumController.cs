@@ -27,7 +27,13 @@ public class ForumController : ControllerBase
     {
         _forumService.DeleteUser(id);
     }
-    
+
+    [HttpGet]
+    [Route("/GetFeed")]
+    public IEnumerable<User> getUserFeed()
+    {
+        return _forumService.getUserFeed();
+    }
     
     
 }
