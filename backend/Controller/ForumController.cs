@@ -20,6 +20,14 @@ public class ForumController : ControllerBase
     {
         return _forumService.Register(user);
     }
+
+    [HttpDelete]
+    [Route("/DeleteUser{id}")]
+    public void DeleteUser(int id)
+    {
+        _forumService.DeleteUser(id);
+    }
+    
     
     
 }
