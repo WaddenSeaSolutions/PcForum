@@ -24,15 +24,12 @@ import {Router} from "@angular/router";
           <ion-button (click)="registerNewUser()" style="display: flex">Opret Konto</ion-button>
         </div>
       </ion-content>
-
-
-
     `,
   styleUrls: ['./login-page.component.scss'],
 })
 export class LoginPageComponent {
   username = new FormControl('',Validators.compose([Validators.min(5),Validators.max(20)]))
-  password = new FormControl('',Validators.compose([Validators.min(5),Validators.max(50),Validators.required]))
+  password = new FormControl('',Validators.compose([Validators.min(8),Validators.max(30),Validators.required]))
 
   myFormGroup = new FormControl({
     username: this.username,
@@ -43,7 +40,7 @@ export class LoginPageComponent {
 async login(){
     if(this.myFormGroup.valid){
 const users = {
-  username: this.username.value,
+  username: this.username,
   password: this.password,
 };
     const response = this.http.post(environment.baseUrl + '/login', users)
