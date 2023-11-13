@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
     `
       <div class="background"></div>
       <ion-content style="--background: none; position: absolute; top: 40%">
-        <div style="margin-left: 30%; margin-right: 30%">
+        <div style="margin-left: 20%; margin-right: 20%">
           <ion-item>
             <ion-input style="text-align: center" placeholder="Brugernavn" [formControl]="username"></ion-input>
           </ion-item>
@@ -19,10 +19,11 @@ import {Router} from "@angular/router";
             <ion-input style="text-align: center" placeholder="Kodeord" [formControl]="password"></ion-input>
           </ion-item>
           <br>
-          <ion-button (click)="login()" style="display: flex">Login</ion-button>
-          <br>
-          <ion-button (click)="registerNewUser()" style="display: flex">Opret Konto</ion-button>
-        </div>
+          <div>
+          <ion-button class="btnBackground" (click)="login()">Login</ion-button>
+          <ion-button class="btnBackground" (click)="registerNewUser()">Opret Konto</ion-button>
+          </div>
+          </div>
       </ion-content>
     `,
   styleUrls: ['./login-page.component.scss'],
