@@ -14,3 +14,10 @@
   80% {background-color: #121054;}
   100% {background-color: #250202;}
 }
+
+
+.btnBackground{
+  --background: none;
+  background-color: black;
+  display: flex;
+}
