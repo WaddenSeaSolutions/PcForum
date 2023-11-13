@@ -7,16 +7,14 @@ import { Component } from '@angular/core';
     <header>
       <h1 id="mainHeadline">PC Forum</h1>
     </header>
-    <div id="toolbarHeader">
+    <div id="toolbarHolder">
+    <ion-toolbar id="toolbarHeader">
       <ion-item id="toolbarContent">
         <ion-buttons>
           <ion-icon id = "icons" name="home"></ion-icon>
           <p>Forside</p>
         </ion-buttons>
-
-        <ion-icon style = "margin-left: 75%" name="search"></ion-icon>
-        <ion-input> </ion-input>
-
+        <ion-searchbar id = "searchBar"> </ion-searchbar>
         <ion-buttons>
           <ion-icon id = "icons" name="notifications"></ion-icon>
           <p>9+</p>
@@ -27,11 +25,11 @@ import { Component } from '@angular/core';
         </ion-buttons>
         <ion-buttons style = "margin-left: 0.6%">
           <ion-icon id = "icons" name="exit-sharp"></ion-icon>
-          <p>Log ud</p>
+          <p>Log_ud</p>
         </ion-buttons>
 
-
       </ion-item>
+    </ion-toolbar>
     </div>
     </body>
   ` ,

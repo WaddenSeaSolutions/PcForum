@@ -30,8 +30,7 @@
   padding: 4px;
 
   border: 1px solid grey;
-  margin-left: 4%;
-  margin-right: 4%;
+
 
 }
 #mainHeadline{
@@ -40,8 +39,13 @@
 #icons{
   font-size: 30px;
 }
-#toolbarContent{
-  padding: 8px 12px;
+#toolbarHolder{
+  margin-left: 4%;
+  margin-right: 4%;
 }
+#searchBar{
+  padding-left: 67%;
+}
+
 
 
