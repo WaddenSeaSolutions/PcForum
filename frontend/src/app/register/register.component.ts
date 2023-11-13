@@ -40,9 +40,6 @@ import {FormControl, Validators} from "@angular/forms";
           <ion-item>
             <ion-input type="password" style="text-align: center" placeholder="Gentag Kodeord" [formControl]="password2"> </ion-input>
           </ion-item>
-          <div *ngIf="password2.hasError('required')">
-            <p>Password confirmation is required</p>
-          </div>
           <div *ngIf="password2.hasError('passwordsNotMatch')">
             <p>Passwords do not match</p>
           </div>

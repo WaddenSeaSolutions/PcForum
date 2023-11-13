@@ -24,3 +24,18 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+
+@import "./theme/variables";
+body{
+  animation: background 20s infinite ease-in-out;
+}
+
+
+@keyframes background {
+  0% {background-color: #250202;}
+  20% {background-color: #42111e;}
+  40% {background-color: #5d2547;}
+  60% {background-color: #3c2272;}
+  80% {background-color: #121054;}
+  100% {background-color: #250202;}
+}
