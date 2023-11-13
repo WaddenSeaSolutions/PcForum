@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl} from "@angular/forms";
+import {FormControl, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Router} from "@angular/router";
@@ -31,8 +31,8 @@ import {Router} from "@angular/router";
   styleUrls: ['./login-page.component.scss'],
 })
 export class LoginPageComponent {
-  username = new FormControl('')
-  password = new FormControl('')
+  username = new FormControl('',Validators.compose([Validators.min(5),Validators.max(20)]))
+  password = new FormControl('',Validators.compose([Validators.min(5),Validators.max(50),Validators.required]))
 
   myFormGroup = new FormControl({
     username: this.username,
