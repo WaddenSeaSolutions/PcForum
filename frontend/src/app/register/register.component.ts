@@ -83,7 +83,7 @@ export class RegisterComponent{
       username: this.username,
       password: this.password,
     }
-    const response = this.http.post<UsersRegister>(environment.baseUrl + '/registerUser', registrant)
+    const response = this.http.post<UsersRegister>(environment.baseUrl + '/register', registrant)
 
       if (response){
         //Todo authentication
