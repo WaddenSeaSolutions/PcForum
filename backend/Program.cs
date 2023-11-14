@@ -17,6 +17,8 @@ if (builder.Environment.IsProduction())
 
 builder.Services.AddSingleton<ForumDAL>();
 builder.Services.AddSingleton<ForumService>();
+builder.Services.AddSingleton<FrontpageService>();
+builder.Services.AddSingleton<FrontpageDAL>();
 
 builder.Services.AddControllers();
 
