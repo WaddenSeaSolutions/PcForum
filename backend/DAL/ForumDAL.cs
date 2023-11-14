@@ -17,7 +17,7 @@ public class ForumDAL
     public User Register(User user)
     {
         var sql = $@"INSERT INTO forum.users (username, password)
-            VALUES (@username, @password, @email)
+            VALUES (@username, @password)
             RETURNING id as {nameof(User.Id)},
             username as {nameof(User.Username)},
             password as {nameof(User.Password)};";
