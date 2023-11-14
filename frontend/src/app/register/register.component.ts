@@ -63,7 +63,6 @@ export class RegisterComponent{
     email: this.email,
     username: this.username,
     password: this.password,
-    password2: this.password2,
   });
 
   // Method that validates that the password matches and ensures no typos in password
@@ -79,16 +78,21 @@ export class RegisterComponent{
 // Method to register the new user
   async registerUser(){
     const registrant = {
-      email: this.email,
-      username: this.username,
-      password: this.password,
+      email: this.email.value,
+      username: this.username.value,
+      password: this.password.value,
     }
-    const response = this.http.post<UsersRegister>(environment.baseUrl + '/register', registrant)
+    try {
+      const response = await this.http.post<UsersRegister>(environment.baseUrl + '/register', registrant).toPromise();
 
-      if (response){
-        //Todo
-        console.log("Request successfully")
-      }
+      console.log(response);
+
+      // Todo: Handle the response or any other logic
+
+    } catch (error) {
+      console.error("Error in registration:", error);
+      // Todo: Handle the error
+    }
   }
 }
 

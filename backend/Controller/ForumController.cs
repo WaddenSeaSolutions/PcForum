@@ -16,7 +16,7 @@ public class ForumController : ControllerBase
 
     [HttpPost]
     [Route("/register")]
-    public User Register([FromBody] User user)
+    public User Register(User user)
     {
         return _forumService.Register(user);
     }

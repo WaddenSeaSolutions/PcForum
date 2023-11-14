@@ -1,5 +1,6 @@
 using backend.DAL;
 using backend.Model;
+using MimeKit;
 
 namespace backend.Service;
 
@@ -21,9 +22,18 @@ public class ForumService
         string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.Password, 15);
 
         //Replaces existing password with an encrypted created by Bcrypt
-        user.Password = hashedPassword; 
-        return user;
+        user.Password = hashedPassword;
+        SendEmail(user);
+        
+       return _forumDal.Register(user);
     }
+
+    private void SendEmail(User user)
+    {
+        var message = new MimeMessage();
+        message.From.Add(new MailboxAddress("PcForum","todo"));
+    }
+
 
     public void DeleteUser(int id)
     {
