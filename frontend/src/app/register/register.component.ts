@@ -46,7 +46,7 @@ import {environment} from "../../environments/environment";
             <p>Passwords do not match</p>
           </div>
           <br>
-          <ion-button class="btnBackground" style="display: flex" [disabled]="myFormGroup.invalid">Registrer din konto</ion-button>
+          <ion-button class="btnBackground" style="display: flex" (click)="registerUser()">Registrer din konto</ion-button>
         </div>
       </ion-content>
 
@@ -86,7 +86,8 @@ export class RegisterComponent{
     const response = this.http.post<UsersRegister>(environment.baseUrl + '/register', registrant)
 
       if (response){
-        //Todo authentication
+        //Todo
+        console.log("Request successfully")
       }
   }
 }

@@ -1,6 +1,5 @@
 using backend.DAL;
 using backend.Model;
-using DevOne.Security.Cryptography.BCrypt;
 
 namespace backend.Service;
 
@@ -13,16 +12,17 @@ public class ForumService
         _forumDal = forumDal;
     }
 
-    public User Register(User user)
+    /*
+     * //Encrypts the password with a workFactor of 15.
+     * WorkFactor slows the encryption ensuring brute-forcing takes longer amounts of time
+     */
+    public User Register(User user) 
     {
-        string password = user.Password;
-        string salt = BCryptHelper.GenerateSalt();
-        string hashedPassword = BCryptHelper.HashPassword(password, salt);
-        
-        Console.WriteLine(hashedPassword);
-        Console.WriteLine(salt);
-        //return _forumDal.Register(user);
-        return null;
+        string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.Password, 15);
+
+        //Replaces existing password with an encrypted created by Bcrypt
+        user.Password = hashedPassword; 
+        return user;
     }
 
     public void DeleteUser(int id)
