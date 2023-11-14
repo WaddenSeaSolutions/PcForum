@@ -21,11 +21,11 @@ public class ForumController : ControllerBase
         return _forumService.Register(user);
     }
 
-    [HttpDelete]
+    [HttpPut]
     [Route("/DeleteUser{id}")]
     public void DeleteUser(int id)
     {
-        _forumService.DeleteUser(id);
+       _forumService.DeleteUser(id);
     }
 
     [HttpGet]
