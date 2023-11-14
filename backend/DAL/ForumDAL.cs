@@ -16,22 +16,23 @@ public class ForumDAL
 
     public User Register(User user)
     {
-        var sql = $@"INSERT INTO forum.users (username, password, email)
-            VALUES (@username, @password, @email)
+        var sql = $@"INSERT INTO forum.users (username, password)
+            VALUES (@username, @password)
             RETURNING id as {nameof(User.Id)},
             username as {nameof(User.Username)},
-            password as {nameof(User.Password)},
-            email as {nameof(User.Email)};";
+            password as {nameof(User.Password)};";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.QueryFirst<User>(sql, new  {username = user.Username, password = user.Password, email = user.Email});
+            return conn.QueryFirst<User>(sql, new  {username = user.Username, password = user.Password});
         }
     }
 
     public void DeleteUser(int id)
     {
-        var sql = $@"DELETE FROM forum.users WHERE id = @id;";
+        var sql = $@"UPDATE forum.users
+                  SET deleted = true
+                  WHERE id = @id";
 
         using (var conn = _dataSource.OpenConnection())
         {
@@ -44,7 +45,7 @@ public class ForumDAL
         var sql = $@"SELECT id as {nameof(User.Id)},
                 username as {nameof(User.Username)},
                 password as {nameof(User.Password)},
-                email as {nameof(User.Email)}
+                deleted as {nameof(User.Deleted)}
     FROM forum.users;";
         using (var conn = _dataSource.OpenConnection())
         {

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Router} from "@angular/router";
+import {Users} from "../../Interface";
 
 @Component({
   selector: 'login-page',
@@ -44,7 +45,7 @@ const users = {
   username: this.username,
   password: this.password,
 };
-    const response = this.http.post(environment.baseUrl + '/login', users)
+    const response = this.http.post<Users>(environment.baseUrl + '/login', users)
 
     if(response){
       //Todo go to homepage login

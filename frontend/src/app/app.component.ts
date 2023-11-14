@@ -40,6 +40,7 @@ import { Component } from '@angular/core';
     </ion-toolbar>
     </div>
     </body>
+    <router-outlet></router-outlet>
   ` ,
   styleUrls: ['app.component.scss'],
 })
