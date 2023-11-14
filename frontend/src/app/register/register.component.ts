@@ -1,5 +1,7 @@
 import { Component} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
+import {HttpClient} from "@angular/common/http";
+import {environment} from "../../environments/environment";
 
 
 
@@ -72,7 +74,7 @@ export class RegisterComponent{
     return null;
   }
 
-  constructor() { }
+  constructor(private http : HttpClient) { }
 
 // Method to register the new user
   async registerUser(){
@@ -81,8 +83,11 @@ export class RegisterComponent{
       username: this.username,
       password: this.password,
     }
+    const response = this.http.post<UsersRegister>(environment.baseUrl + '/registerUser', registrant)
 
-
+      if (response){
+        //Todo authentication
+      }
   }
 }
 
