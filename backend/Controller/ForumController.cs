@@ -21,6 +21,13 @@ public class ForumController : ControllerBase
         return _forumService.Register(user);
     }
 
+    [HttpGet]
+    [Route("/login")]
+    public User Login(User user)
+    {
+        return _forumService.Login(user);
+    }
+
     [HttpPut]
     [Route("/DeleteUser{id}")]
     public void DeleteUser(int id)

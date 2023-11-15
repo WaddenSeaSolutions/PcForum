@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Security.Authentication;
 using backend.DAL;
 using backend.Model;
 using MimeKit;
@@ -19,7 +21,7 @@ public class ForumService
      */
     public User Register(User user) 
     {
-        string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.Password, 15);
+        string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.Password, 12);
 
         //Replaces existing password with an encrypted created by Bcrypt
         user.Password = hashedPassword;
@@ -44,5 +46,22 @@ public class ForumService
     {
         return _forumDal.GetUserFeed();
     }
-    
+
+    public User Login(User user)
+    {
+        try
+        {
+            var userToCheck = _forumDal.login(user);
+            if (BCrypt.Net.BCrypt.Verify(user.Password, userToCheck.Password))
+            {
+                return userToCheck;
+            }
+        }
+        catch (Exception e)
+        {
+            throw new InvalidCredentialException();
+        }
+            
+        return null;
+    }
 }
