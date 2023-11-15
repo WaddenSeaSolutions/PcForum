@@ -16,4 +16,9 @@ public class FrontpageService
     {
         return _frontpageDAL.getTopics();
     }
+
+    public void createTopic(Topic topic)
+    {
+        _frontpageDAL.createTopic(topic);
+    }
 }

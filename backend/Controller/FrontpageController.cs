@@ -24,8 +24,9 @@ public class FrontpageController : ControllerBase
 
     [HttpPost]
     [Route("/topics")]
-    public void createTopic()
+    public void createTopic([FromBody] Topic topic)
     {
-        
+        topic.deleted = false;
+        _frontpageService.createTopic(topic);
     }
 }
