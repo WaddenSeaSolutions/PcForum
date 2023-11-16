@@ -20,9 +20,8 @@ const routes: Routes = [
     path: 'register',
     component: RegisterComponent
   },
-
   {
-    path: 'topic',
+    path: 'topic/:id',
     component: TopicComponent
   }
 ];

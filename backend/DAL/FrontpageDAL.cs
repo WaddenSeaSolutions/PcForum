@@ -27,13 +27,11 @@ public class FrontpageDAL
 
     public void createTopic(Topic topic)
     {
-        var sql = $@"INSERT INTO forum.topics (title, deleted) VALUES (@title, @deleted)
-        title as {nameof(Topic.title)}
-        deleted as {nameof(Topic.deleted)};";
+        var sql = @"INSERT INTO forum.topics (title, deleted) VALUES (@title, @deleted);";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            conn.Query<Topic>(sql, new { title = topic.title, deleted = topic.deleted });
+            conn.Execute(sql, new { title = topic.title, deleted = topic.deleted });
         }
     }
 }
