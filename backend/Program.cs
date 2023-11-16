@@ -30,5 +30,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseSecurityHeaders();
+
 app.MapControllers();
 app.Run();

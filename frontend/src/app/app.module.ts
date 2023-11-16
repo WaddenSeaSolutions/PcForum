@@ -8,14 +8,17 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {HomePage} from "./home/home.page";
 import {LoginPageComponent} from "./login-page/login-page.component";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RegisterComponent} from "./register/register.component";
+import {ErrorHttpInterceptor} from "../interceptor/error.interceptor";
 
 @NgModule({
   declarations: [AppComponent, LoginPageComponent, RegisterComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers:
+    [ { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorHttpInterceptor, multi: true} ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
