@@ -6,4 +6,5 @@ export interface Topic{
   id:number
   title: string
   deleted: boolean
+  image: string
 }
