@@ -12,8 +12,8 @@ import {Router} from "@angular/router";
     <ion-content style="--background: none; position: absolute; top: 15%">
       <div *ngFor="let topic of service.topics">
         <ion-card id="topicCards">
+          <ion-img id="topicImage" src="{{topic.image}}"></ion-img>
             <ion-title (click)="openTopic(topic)" style="color: white; cursor: pointer">{{topic.title}}</ion-title>
-
         </ion-card>
       </div>
     </ion-content>
