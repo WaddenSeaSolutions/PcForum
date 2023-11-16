@@ -21,7 +21,7 @@ public class ForumController : ControllerBase
         return _forumService.Register(user);
     }
 
-    [HttpGet]
+    [HttpPost]
     [Route("/login")]
     public User Login(User user)
     {

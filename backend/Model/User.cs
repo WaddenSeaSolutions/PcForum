@@ -10,7 +10,7 @@ public class User
     
     public required string Email { get; set; }
     
-    public required string Role  {get; set; }
+    public required string UserRole  {get; set; }
     public Boolean Deleted { get; set; }
     
 }

@@ -59,9 +59,8 @@ public class ForumService
         }
         catch (Exception e)
         {
-            throw new InvalidCredentialException();
+            Console.WriteLine("An error occurred during login" + e.Message);
         }
-            
         return null;
     }
 }
