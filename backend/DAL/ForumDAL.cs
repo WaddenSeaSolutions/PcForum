@@ -53,7 +53,9 @@ public class ForumDAL
         }
     }
 
-    
-    
 
+    public User login(User user)
+    {
+        throw new NotImplementedException();
+    }
 }

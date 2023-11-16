@@ -1,6 +1,8 @@
+using System.Collections;
+using System.Security.Authentication;
 using backend.DAL;
 using backend.Model;
-using DevOne.Security.Cryptography.BCrypt;
+using MimeKit;
 
 namespace backend.Service;
 
@@ -13,17 +15,27 @@ public class ForumService
         _forumDal = forumDal;
     }
 
-    public User Register(User user)
+    /*
+     * //Encrypts the password with a workFactor of 15.
+     * WorkFactor slows the encryption ensuring brute-forcing takes longer amounts of time
+     */
+    public User Register(User user) 
     {
-        string password = user.Password;
-        string salt = BCryptHelper.GenerateSalt();
-        string hashedPassword = BCryptHelper.HashPassword(password, salt);
+        string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.Password, 12);
+
+        //Replaces existing password with an encrypted created by Bcrypt
+        user.Password = hashedPassword;
+        SendEmail(user);
         
-        Console.WriteLine(hashedPassword);
-        Console.WriteLine(salt);
-        //return _forumDal.Register(user);
-        return null;
+       return _forumDal.Register(user);
     }
+
+    private void SendEmail(User user)
+    {
+        var message = new MimeMessage();
+        message.From.Add(new MailboxAddress("PcForum","todo"));
+    }
+
 
     public void DeleteUser(int id)
     {
@@ -34,5 +46,22 @@ public class ForumService
     {
         return _forumDal.GetUserFeed();
     }
-    
+
+    public User Login(User user)
+    {
+        try
+        {
+            var userToCheck = _forumDal.login(user);
+            if (BCrypt.Net.BCrypt.Verify(user.Password, userToCheck.Password))
+            {
+                return userToCheck;
+            }
+        }
+        catch (Exception e)
+        {
+            throw new InvalidCredentialException();
+        }
+            
+        return null;
+    }
 }
