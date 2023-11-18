@@ -17,20 +17,17 @@ public class ForumDAL
     public bool Register(User user)
     {
         var sql = $@"INSERT INTO forum.users (username, password, email, userrole, deleted)
-        VALUES (@username, @password, @email, @userrole, @deleted)
-        RETURNING id as {nameof(User.Id)},
-        username as {nameof(User.Username)},
-        password as {nameof(User.Password)},
-        email as {nameof(User.Email)},
-        userrole as {nameof(User.UserRole)},
-        deleted as {nameof(User.Deleted)};";
+        VALUES (@username, @password, @email, @userrole, @deleted);";
 
         using (var conn = _dataSource.OpenConnection())
         {
             var result = conn.Execute(sql, new { username = user.Username, password = user.Password, email = user.Email, userrole = user.UserRole, deleted = user.Deleted });
-            
-            return result > 0; // Return true if at least one row was affected
+
+            if (result > 0)
+                return true;
         }
+
+        return false;
     }
 
     public void DeleteUser(int id)

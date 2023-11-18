@@ -31,7 +31,7 @@ public class ForumController : ControllerBase
         {
             _emailService.SendEmail(user);
             // Return a 201 Created status code for successful registration
-            return Created("/register", user);
+            return Ok(new { Message = "Registration successful" });
         }
 
         // Return a 400 Bad Request status code for failed registration
