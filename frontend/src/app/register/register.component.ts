@@ -90,7 +90,7 @@ export class RegisterComponent{
       // Todo: Handle the response or any other logic
 
     } catch (error) {
-      console.error("Error in registration:", error);
+      console.error("Fejl i registrering:", error);
       // Todo: Handle the error
     }
   }
