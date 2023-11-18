@@ -18,6 +18,7 @@ public class ForumController : ControllerBase
     [Route("/register")]
     public User Register(User user)
     {
+        user.Deleted = false;
         return _forumService.Register(user);
     }
 

@@ -32,8 +32,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseSecurityHeaders();
-
 app.UseCors(options =>
 {
     options.SetIsOriginAllowed(origin => true)
