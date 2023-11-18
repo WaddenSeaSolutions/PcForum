@@ -12,9 +12,10 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RegisterComponent} from "./register/register.component";
 import {ErrorHttpInterceptor} from "../interceptor/error.interceptor";
+import {TopicComponent} from "./topic/topic.component";
 
 @NgModule({
-  declarations: [AppComponent, LoginPageComponent, RegisterComponent],
+  declarations: [AppComponent, LoginPageComponent, RegisterComponent, TopicComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule],
   providers:
     [ { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
