@@ -3,6 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import {RegisterComponent} from "./register/register.component";
 import {LoginPageComponent} from "./login-page/login-page.component";
 import {TopicComponent} from "./topic/topic.component";
+import {TopicCreationComponent} from "./topic-creation/topic-creation.component";
 
 const routes: Routes = [
   {
@@ -23,7 +24,12 @@ const routes: Routes = [
   {
     path: 'topic/:id',
     component: TopicComponent
+  },
+  {
+    path: 'topic-creation',
+    component: TopicCreationComponent
   }
+
 ];
 
 @NgModule({

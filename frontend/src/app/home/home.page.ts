@@ -10,10 +10,16 @@ import {Router} from "@angular/router";
   selector: 'app-home',
   template: `
     <ion-content style="--background: none; position: absolute; top: 15%">
+      <ion-card id ="topicCards">
+        <ion-title>Modereringskontrol:</ion-title>
+        <ion-button (click)="openCreateTopic()" style="--background: none;">Opret nyt emne</ion-button>
+        <ion-button  style="--background: none;">Administrere emner</ion-button>
+      </ion-card>
       <div *ngFor="let topic of service.topics">
         <ion-card id="topicCards">
           <ion-img id="topicImage" src="{{topic.image}}"></ion-img>
-            <ion-title (click)="openTopic(topic)" style="color: white; cursor: pointer">{{topic.title}}</ion-title>
+            <ion-title id="topicTitle" (click)="openTopic(topic)">{{topic.title}}</ion-title>
+          <p>Antal af tråde: </p>
         </ion-card>
       </div>
     </ion-content>
@@ -32,6 +38,10 @@ export class HomePage {
 
   async openTopic(topic: Topic){
     this.router.navigate(['topic', topic.id])
+  }
+
+  async openCreateTopic(){
+    this.router.navigate(['topic-creation'])
   }
 
 }
