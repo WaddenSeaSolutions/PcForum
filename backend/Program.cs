@@ -19,6 +19,7 @@ builder.Services.AddSingleton<ForumDAL>();
 builder.Services.AddSingleton<ForumService>();
 builder.Services.AddSingleton<FrontpageService>();
 builder.Services.AddSingleton<FrontpageDAL>();
+builder.Services.AddSingleton<EmailService>();
 
 builder.Services.AddControllers();
 

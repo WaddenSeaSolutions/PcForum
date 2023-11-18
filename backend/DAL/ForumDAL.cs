@@ -14,7 +14,7 @@ public class ForumDAL
         _dataSource = dataSource;
     }
 
-    public User Register(User user)
+    public bool Register(User user)
     {
         var sql = $@"INSERT INTO forum.users (username, password, email, userrole, deleted)
         VALUES (@username, @password, @email, @userrole, @deleted)
@@ -27,8 +27,9 @@ public class ForumDAL
 
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.QueryFirst<User>(sql, new { username = user.Username, password = user.Password, email = user.Email, userrole = user.UserRole, deleted = user.Deleted });
+            var result = conn.Execute(sql, new { username = user.Username, password = user.Password, email = user.Email, userrole = user.UserRole, deleted = user.Deleted });
             
+            return result > 0; // Return true if at least one row was affected
         }
     }
 

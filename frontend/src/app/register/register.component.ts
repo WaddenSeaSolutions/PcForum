@@ -2,6 +2,8 @@ import { Component} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
+import {navigate} from "ionicons/icons";
+import {Router} from "@angular/router";
 
 
 
@@ -73,7 +75,7 @@ export class RegisterComponent{
     return null;
   }
 
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient, private router: Router) { }
 
 // Method to register the new user
   async registerUser(){
@@ -84,15 +86,12 @@ export class RegisterComponent{
       UserRole: "standard",
     }
     try {
-      const response = await this.http.post<UsersRegister>(environment.baseUrl + '/register', registrant).toPromise();
-
-      console.log(response);
-
-      // Todo: Handle the response or any other logic
+      this.http.post<UsersRegister>(environment.baseUrl + '/register', registrant).toPromise();
+      // Proceed to login-page if the request was successful
+      this.router.navigate(["login-page"]);
 
     } catch (error) {
-      console.error("Fejl i registrering:", error);
-      // Todo: Handle the error
+      console.error("Fejl i registrering, venligst prøv igen");
     }
   }
 }
