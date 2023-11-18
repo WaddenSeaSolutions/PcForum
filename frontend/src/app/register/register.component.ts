@@ -81,6 +81,7 @@ export class RegisterComponent{
       email: this.email.value,
       username: this.username.value,
       password: this.password.value,
+      UserRole: "standard",
     }
     try {
       const response = await this.http.post<UsersRegister>(environment.baseUrl + '/register', registrant).toPromise();

@@ -29,6 +29,7 @@ public class ForumService
 
         //Replaces existing password with an encrypted created by Bcrypt
         user.Password = hashedPassword;
+        
         SendEmail(user);
         
        return _forumDal.Register(user);

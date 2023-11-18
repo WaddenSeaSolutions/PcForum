@@ -19,6 +19,7 @@ public class ForumController : ControllerBase
     public User Register(User user)
     {
         user.Deleted = false;
+        user.UserRole = "standard";
         return _forumService.Register(user);
     }
 
