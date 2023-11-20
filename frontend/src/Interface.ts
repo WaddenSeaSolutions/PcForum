@@ -7,3 +7,12 @@ export interface Topic{
   title: string
   deleted: boolean
 }
+
+export interface Thread{
+  id: number
+  title: string
+  topicid: number
+  body: string
+  likes: number
+  deleted: boolean
+}
