@@ -12,7 +12,7 @@ import {Thread} from "../../Interface";
     <ion-content style="--background: none; top: 20%">
       <div *ngFor="let thread of service.threads">
         <ion-card id="threadCard">
-         <ion-title (click)="openThread(thread)" style="color: white; cursor: pointer"> {{thread.title}}</ion-title>
+         <ion-title (click)="openThread(thread)" style="color: white; cursor: pointer"> {{thread.title}} </ion-title>
 
         </ion-card>
       </div>
