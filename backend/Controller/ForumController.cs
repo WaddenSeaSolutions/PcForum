@@ -11,10 +11,13 @@ public class ForumController : ControllerBase
 
     private readonly EmailService _emailService;
 
-    public ForumController(ForumService forumService, EmailService emailService)
+    private readonly TokenService _tokenService;
+
+    public ForumController(ForumService forumService, EmailService emailService, TokenService tokenService)
     {
         _forumService = forumService;
         _emailService = emailService;
+        _tokenService = tokenService;
     }
 
     [HttpPost]
@@ -40,9 +43,24 @@ public class ForumController : ControllerBase
 
     [HttpPost]
     [Route("/login")]
-    public User Login(User user)
+    public IActionResult Login(User user)
     {
-        return _forumService.Login(user);
+        var userToAuthenticate = _forumService.Login(user);
+
+        if (userToAuthenticate != null)
+        {
+            var token = _tokenService.CreateToken(userToAuthenticate);
+        
+            var responseDto = new LoginResponseDto
+            {
+                User = userToAuthenticate,
+                Token = token
+            };
+
+            return Ok(responseDto); // Assuming a successful login (200 OK)
+        }
+
+        return Unauthorized(); // Or any other appropriate status code for unsuccessful login
     }
 
     [HttpPut]
