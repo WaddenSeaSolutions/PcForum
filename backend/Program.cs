@@ -19,6 +19,7 @@ builder.Services.AddSingleton<ForumDAL>();
 builder.Services.AddSingleton<ForumService>();
 builder.Services.AddSingleton<FrontpageService>();
 builder.Services.AddSingleton<FrontpageDAL>();
+builder.Services.AddSingleton<EmailService>();
 
 builder.Services.AddControllers();
 
@@ -31,8 +32,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseSecurityHeaders();
 
 app.UseCors(options =>
 {

@@ -9,19 +9,36 @@ public class ForumController : ControllerBase
 {
     private readonly ForumService _forumService;
 
-    public ForumController(ForumService forumService)
+    private readonly EmailService _emailService;
+
+    public ForumController(ForumService forumService, EmailService emailService)
     {
         _forumService = forumService;
+        _emailService = emailService;
     }
 
     [HttpPost]
     [Route("/register")]
-    public User Register(User user)
+    public IActionResult Register(User user)
     {
-        return _forumService.Register(user);
+        user.Deleted = false;
+        user.UserRole = "standard";
+
+        // Attempt to register the user in the database
+        var isUserRegistered = _forumService.Register(user);
+
+        if (isUserRegistered)
+        {
+            _emailService.SendEmail(user);
+            // Return a 201 Created status code for successful registration
+            return Ok(new { Message = "Registration successful" });
+        }
+
+        // Return a 400 Bad Request status code for failed registration
+        return BadRequest("Registration failed");
     }
 
-    [HttpGet]
+    [HttpPost]
     [Route("/login")]
     public User Login(User user)
     {

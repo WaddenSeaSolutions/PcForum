@@ -1,8 +1,13 @@
 using System.Collections;
+using System.Net.Mail;
 using System.Security.Authentication;
 using backend.DAL;
 using backend.Model;
 using MimeKit;
+using MailKit;
+using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Mvc;
+using SmtpClient = MailKit.Net.Smtp.SmtpClient;
 
 namespace backend.Service;
 
@@ -19,22 +24,16 @@ public class ForumService
      * //Encrypts the password with a workFactor of 15.
      * WorkFactor slows the encryption ensuring brute-forcing takes longer amounts of time
      */
-    public User Register(User user) 
+    public bool Register(User user) 
     {
         string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.Password, 12);
 
         //Replaces existing password with an encrypted created by Bcrypt
         user.Password = hashedPassword;
-        SendEmail(user);
         
        return _forumDal.Register(user);
     }
-
-    private void SendEmail(User user)
-    {
-        var message = new MimeMessage();
-        message.From.Add(new MailboxAddress("PcForum","todo"));
-    }
+    
 
 
     public void DeleteUser(int id)
@@ -59,9 +58,8 @@ public class ForumService
         }
         catch (Exception e)
         {
-            throw new InvalidCredentialException();
+            Console.WriteLine("An error occurred during login" + e.Message);
         }
-            
         return null;
     }
 }
