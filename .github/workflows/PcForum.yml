@@ -44,7 +44,7 @@ jobs:
 
 
       - name: Build test code and install playwright test browser
-        run: cd backend && cd Tests && dotnet build && pwsh bin/Debug/net8.0/playwright.ps1 install --with-deps
+        run: cd Tests && dotnet build && pwsh bin/Debug/net8.0/playwright.ps1 install --with-deps
 
 
       - name: Build and run Web API + getting process ID for shutting down later
