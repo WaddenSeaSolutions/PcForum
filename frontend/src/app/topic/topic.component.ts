@@ -25,17 +25,24 @@ import {Thread} from "../../Interface";
   styleUrls: ['./topic.component.scss'],
 })
 export class TopicComponent {
+
+  
+
   constructor(private http: HttpClient, public service: Service, private router: Router) {
     this.getThreads();
   }
-  async getThreads(){
 
-    const call = this.http.get<Thread[]>(environment.baseUrl+'/threads/');
-    this.service.threads =await firstValueFrom<Thread[]>(call);
+  async getThreads() {
+
+    const call = this.http.get<Thread[]>(environment.baseUrl + '/threads/');
+    this.service.threads = await firstValueFrom<Thread[]>(call);
   }
 
   async openThread(thread: Thread) {
     this.router.navigate(['thread', thread.id])
   }
 
+  async createThread() {
+    this.service.threads = await firstValueFrom<Thread[]>()
+  }
 }

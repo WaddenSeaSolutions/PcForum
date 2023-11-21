@@ -22,11 +22,11 @@ public class ThreadDAL
         likes as {nameof(Threads.likes)},
         deleted as {nameof(Threads.deleted)}
         FROM forum.threads
-        WHERE topicid = {topicId}";
+        WHERE topicid = @topicId;";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.Query<Threads>(sql);
+            return conn.Query<Threads>(sql, new {topicId = topicId});
         }
     }
 
