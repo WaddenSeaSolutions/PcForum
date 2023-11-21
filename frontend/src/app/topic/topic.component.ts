@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {Service} from "../../Service";
 import {HttpClient} from "@angular/common/http";
 import {Thread} from "../../Interface";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'topic',
@@ -26,7 +27,6 @@ import {Thread} from "../../Interface";
 })
 export class TopicComponent {
 
-  
 
   constructor(private http: HttpClient, public service: Service, private router: Router) {
     this.getThreads();
@@ -42,7 +42,4 @@ export class TopicComponent {
     this.router.navigate(['thread', thread.id])
   }
 
-  async createThread() {
-    this.service.threads = await firstValueFrom<Thread[]>()
-  }
 }
