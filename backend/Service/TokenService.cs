@@ -3,6 +3,7 @@ using System.Security.Authentication;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
+using backend.DAL;
 using backend.Model;
 using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
@@ -11,12 +12,13 @@ namespace backend.Service;
 
 public class TokenService
 {
+    private TokenDal _tokenDal;
 
     private static readonly byte[] Secret = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("jwtKey")!);
 
-    public TokenService()
+    public TokenService(TokenDal tokenDal)
     {
-
+        _tokenDal = tokenDal;
     }
 
     public string CreateToken(User user)
@@ -47,72 +49,84 @@ public class TokenService
         }
 
     }
-    
-    public User ValidateAndReturnTokenIfUserIsNotDeleted(StringValues authHeaders)
-    {
-        throw new NotImplementedException();
-    }
 
-    private JwtSecurityToken ValidateAndReturnToken(StringValues authHeader)
+    public void validateTokenAndVerifyUserNotDeleted(string token)
+    {
+        var principal = ValidateAndReturnToken(token); //Validating the token has not been tampered
+    
+        var nameClaim = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name); // Saves the id of the user with the token
+
+        bool isUserDeleted = _tokenDal.isUserDeleted(nameClaim.Value);
+        
+        if (isUserDeleted == true)
+        {
+            Console.WriteLine("User is deleted");
+        }
+        else
+        {
+            Console.WriteLine("User is deleted");
+        }
+
+    }
+    
+
+    private ClaimsPrincipal ValidateAndReturnToken(string token)
     {
         try
         {
+            var tokenHandler = new JwtSecurityTokenHandler();
             var validationParameters = new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(Secret),
-                ValidateIssuer = false,
-                ValidateAudience = false,
+                ValidateIssuer = false, // No Issuer
+                ValidateAudience = false, // No targeted audience
+                ClockSkew = TimeSpan.Zero // Amount the token can be over date
             };
 
-            new JwtSecurityTokenHandler().ValidateToken(authHeader[0],
-                validationParameters,
-                out SecurityToken token);
-            
-            var t =  (JwtSecurityToken)token;
-            var json = JsonSerializer.Serialize(t.Claims);
-            var role = t.Claims.FirstOrDefault(c => c.Type == "role");
-            Console.WriteLine("the role is "+role);
-            Console.WriteLine(json);
-            return t;
+            SecurityToken validatedToken;
+            ClaimsPrincipal principal = tokenHandler.ValidateToken(token, validationParameters, out validatedToken);
+
+            return principal;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            throw new AuthenticationException("Failed to validate user identity from token", e.InnerException);
+            // Token validation failed
+            throw new Exception("Token validation failed", ex);
         }
-
-        /*
-        public ClaimsPrincipal  ValidateToken(string token)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_secretKey);
-
-            try
-            {
-                tokenHandler.ValidateToken(token, new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ClockSkew = TimeSpan.Zero // This is the maximum allowable clock skew between the token's timestamps and the current time
-                }, out SecurityToken validatedToken);
-
-                var jwtToken = (JwtSecurityToken)validatedToken;
-
-                var claimsIdentity = new ClaimsIdentity(jwtToken.Claims, "jwt");
-
-                return new ClaimsPrincipal(claimsIdentity);
-
-            }
-            catch (SecurityTokenException ex)
-            {
-                Console.WriteLine(ex);
-                throw new Exception("Token faulty");
-            }
-        }
-        */
-        
     }
+    
+    
+    // public JwtSecurityToken ValidateAndReturnToken(string token)
+    // {
+    //     
+    //     try
+    //     {
+    //         var validationParameters = new TokenValidationParameters
+    //         {
+    //             ValidateIssuerSigningKey = true,
+    //             IssuerSigningKey = new SymmetricSecurityKey(Secret),
+    //             ValidateIssuer = false,
+    //             ValidateAudience = false,
+    //         };
+    //
+    //         new JwtSecurityTokenHandler().ValidateToken(authHeader[0],
+    //             validationParameters,
+    //             out SecurityToken token);
+    //         
+    //         var t =  (JwtSecurityToken)token;
+    //         // var json = JsonSerializer.Serialize(t.Claims);
+    //         // var role = t.Claims.FirstOrDefault(c => c.Type == "role");
+    //         // Console.WriteLine("the role is "+role);
+    //         // Console.WriteLine(json);
+    //         return t;
+    //     }
+    //     catch (Exception e)
+    //     {
+    //         throw new AuthenticationException("Failed to validate user identity from token", e.InnerException);
+    //     }
+    //     
+    //     
+    // }
     
 }

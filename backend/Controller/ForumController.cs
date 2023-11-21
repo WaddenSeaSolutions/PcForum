@@ -85,7 +85,7 @@ public class ForumController : ControllerBase
     {
         try
         {
-            _tokenService.ValidateToken(token);
+            _tokenService.validateTokenAndVerifyUserNotDeleted(token);
             return Ok();
         }
         catch (SecurityTokenException exception)
