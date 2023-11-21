@@ -17,12 +17,13 @@ public class ThreadController : ControllerBase
     }
     
     [HttpGet]
-    [Route("/threads")]
-    public IEnumerable<Threads> getThreads(int id)
+    [Route("/threads/{id}")]
+    public IEnumerable<Threads> GetThreadsForTopic(int id)
     {
-        return _threadService.getThreads(id);
-        
+        return _threadService.GetThreadsForTopic(id);
     }
+
+    
 
     [HttpPost]
     [Route("/threads")]
