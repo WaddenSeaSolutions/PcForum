@@ -1,7 +1,10 @@
 import { Component} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpResponse} from "@angular/common/http";
 import {environment} from "../../environments/environment";
+import {navigate} from "ionicons/icons";
+import {Router} from "@angular/router";
+import {ToastController} from "@ionic/angular";
 
 
 
@@ -73,7 +76,7 @@ export class RegisterComponent{
     return null;
   }
 
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient, private router: Router, private toastController : ToastController) { }
 
 // Method to register the new user
   async registerUser(){
@@ -81,19 +84,63 @@ export class RegisterComponent{
       email: this.email.value,
       username: this.username.value,
       password: this.password.value,
+      UserRole: "standard",
     }
     try {
-      const response = await this.http.post<UsersRegister>(environment.baseUrl + '/register', registrant).toPromise();
+      let response = new HttpResponse();
+      await this.http.post<UsersRegister>(environment.baseUrl + '/register', registrant).toPromise();
 
-      console.log(response);
-
-      // Todo: Handle the response or any other logic
-
+      if (response.ok)
+      {
+        this.okResponse("Din konto blev oprettet")
+      // Proceed to login-page if the request was successful
+      this.router.navigate(["login-page"]);
+    }
     } catch (error) {
-      console.error("Error in registration:", error);
-      // Todo: Handle the error
+      this.errorResponse("Noget gik galt")
     }
   }
+
+  async okResponse(message: string, duration: number = 2000) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: duration,
+      position: 'bottom', // Displays in the bottom
+      color: 'success', // Green Color for ok response
+      buttons: [
+        {
+          text: 'Close',
+          role: 'cancel',
+          handler: () => {
+            console.log('Toast dismissed');
+          }
+        }
+      ]
+    });
+
+    toast.present();
+  }
+
+  async errorResponse(message: string, duration: number = 2000) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: duration,
+      position: 'bottom', // Displays in the bottom
+      color: 'warning', // Green Color for ok response
+      buttons: [
+        {
+          text: 'Close',
+          role: 'cancel',
+          handler: () => {
+            console.log('Toast dismissed');
+          }
+        }
+      ]
+    });
+
+    toast.present();
+  }
+
 }
 
 export interface UsersRegister {
