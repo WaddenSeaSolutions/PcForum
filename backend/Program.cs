@@ -20,6 +20,8 @@ builder.Services.AddSingleton<ForumService>();
 builder.Services.AddSingleton<FrontpageService>();
 builder.Services.AddSingleton<FrontpageDAL>();
 builder.Services.AddSingleton<EmailService>();
+builder.Services.AddSingleton<ThreadService>();
+builder.Services.AddSingleton<ThreadDAL>();
 
 builder.Services.AddControllers();
 
@@ -40,6 +42,7 @@ app.UseCors(options =>
         .AllowAnyHeader()
         .AllowCredentials();
 });
+
 
 app.MapControllers();
 app.Run();

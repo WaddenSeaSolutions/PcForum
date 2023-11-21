@@ -1,15 +1,22 @@
 import { Component, OnInit } from '@angular/core';
+import {firstValueFrom} from "rxjs";
+import {environment} from "../../environments/environment";
+import {Router} from "@angular/router";
+import {Service} from "../../Service";
+import {HttpClient} from "@angular/common/http";
+import {Thread} from "../../Interface";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'topic',
   template: `
     <ion-content style="--background: none; top: 20%">
-      <ion-card id="threadCard">
-        <ion-title style="cursor: pointer"> Thomas' gaming værelse </ion-title>
-            <p></p>
-      </ion-card>
+      <div *ngFor="let thread of service.threads">
+        <ion-card id="threadCard">
+         <ion-title (click)="openThread(thread)" style="color: white; cursor: pointer"> {{thread.title}} </ion-title>
 
-
+        </ion-card>
+      </div>
     </ion-content>
 
 
@@ -18,12 +25,21 @@ import { Component, OnInit } from '@angular/core';
   `,
   styleUrls: ['./topic.component.scss'],
 })
-export class TopicComponent  implements OnInit {
+export class TopicComponent {
 
-  constructor() {
 
+  constructor(private http: HttpClient, public service: Service, private router: Router) {
+    this.getThreads();
   }
 
-  ngOnInit() {}
+  async getThreads() {
+
+    const call = this.http.get<Thread[]>(environment.baseUrl + '/threads/');
+    this.service.threads = await firstValueFrom<Thread[]>(call);
+  }
+
+  async openThread(thread: Thread) {
+    this.router.navigate(['thread', thread.id])
+  }
 
 }
