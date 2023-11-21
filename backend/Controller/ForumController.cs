@@ -1,6 +1,8 @@
+using System.Security;
 using backend.Model;
 using backend.Service;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace backend.Controller;
 
@@ -76,6 +78,20 @@ public class ForumController : ControllerBase
     {
         return _forumService.getUserFeed();
     }
-    
+
+    [HttpPost]
+    [Route("/TestValidationToken")]
+    public IActionResult tokenTest(string token)
+    {
+        try
+        {
+            _tokenService.ValidateToken(token);
+            return Ok();
+        }
+        catch (SecurityTokenException exception)
+        {
+            return Unauthorized();
+        }
+    }
     
 }

@@ -1,17 +1,6 @@
-using System.Collections;
-using System.IdentityModel.Tokens.Jwt;
-using System.Net.Mail;
-using System.Security.Authentication;
-using System.Security.Claims;
-using System.Text;
 using backend.DAL;
 using backend.Model;
-using MimeKit;
-using MailKit;
-using MailKit.Net.Smtp;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using SmtpClient = MailKit.Net.Smtp.SmtpClient;
+
 
 namespace backend.Service;
 
