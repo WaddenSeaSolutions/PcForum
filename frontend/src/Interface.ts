@@ -8,3 +8,12 @@ export interface Topic{
   deleted: boolean
   image: string
 }
+
+export interface Thread{
+  id: number
+  title: string
+  topicid: number
+  body: string
+  likes: number
+  deleted: boolean
+}

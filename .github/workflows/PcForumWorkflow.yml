@@ -6,9 +6,9 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -44,21 +44,21 @@ jobs:
 
 
       - name: Build test code and install playwright test browser
-        run: cd Tests && dotnet build && pwsh bin/Debug/net8.0/playwright.ps1 install --with-deps
+        run: cd backend && cd Tests && dotnet build && pwsh bin/Debug/net8.0/playwright.ps1 install --with-deps
 
 
       - name: Build and run Web API + getting process ID for shutting down later
-        run: cd backend && dotnet run backend --disable-host-check > /dev/null 2>&1 &
+        run: cd backend/backend && dotnet run backend --disable-host-check > /dev/null 2>&1 &
         env:
-          pgconn: ${{secrets.pgconn}}
+          pgconn: ${{secrets.PGCONN}}
           
       - name: Run the tests
-        run: dotnet test Tests
+        run: cd backend && dotnet test Tests
         env:
-          pgconn: ${{secrets.pgconn}}
+          pgconn: ${{secrets.PGCONN}}
 
       - name: Shutdown Web API
         run: npx kill-port 5000
-
+ 
       # Runs a single command using the runners shell
       
