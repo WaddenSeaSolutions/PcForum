@@ -93,37 +93,4 @@ public class TokenService
         }
     }
     
-    
-    // public JwtSecurityToken ValidateAndReturnToken(string token)
-    // {
-    //     
-    //     try
-    //     {
-    //         var validationParameters = new TokenValidationParameters
-    //         {
-    //             ValidateIssuerSigningKey = true,
-    //             IssuerSigningKey = new SymmetricSecurityKey(Secret),
-    //             ValidateIssuer = false,
-    //             ValidateAudience = false,
-    //         };
-    //
-    //         new JwtSecurityTokenHandler().ValidateToken(authHeader[0],
-    //             validationParameters,
-    //             out SecurityToken token);
-    //         
-    //         var t =  (JwtSecurityToken)token;
-    //         // var json = JsonSerializer.Serialize(t.Claims);
-    //         // var role = t.Claims.FirstOrDefault(c => c.Type == "role");
-    //         // Console.WriteLine("the role is "+role);
-    //         // Console.WriteLine(json);
-    //         return t;
-    //     }
-    //     catch (Exception e)
-    //     {
-    //         throw new AuthenticationException("Failed to validate user identity from token", e.InnerException);
-    //     }
-    //     
-    //     
-    // }
-    
 }
