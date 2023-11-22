@@ -1,6 +1,7 @@
 using backend;
 using backend.DAL;
 using backend.Service;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
@@ -42,6 +44,7 @@ app.UseCors(options =>
         .AllowAnyHeader()
         .AllowCredentials();
 });
+
 
 app.MapControllers();
 app.Run();

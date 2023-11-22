@@ -50,23 +50,20 @@ public class TokenService
 
     }
 
-    public void validateTokenAndVerifyUserNotDeleted(string token)
+    public User validateTokenAndReturnUserIfNotDeleted(string token)
     {
         var principal = ValidateAndReturnToken(token); //Validating the token has not been tampered
     
         var nameClaim = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name); // Saves the id of the user with the token
 
-        bool isUserDeleted = _tokenDal.isUserDeleted(nameClaim.Value);
-        
-        if (isUserDeleted == true)
-        {
-            Console.WriteLine("User is deleted");
-        }
-        else
-        {
-            Console.WriteLine("User is deleted");
-        }
+        //bool isUserDeleted = _tokenDal.isUserDeleted(nameClaim.Value); // Gets the deleted bool from the DB
+        User userFromToken = _tokenDal.userFromUsername(nameClaim.Value);
 
+        Console.WriteLine(userFromToken.Email);
+        if (userFromToken.Deleted == false)
+            return userFromToken;
+
+        throw new Exception("User is deleted");
     }
     
 

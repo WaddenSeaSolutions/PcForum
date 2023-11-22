@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using backend.Model;
+using Dapper;
 using Npgsql;
 
 namespace backend.DAL;
@@ -14,16 +15,21 @@ public class TokenDal
         _dataSource = dataSource;
     }
     
-    public bool isUserDeleted(string nameClaimValue)
+    public User userFromUsername(string nameClaimValue)
     {
         var sql = $@"
-        SELECT deleted
-        FROM forum.users
-        WHERE username = @Username;";
-
+            SELECT id as {nameof(User.Id)},
+            username as {nameof(User.Username)},
+            password as {nameof(User.Password)},
+            email as {nameof(User.Email)},
+            userrole as {nameof(User.UserRole)},
+            deleted as {nameof(User.Deleted)}
+            FROM forum.users
+            WHERE username = @Username;";
+        
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.QueryFirstOrDefault<bool>(sql, new {Username = nameClaimValue});
+            return conn.QueryFirst<User>(sql, new {Username = nameClaimValue});
         }
     }
 }

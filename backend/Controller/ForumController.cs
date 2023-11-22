@@ -52,14 +52,8 @@ public class ForumController : ControllerBase
         if (userToAuthenticate != null)
         {
             var token = _tokenService.CreateToken(userToAuthenticate);
-        
-            var responseDto = new LoginResponseDto
-            {
-                User = userToAuthenticate,
-                Token = token
-            };
 
-            return Ok(responseDto); // Assuming a successful login (200 OK)
+            return Ok(token); // Assuming a successful login (200 OK)
         }
 
         return Unauthorized(); // Or any other appropriate status code for unsuccessful login
@@ -80,18 +74,18 @@ public class ForumController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     [Route("/TestValidationToken")]
-    public IActionResult tokenTest(string token)
+    public IActionResult tokenTest()
     {
-        try
+        var user = HttpContext.Items["User"] as User;
+        if (user != null)
         {
-            _tokenService.validateTokenAndVerifyUserNotDeleted(token);
+            // Use the user object as needed
             return Ok();
         }
-        catch (SecurityTokenException exception)
-        {
+            // User was not found in HttpContext.Items. This might be due to improper token validation.
             return Unauthorized();
-        }
     }
     
 }
