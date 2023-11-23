@@ -1,6 +1,7 @@
 using backend;
 using backend.DAL;
 using backend.Service;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,10 @@ builder.Services.AddSingleton<ForumService>();
 builder.Services.AddSingleton<FrontpageService>();
 builder.Services.AddSingleton<FrontpageDAL>();
 builder.Services.AddSingleton<EmailService>();
+
+builder.Services.AddSingleton<TokenService>();
+builder.Services.AddSingleton<TokenDal>();
+
 builder.Services.AddSingleton<ThreadService>();
 builder.Services.AddSingleton<ThreadDAL>();
 
@@ -27,6 +32,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())

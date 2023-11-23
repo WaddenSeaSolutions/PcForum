@@ -39,19 +39,29 @@ export class LoginPageComponent {
   })
   constructor(private http: HttpClient, private router: Router) { }
 
-async login(){
-    if(this.myFormGroup.valid){
-const users = {
-  username: this.username,
-  password: this.password,
-};
-    const response = this.http.post<Users>(environment.baseUrl + '/login', users)
+  login() {
+    if (this.myFormGroup.valid) {
+      const users = {
+        username: this.username,
+        password: this.password
+      };
 
-    if(response){
-      //Todo go to homepage login
+      this.http.post<any>(environment.baseUrl + '/login', users).subscribe({
+        next: (response) => {
+          if(response){
+            // store your token
+            localStorage.setItem('token', response.token);
+            //Go to homepage after successful login
+            this.router.navigate(["home"])
+          }
+        },
+        error: (err) => {
+          // Handle error here
+          console.error(err);
+        }
+      });
     }
-    }
-}
+  }
 
  async registerNewUser() {
     await this.router.navigate(['register'])
