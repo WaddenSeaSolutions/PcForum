@@ -58,10 +58,8 @@ public class ForumDAL
     }
 
 
-    public User login(User user)
-
+    public User login(UserLogin userToBeLoggedIn)
     {
-        string loggedUsername = user.Username;
         var sql = $@"SELECT id as {nameof(User.Id)},
             username as {nameof(User.Username)},
             password as {nameof(User.Password)},
@@ -71,7 +69,7 @@ public class ForumDAL
             FROM forum.users where username = @username";
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.QueryFirst<User>(sql, new {username = user.Username, password = user.Password, email = user.Email, userrole = user.UserRole, deleted = user.Deleted});
+            return conn.QueryFirstOrDefault<User>(sql, new {username = userToBeLoggedIn.Username});
         }
     }
 }

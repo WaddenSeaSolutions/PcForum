@@ -1,4 +1,6 @@
 using System.Security;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using backend.Model;
 using backend.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -45,18 +47,17 @@ public class ForumController : ControllerBase
 
     [HttpPost]
     [Route("/login")]
-    public IActionResult Login(User user)
+    public IActionResult Login([FromBody] UserLogin userToBeLoggedIn)
     {
-        var userToAuthenticate = _forumService.Login(user);
-
-        if (userToAuthenticate != null)
+        User userToBeAuthenticated = _forumService.Login(userToBeLoggedIn);
+        if (userToBeAuthenticated == null)
         {
-            var token = _tokenService.CreateToken(userToAuthenticate);
-
-            return Ok(token); // Assuming a successful login (200 OK)
+            throw new Exception("Could not log in. User could not be authenticated.");
         }
+        Console.WriteLine(userToBeAuthenticated.Email);
+        var token = _tokenService.CreateToken(userToBeAuthenticated);
 
-        return Unauthorized(); // Or any other appropriate status code for unsuccessful login
+        return Ok(token); // Successful login (200 OK)
     }
 
     [HttpPut]
