@@ -28,7 +28,6 @@ builder.Services.AddSingleton<TokenDal>();
 builder.Services.AddSingleton<ThreadService>();
 builder.Services.AddSingleton<ThreadDAL>();
 
-
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
