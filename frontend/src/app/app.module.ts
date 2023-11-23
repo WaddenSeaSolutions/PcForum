@@ -15,9 +15,10 @@ import {ErrorHttpInterceptor} from "../interceptor/error.interceptor";
 import {TopicComponent} from "./topic/topic.component";
 import {TopicCreationComponent} from "./topic-creation/topic-creation.component";
 import {ThreadCreationComponent} from "./thread-creation/thread-creation.component";
+import {TopicModerationComponent} from "./topic-moderation/topic-moderation.component";
 
 @NgModule({
-  declarations: [AppComponent, LoginPageComponent, RegisterComponent, TopicComponent,TopicCreationComponent, ThreadCreationComponent],
+  declarations: [AppComponent, LoginPageComponent, RegisterComponent, TopicComponent,TopicCreationComponent, ThreadCreationComponent, TopicModerationComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule],
   providers:
     [ { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

@@ -5,6 +5,7 @@ import {LoginPageComponent} from "./login-page/login-page.component";
 import {TopicComponent} from "./topic/topic.component";
 import {TopicCreationComponent} from "./topic-creation/topic-creation.component";
 import {ThreadCreationComponent} from "./thread-creation/thread-creation.component";
+import {TopicModerationComponent} from "./topic-moderation/topic-moderation.component";
 
 const routes: Routes = [
   {
@@ -33,6 +34,10 @@ const routes: Routes = [
   {
     path: 'thread-creation',
     component: ThreadCreationComponent
+  },
+  {
+    path: 'topic-moderation',
+    component: TopicModerationComponent
   }
 
 ];
