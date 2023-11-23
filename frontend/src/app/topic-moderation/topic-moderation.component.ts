@@ -51,6 +51,6 @@ export class TopicModerationComponent {
   }
 
   async openUpdateTopic(topic: Topic) {
-
+    this.router.navigate(['topic-update', topic.id])
   }
 }
