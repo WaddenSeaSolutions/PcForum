@@ -33,7 +33,7 @@ const routes: Routes = [
     component: TopicCreationComponent
   },
   {
-    path: 'thread-creation',
+    path: 'thread-creation/:id',
     component: ThreadCreationComponent
   },
   {

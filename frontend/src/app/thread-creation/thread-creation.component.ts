@@ -4,7 +4,7 @@ import {environment} from "../../environments/environment";
 import {FormControl} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {Service} from "../../Service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-thread-creation',
@@ -20,7 +20,6 @@ import {Router} from "@angular/router";
           <ion-input style="text-align: center" placeholder="Tekst" [formControl]="body"></ion-input>
         </ion-item>
         <br>
-
         <div>
           <ion-button class="btnBackground" (click)="createThread()">Opret</ion-button>
           <ion-button class="btnBackground" (click)="cancel()">Annuller</ion-button>
@@ -38,19 +37,25 @@ export class ThreadCreationComponent {
   body = new FormControl('');
   id = new FormControl('')
 
-  constructor(private http: HttpClient, public service: Service, private router: Router) {
+  constructor(private http: HttpClient, public service: Service, private route: ActivatedRoute, private router: Router) {
 
   }
 
   async createThread() {
+
+    let topicId = 1;
+    this.route.params.subscribe((params) => {
+      topicId = params['id']
+    });
     const newThread = {
       title: this.title.value,
       body: this.body.value,
-      id: this.id.value
+      topicId
+
     };
     try {
-      await this.http.post<Thread[]>(environment.baseUrl + 'threads', newThread).toPromise();
-      await this.router.navigate(['topics'])
+      await this.http.post<Thread[]>(environment.baseUrl + '/threads/', newThread).toPromise();
+      await this.router.navigate(['topic', topicId])
     }
     catch (e) {
       console.error(e)

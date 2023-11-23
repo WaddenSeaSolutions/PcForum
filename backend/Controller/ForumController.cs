@@ -1,6 +1,8 @@
+using System.Security;
 using backend.Model;
 using backend.Service;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace backend.Controller;
 
@@ -11,10 +13,13 @@ public class ForumController : ControllerBase
 
     private readonly EmailService _emailService;
 
-    public ForumController(ForumService forumService, EmailService emailService)
+    private readonly TokenService _tokenService;
+
+    public ForumController(ForumService forumService, EmailService emailService, TokenService tokenService)
     {
         _forumService = forumService;
         _emailService = emailService;
+        _tokenService = tokenService;
     }
 
     [HttpPost]
@@ -40,9 +45,18 @@ public class ForumController : ControllerBase
 
     [HttpPost]
     [Route("/login")]
-    public User Login(User user)
+    public IActionResult Login(User user)
     {
-        return _forumService.Login(user);
+        var userToAuthenticate = _forumService.Login(user);
+
+        if (userToAuthenticate != null)
+        {
+            var token = _tokenService.CreateToken(userToAuthenticate);
+
+            return Ok(token); // Assuming a successful login (200 OK)
+        }
+
+        return Unauthorized(); // Or any other appropriate status code for unsuccessful login
     }
 
     [HttpPut]
@@ -58,6 +72,20 @@ public class ForumController : ControllerBase
     {
         return _forumService.getUserFeed();
     }
-    
+
+    [HttpPost]
+    [Authorize]
+    [Route("/TestValidationToken")]
+    public IActionResult tokenTest()
+    {
+        var user = HttpContext.Items["User"] as User;
+        if (user != null)
+        {
+            // Use the user object as needed
+            return Ok();
+        }
+            // User was not found in HttpContext.Items. This might be due to improper token validation.
+            return Unauthorized();
+    }
     
 }
