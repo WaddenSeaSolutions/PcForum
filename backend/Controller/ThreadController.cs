@@ -32,5 +32,12 @@ public class ThreadController : ControllerBase
         threads.deleted = false;
         _threadService.createThread(threads);
     }
+
+    [HttpGet]
+    [Route("/searchOnThreads")]
+    public IEnumerable<Threads> searchOnThreads([FromQuery] string searchTerm)
+    {
+        return _threadService.searchOnThreads(searchTerm);
+    }
     
 }

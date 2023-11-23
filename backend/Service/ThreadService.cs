@@ -23,4 +23,9 @@ public class ThreadService
         _threadDal.createThread(threads);
     }
 
+    public IEnumerable<Threads> searchOnThreads(string searchTerm)
+    {
+        return _threadDal.searchOnThreads(searchTerm);
+    }
+
 }
