@@ -47,5 +47,7 @@ public class Tests
             exp.Should().BeEquivalentTo(testTopic, options => options.Excluding(o => o.id));
         }
     }
+    
+    
 
 }

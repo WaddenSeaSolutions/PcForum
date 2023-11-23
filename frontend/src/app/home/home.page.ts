@@ -5,6 +5,7 @@ import {environment} from "../../environments/environment";
 import {Topic} from "../../Interface";
 import {firstValueFrom} from "rxjs";
 import {Router} from "@angular/router";
+import {navigate} from "ionicons/icons";
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,7 @@ import {Router} from "@angular/router";
       <ion-card id ="topicCards">
         <ion-title>Modereringskontrol:</ion-title>
         <ion-button (click)="openCreateTopic()" style="--background: none;">Opret nyt emne</ion-button>
-        <ion-button  style="--background: none;">Administrere emner</ion-button>
+        <ion-button (click)="openTopicModeration()" style="--background: none;">Administrere emner</ion-button>
       </ion-card>
       <div *ngFor="let topic of service.topics">
         <ion-card id="topicCards">
@@ -42,6 +43,10 @@ export class HomePage {
 
   async openCreateTopic(){
     this.router.navigate(['topic-creation'])
+  }
+
+  async openTopicModeration(){
+    this.router.navigate(['topic-moderation'])
   }
 
 }

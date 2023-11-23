@@ -21,4 +21,9 @@ public class FrontpageService
     {
         _frontpageDAL.createTopic(topic);
     }
+
+    public void deleteTopic(int id)
+    {
+        _frontpageDAL.deleteTopic(id);
+    }
 }

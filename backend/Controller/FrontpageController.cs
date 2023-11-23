@@ -29,4 +29,11 @@ public class FrontpageController : ControllerBase
         topic.deleted = false;
         _frontpageService.createTopic(topic);
     }
+
+    [HttpDelete]
+    [Route("/topics/{id}")]
+    public void deleteTopic([FromRoute] int id)
+    {
+        _frontpageService.deleteTopic(id);
+    }
 }
