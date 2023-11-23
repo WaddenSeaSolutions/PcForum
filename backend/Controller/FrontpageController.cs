@@ -30,7 +30,7 @@ public class FrontpageController : ControllerBase
         _frontpageService.createTopic(topic);
     }
 
-    [HttpDelete]
+    [HttpPut]
     [Route("/topics/{id}")]
     public void deleteTopic([FromRoute] int id)
     {

@@ -39,7 +39,7 @@ public class FrontpageDAL
 
     public void deleteTopic(int id)
     {
-        var sql = @"DELETE FROM forum.topics WHERE id = @id;";
+        var sql = @"UPDATE forum.topics SET deleted = true WHERE id = @id;";
 
         using (var conn = _dataSource.OpenConnection())
         {
