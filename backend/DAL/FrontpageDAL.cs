@@ -19,7 +19,8 @@ public class FrontpageDAL
             title as {nameof(Topic.title)},
             deleted as {nameof(Topic.deleted)},
             image as {nameof(Topic.image)}
-            FROM forum.topics;";
+            FROM forum.topics 
+            WHERE deleted = false;";
         using (var conn = _dataSource.OpenConnection())
         {
             return conn.Query<Topic>(sql);
@@ -33,6 +34,16 @@ public class FrontpageDAL
         using (var conn = _dataSource.OpenConnection())
         {
             conn.Execute(sql, new { title = topic.title, deleted = topic.deleted, image = topic.image });
+        }
+    }
+
+    public void deleteTopic(int id)
+    {
+        var sql = @"DELETE FROM forum.topics WHERE id = @id;";
+
+        using (var conn = _dataSource.OpenConnection())
+        {
+            conn.Execute(sql, new { id });
         }
     }
 }
