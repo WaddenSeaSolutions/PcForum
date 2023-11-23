@@ -36,4 +36,19 @@ public class FrontpageController : ControllerBase
     {
         _frontpageService.deleteTopic(id);
     }
+    
+    [HttpGet]
+    [Route("/topic-update/{id}")]
+    public Topic getTopicForUpdate([FromRoute] int id)
+    {
+        return _frontpageService.getTopicForUpdate(id);
+        
+    }
+
+    [HttpPut]
+    [Route("/topic-update/{id}")]
+    public void updateTopic(int id, [FromBody] Topic topic)
+    {
+        _frontpageService.updateTopic(id, topic.title,topic.image);
+    }
 }
