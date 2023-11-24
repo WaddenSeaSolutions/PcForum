@@ -50,6 +50,9 @@ export class LoginPageComponent {
             if(response){
               // store token
               localStorage.setItem('token', response);
+              let payload = JSON.parse(atob(response.split(".")[1]))
+              //Store the role, only allows for visual admin controls
+              localStorage.setItem('role',payload.role)
               //Go to homepage after successful login
               this.router.navigate(["home"])
             }
