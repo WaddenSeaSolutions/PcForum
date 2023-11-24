@@ -11,7 +11,7 @@ import {navigate} from "ionicons/icons";
   selector: 'app-home',
   template: `
     <ion-content style="--background: none; position: absolute; top: 15%">
-      <ion-card id ="topicCards">
+      <ion-card id ="topicCards" *ngIf="checkIfAdmin">
         <ion-title>Modereringskontrol:</ion-title>
         <ion-button (click)="openCreateTopic()" style="--background: none;">Opret nyt emne</ion-button>
         <ion-button (click)="openTopicModeration()" style="--background: none;">Administrere emner</ion-button>
@@ -29,7 +29,11 @@ import {navigate} from "ionicons/icons";
 })
 export class HomePage {
 
+  public checkIfAdmin: boolean;
+
   constructor(private http: HttpClient, public service: Service, private router: Router) {
+    //Checks if the user is an admin role, if not the user should not be shown the admin l
+    this.checkIfAdmin = localStorage.getItem('role') === 'admin';
     this.getTopics();
   }
   async getTopics(){
@@ -49,5 +53,5 @@ export class HomePage {
     this.router.navigate(['topic-moderation'])
   }
 
-
+  protected readonly localStorage = localStorage;
 }

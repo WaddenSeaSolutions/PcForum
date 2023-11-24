@@ -40,12 +40,12 @@ public class ForumService
         return _forumDal.GetUserFeed();
     }
 
-    public User Login(User user)
+    public User Login(UserLogin userToBeLoggedIn)
     {
         try
         {
-            var userToCheck = _forumDal.login(user);
-            if (BCrypt.Net.BCrypt.Verify(user.Password, userToCheck.Password))
+            var userToCheck = _forumDal.login(userToBeLoggedIn);
+            if (BCrypt.Net.BCrypt.Verify(userToBeLoggedIn.Password, userToCheck.Password))
             {
                 return userToCheck;
             }
