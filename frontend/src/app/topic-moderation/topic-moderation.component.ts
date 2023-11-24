@@ -39,18 +39,19 @@ export class TopicModerationComponent {
   }
 
   async deleteTopic(topic: Topic) {
-    const deleteUrl = `${environment.baseUrl}/topics/${topic.id}`; // Assuming topic has an 'id' property
+    const softDeleteUrl = `${environment.baseUrl}/topics/${topic.id}`;
 
     try {
-      await this.http.delete(deleteUrl).toPromise();
-      const call = this.http.get<Topic[]>(environment.baseUrl+'/topics/');
-      this.service.topics =await firstValueFrom<Topic[]>(call);
+      await this.http.put(softDeleteUrl, { deleted: true }).toPromise();
+
+      const call = this.http.get<Topic[]>(`${environment.baseUrl}/topics/`);
+      this.service.topics = await firstValueFrom<Topic[]>(call);
     } catch (error) {
-      // Handle errors - log or notify the user about the failure
+      console.error(error);
     }
   }
 
   async openUpdateTopic(topic: Topic) {
-
+    this.router.navigate(['topic-update', topic.id])
   }
 }

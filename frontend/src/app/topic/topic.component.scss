@@ -6,6 +6,11 @@
   margin-bottom: 15px;
   border: 1px solid grey;
 }
+.btnBackground{
+  --background: none;
+  background-color: black;
+  display: flex;
+}
 
 .page-container {
   overflow-y: auto; /* Enable vertical scrolling if content exceeds the container height */
