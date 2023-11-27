@@ -2,6 +2,7 @@
 
 using System.Data;
 using System.Net.Http.Json;
+using System.Text;
 using Dapper;
 using FluentAssertions;
 using Newtonsoft.Json;
@@ -48,7 +49,7 @@ public class Tests
     }
     
     [Test] 
-    public async Task CreateThenDeleteTopicTest() 
+    public async Task createThenDeleteTopicTest() 
     { 
         var testTopic = new Topic()
         {
@@ -98,7 +99,68 @@ public class Tests
                 Assert.IsTrue(deleted);
         }
     }
-    
+
+    [Test]
+    public async Task createThenUpdateTopic()
+    {
+        var testTopic = new Topic()
+        {
+            deleted = false,
+            title = "NotUpdatedTitle",
+            image = "NotUpdatedImage"
+        };
+
+        // HttpClient for API requests
+        var client = new HttpClient();
+
+        // API POST request to create a new topic
+        var httpResponse = await client.PostAsJsonAsync(Helper.ApiBaseUrl + "topics", testTopic);
+        httpResponse.EnsureSuccessStatusCode();  
+        
+        await using (var conn = Helper.DataSource.OpenConnection())
+        {
+            var query = @"SELECT id FROM forum.topics ORDER BY id DESC LIMIT 1;";
+            var createdTopicId = conn.QueryFirstOrDefault<int>(query); 
+
+            var responseBody = await httpResponse.Content.ReadAsStringAsync();
+            Console.WriteLine(responseBody); 
+            var createdTopic = JsonConvert.DeserializeObject<Topic>(responseBody);
+
+            var updatedTopic = new Topic()
+            {
+                id = createdTopicId,
+                title = "UpdatedTitle",
+                image = "https://i.imgur.com/PNaYuFd.png"
+            };
+
+            var json = JsonConvert.SerializeObject(updatedTopic);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            // API PUT request to update the topic
+            httpResponse = await client.PutAsync(Helper.ApiBaseUrl + "topic-update/" + createdTopicId, httpContent);
+
+            if (!httpResponse.IsSuccessStatusCode)
+            {
+                var errorResponse = await httpResponse.Content.ReadAsStringAsync();
+                throw new Exception($"Request failed with status code {httpResponse.StatusCode}. Response: {errorResponse}");
+            }
+            httpResponse.EnsureSuccessStatusCode();
+
+            // Assert
+            
+            var query2 = $@"SELECT title as {nameof(Topic.title)},
+            image as {nameof(Topic.image)},
+            deleted as {nameof(Topic.deleted)},
+            id as {nameof(Topic.id)}
+        FROM forum.topics
+        WHERE id = @id;";
+
+            var updated = conn.QueryFirstOrDefault<Topic>(query2, new { id = createdTopicId });
+
+            Assert.That(updated.title, Is.EqualTo(updatedTopic.title));
+            Assert.That(updated.image, Is.EqualTo(updatedTopic.image));
+        }
+    }
+        
     
 
 }
