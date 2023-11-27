@@ -26,4 +26,14 @@ public class FrontpageService
     {
         _frontpageDAL.deleteTopic(id);
     }
+
+    public Topic getTopicForUpdate(int id)
+    {
+        return _frontpageDAL.getTopicForUpdate(id);
+    }
+
+    public void updateTopic(int id, string title, string image)
+    {
+        _frontpageDAL.updateTopic(id, title, image);
+    }
 }

@@ -7,19 +7,18 @@ import {TopicCreationComponent} from "./topic-creation/topic-creation.component"
 import {ThreadCreationComponent} from "./thread-creation/thread-creation.component";
 import {TopicModerationComponent} from "./topic-moderation/topic-moderation.component";
 import {ThreadDetailComponent} from "./thread-detail/thread-detail.component";
+import {TopicUpdateComponent} from "./topic-update/topic-update.component";
+
 
 const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
   },
-
-
   {
     path: 'login-page',
     component: LoginPageComponent
   },
-
   {
     path: 'register',
     component: RegisterComponent
@@ -43,6 +42,10 @@ const routes: Routes = [
   {
     path: 'thread/:id',
     component: ThreadDetailComponent
+  },
+  {
+    path: 'topic-update/:id',
+    component: TopicUpdateComponent
   }
 
 ];

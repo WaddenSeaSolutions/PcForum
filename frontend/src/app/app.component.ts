@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,7 @@ import { Component } from '@angular/core';
     <ion-toolbar id="toolbarHeader">
       <ion-item id="toolbarContent">
         <ion-buttons id="ionButton">
-          <ion-button>
+          <ion-button (click)="navigateToFrontpage()">
           <ion-icon id = "icons" name="home"></ion-icon>
           <p>Forside</p>
           </ion-button>
@@ -45,5 +46,9 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+  constructor(private router: Router) {}
+
+  async navigateToFrontpage(){
+    await this.router.navigate(['home'])
+  }
 }

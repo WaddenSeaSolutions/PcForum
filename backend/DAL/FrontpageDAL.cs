@@ -39,11 +39,38 @@ public class FrontpageDAL
 
     public void deleteTopic(int id)
     {
-        var sql = @"DELETE FROM forum.topics WHERE id = @id;";
+        var sql = @"UPDATE forum.topics SET deleted = true WHERE id = @id;";
 
         using (var conn = _dataSource.OpenConnection())
         {
             conn.Execute(sql, new { id });
+        }
+    }
+
+    public Topic getTopicForUpdate(int id)
+    {
+        var sql = $@"SELECT id as {nameof(Topic.id)},
+            title as {nameof(Topic.title)},
+            deleted as {nameof(Topic.deleted)},
+            image as {nameof(Topic.image)}
+            FROM forum.topics WHERE id = {id};";
+
+        using (var conn = _dataSource.OpenConnection())
+        {
+            return conn.QueryFirstOrDefault<Topic>(sql);
+        }
+    }
+
+    public void updateTopic(int id, string title, string image)
+    {
+        var sql = $@"
+        UPDATE forum.topics
+        SET title = @title, image = @image
+        WHERE id = @id;";
+
+        using (var conn = _dataSource.OpenConnection())
+        {
+            conn.Execute(sql, new { id, title, image });
         }
     }
 }
