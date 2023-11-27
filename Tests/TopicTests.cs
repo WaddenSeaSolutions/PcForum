@@ -36,8 +36,7 @@ public class Tests
             from forum.topics
             ORDER BY id DESC;";
 
-            var exp = conn.QueryFirstOrDefault<Topic>(query); // Use QueryFirstOrDefault instead of QueryFirst
-            // Log the retrieved 'exp' for further inspection
+            var exp = conn.QueryFirstOrDefault<Topic>(query); 
             Console.WriteLine($"Retrieved topic from database: {JsonConvert.SerializeObject(exp)}");    
 
 
@@ -62,7 +61,6 @@ public class Tests
         var client = new HttpClient();
 
         // API POST request to create a new topic
-        //...
         var httpResponse = await client.PostAsJsonAsync(Helper.ApiBaseUrl + "topics", testTopic);
         httpResponse.EnsureSuccessStatusCode();  
 
@@ -76,9 +74,8 @@ public class Tests
             Console.WriteLine(responseBody); 
             var createdTopic = JsonConvert.DeserializeObject<Topic>(responseBody);
             
-//...
 
-            // API PUT request to delete the topic
+
             // API PUT request to delete the topic
             httpResponse = await client.PutAsync(Helper.ApiBaseUrl + "topics/" + createdTopicId, null);
 
