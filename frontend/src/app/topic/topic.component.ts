@@ -7,6 +7,8 @@ import {HttpClient} from "@angular/common/http";
 import {Thread} from "../../Interface";
 import {FormControl} from "@angular/forms";
 import {ToastController} from "@ionic/angular";
+import {search} from "ionicons/icons";
+
 
 @Component({
   selector: 'topic',
@@ -15,6 +17,7 @@ import {ToastController} from "@ionic/angular";
       <div style="background: #1e1e1e; padding: 2%; margin-left: 10%; margin-right: 10%; border: 1px solid grey">
         <ion-item style="border: 1px solid grey">
           <u (click)="createNewThread()" style="cursor: pointer; color: white; ">Opret</u>
+          <ion-searchbar id = "searchBar" [debounce]="1000" [formControl]="searchterm" (ionInput)="searchOnThreads()"> </ion-searchbar>
         </ion-item>
         <div *ngFor="let thread of service.threads">
           <ion-card id="threadCard" style="--background: none; background: black">
@@ -66,5 +69,24 @@ export class TopicComponent {
     });
     toast.present();
   }
+
+  async searchOnThreads() {
+    const searchTermLower = this.searchterm.value!.trim();
+
+    if (searchTermLower) {
+      const call = this.http.get<Thread[]>(environment.baseUrl+'/searchOnThreads?searchTerm=' + searchTermLower);
+
+      const result = await firstValueFrom<Thread[]>(call);
+
+      this.service.threads = result;
+    } else {
+      this.getThreads();
+    }
+  }
+
+  protected readonly search = search;
+  searchterm = new  FormControl("");
+
+
 
 }
