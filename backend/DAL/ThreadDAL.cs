@@ -65,4 +65,20 @@ public class ThreadDAL
             });
         }
     }
+
+    public IEnumerable<Threads> getThreadDetails(int id)
+    {
+        var sql = $@"SELECT id as {nameof(Threads.id)},
+        title as {nameof(Threads.title)},
+        body as {nameof(Threads.body)},
+        likes as {nameof(Threads.likes)},
+        deleted as {nameof(Threads.deleted)}
+        FROM forum.threads
+        WHERE id = @id;";
+
+        using (var conn = _dataSource.OpenConnection())
+        {
+            return conn.Query<Threads>(sql, new { id = id });
+        }
+    }
 }
