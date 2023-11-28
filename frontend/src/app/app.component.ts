@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {Router} from "@angular/router";
+import {logOut} from "ionicons/icons";
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,6 @@ import {Router} from "@angular/router";
           <p>Forside</p>
           </ion-button>
         </ion-buttons>
-        <ion-searchbar id = "searchBar"> </ion-searchbar>
         <ion-buttons id="ionButton">
           <ion-button>
           <ion-icon id = "icons" name="notifications"></ion-icon>
@@ -30,10 +30,16 @@ import {Router} from "@angular/router";
           <p>Profil</p>
           </ion-button>
         </ion-buttons>
-        <ion-buttons id="ionButton" style = "margin-left: 0.6%">
+        <ion-buttons id="ionButton" style = "margin-left: 0.6%" *ngIf="checkIfLoggedIn" (click)="logOut()">
           <ion-button>
-          <ion-icon id = "icons" name="exit-sharp"></ion-icon>
-          <p>Log ud</p>
+            <ion-icon id = "icons" name="exit-sharp"></ion-icon>
+            <p>Log ud</p>
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons id="ionButton" style = "margin-left: 0.6%" *ngIf="checkIfLoggedOut" (click)="navigateToLoginPage()">
+          <ion-button>
+          <ion-icon id = "icons" name="enter-sharp"></ion-icon>
+          <p>Log in</p>
           </ion-button>
         </ion-buttons>
 
@@ -46,9 +52,24 @@ import {Router} from "@angular/router";
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor(private router: Router) {}
+
+  public checkIfLoggedIn: boolean;
+  public checkIfLoggedOut: boolean;
+
+  constructor(private router: Router) {
+    this.checkIfLoggedIn = localStorage.getItem('token') != null;
+    this.checkIfLoggedOut = localStorage.getItem('token') == null;
+  }
 
   async navigateToFrontpage(){
     await this.router.navigate(['home'])
   }
+
+  async navigateToLoginPage(){
+    await this.router.navigate(['login-page']);
+  }
+  async logOut(){
+
+  }
+
 }
