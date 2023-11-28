@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {Topic} from "../../Interface";
 import {environment} from "../../environments/environment";
 import {FormControl, Validators} from "@angular/forms";
+import {ToastController} from "@ionic/angular";
 
 
 @Component({
@@ -26,6 +27,7 @@ import {FormControl, Validators} from "@angular/forms";
           <ion-button class="btnBackground" (click)="cancel()">Annuller</ion-button>
         </div>
         </div>
+
     </ion-content>
 
 
@@ -34,12 +36,16 @@ import {FormControl, Validators} from "@angular/forms";
 })
 export class TopicCreationComponent  {
 
+  public checkIfAdmin: boolean;
+
   title = new FormControl('');
   image = new FormControl('');
 
-  constructor(private http: HttpClient, public service: Service, private router: Router) {
+  constructor(private http: HttpClient, public service: Service, private router: Router, private toastController: ToastController) {
+    this.checkIfAdmin = localStorage.getItem('role') === 'admin';
   }
   async createTopic(){
+    if (this.checkIfAdmin){
     const newTopic = {
       title: this.title.value,
       image:this.image.value
@@ -51,9 +57,21 @@ export class TopicCreationComponent  {
     catch (e){
       console.error(e)
     }
+    }
+    else{
+      this.tellUserNotAllowed()
+    }
   }
   async cancel(){
     await this.router.navigate(['home'])
+  }
+
+  async tellUserNotAllowed(){
+    const toast = await this.toastController.create({
+      message: 'Du må ikke lave en topic som en standard bruger.',
+      duration: 2000
+    });
+    toast.present();
   }
 
 

@@ -6,6 +6,7 @@ import {Service} from "../../Service";
 import {HttpClient} from "@angular/common/http";
 import {Thread} from "../../Interface";
 import {FormControl} from "@angular/forms";
+import {ToastController} from "@ionic/angular";
 
 @Component({
   selector: 'topic',
@@ -27,8 +28,11 @@ import {FormControl} from "@angular/forms";
 })
 export class TopicComponent {
 
-  constructor(private http: HttpClient, public service: Service, private route: ActivatedRoute, private router: Router) {
+  public checkIfLoggedIn: boolean;
+
+  constructor(private http: HttpClient, public service: Service, private route: ActivatedRoute, private router: Router, private toastController: ToastController) {
     this.getThreads();
+    this.checkIfLoggedIn = localStorage.getItem('token') != null;
   }
 
   async getThreads() {
@@ -45,9 +49,22 @@ export class TopicComponent {
   }
 
   async createNewThread() {
-    this.route.params.subscribe((params) => {
-      const topicId = params['id']
-    this.router.navigate(['thread-creation', topicId ])});
+    if (this.checkIfLoggedIn) {
+      this.route.params.subscribe((params) => {
+        const topicId = params['id']
+        this.router.navigate(['thread-creation', topicId])
+      });
+    }
+    else {
+      this.tellUserToLogin();
+    }
+  }
+  async tellUserToLogin(){
+    const toast = await this.toastController.create({
+      message: 'Du er nødt til at logge ind for at lave en thread.',
+      duration: 4000
+    });
+    toast.present();
   }
 
 }
