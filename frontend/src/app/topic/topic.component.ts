@@ -22,7 +22,7 @@ import {ThreadCreationComponent} from "../thread-creation/thread-creation.compon
         </ion-item>
         <div *ngFor="let thread of service.threads">
           <ion-card id="threadCard" style="--background: none; background: black">
-            <ion-title (click)="openThread(thread.topicid)" style="color: white; cursor: pointer"> {{thread.title}} </ion-title>
+            <ion-title (click)="openThread(thread.id)" style="color: white; cursor: pointer"> {{thread.title}} </ion-title>
           </ion-card>
         </div>
       </div>
