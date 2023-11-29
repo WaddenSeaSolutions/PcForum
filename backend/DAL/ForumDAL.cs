@@ -50,7 +50,7 @@ public class ForumDAL
                 email as {nameof(User.Email)},
                 userrole as {nameof(User.UserRole)},
                 deleted as {nameof(User.Deleted)}
-            FROM forum.users;";
+                FROM forum.users;";
         using (var conn = _dataSource.OpenConnection())
         {
             return conn.Query<User>(sql);
@@ -70,6 +70,23 @@ public class ForumDAL
         using (var conn = _dataSource.OpenConnection())
         {
             return conn.QueryFirstOrDefault<User>(sql, new {username = userToBeLoggedIn.Username});
+        }
+    }
+
+    public IEnumerable<Threads> getThreadsBasedOnUserId(int userId)
+    {
+        var sql = $@"SELECT id as {nameof(Threads.id)},
+              title as {nameof(Threads.title)},
+              topicId as {nameof(Threads.topicId)},
+              body as {nameof(Threads.body)},
+              likes as {nameof(Threads.likes)},
+              deleted as {nameof(Threads.deleted)}
+              FROM forum.threads
+              WHERE userid = @userid";
+
+        using (var conn = _dataSource.OpenConnection())
+        {
+            return conn.Query<Threads>(sql, new { userid = userId});
         }
     }
 }

@@ -13,4 +13,6 @@ public class Threads
     public int likes { get; set; }
     
     public Boolean deleted { get; set;}
+    
+    public int userId { get; set; }
 }

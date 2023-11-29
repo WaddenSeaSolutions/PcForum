@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Thread} from "../../Interface";
 import {environment} from "../../environments/environment";
 import {FormControl} from "@angular/forms";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Service} from "../../Service";
 import {ActivatedRoute, Router} from "@angular/router";
 
@@ -51,13 +51,21 @@ export class ThreadCreationComponent {
       title: this.title.value,
       body: this.body.value,
       topicId
-
     };
+
+    let token = localStorage.getItem('token'); // Collect token
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      })
+    };
+
     try {
-      await this.http.post<Thread[]>(environment.baseUrl + '/threads/', newThread).toPromise();
+      await this.http.post<Thread[]>(environment.baseUrl + '/threads/', newThread, httpOptions).toPromise();
       await this.router.navigate(['topic', topicId])
-    }
-    catch (e) {
+    } catch (e) {
       console.error(e)
     }
   }
