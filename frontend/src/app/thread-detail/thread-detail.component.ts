@@ -11,8 +11,8 @@ import {firstValueFrom} from "rxjs";
   template: `
     <ion-content style="--background: none; top: 20%">
       <div style="background: #1e1e1e; padding: 2%; margin-left: 10%; margin-right: 10%; border: 1px solid grey">
-        <p style="color: white;">Title: {{service.thread}}</p>
-        <p style="color: white;">Body: {{service.thread}}</p>
+        <p style="color: white;">Title: {{service.thread?.title}}</p>
+        <p style="color: white;">Body: {{service.thread?.body}}</p>
         <ion-button id="DeleteButton">Delete this thread</ion-button>
         <ion-item style="border: 1px solid grey">
 
@@ -35,6 +35,7 @@ export class ThreadDetailComponent {
 
       const call = this.http.get<Thread>(`${environment.baseUrl}/thread/${threadId}`);
       this.service.thread = await firstValueFrom<Thread>(call);
+
     });
   }
 }

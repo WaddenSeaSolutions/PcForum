@@ -28,7 +28,7 @@ public class ThreadService
         return _threadDal.searchOnThreads(searchTerm);
     }
 
-    public IEnumerable<Threads> getThreadDetails(int id)
+    public Threads getThreadDetails(int id)
     {
         return _threadDal.getThreadDetails(id);
     }

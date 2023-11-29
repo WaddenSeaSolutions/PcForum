@@ -42,7 +42,7 @@ public class ThreadController : ControllerBase
 
     [HttpGet]
     [Route("thread/{id}")]
-    public IEnumerable<Threads> getThreadDetails([FromRoute] int id)
+    public Threads getThreadDetails([FromRoute] int id)
     {
         return _threadService.getThreadDetails(id);
     }
