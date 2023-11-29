@@ -7,6 +7,7 @@ import {HttpClient} from "@angular/common/http";
 import {Thread} from "../../Interface";
 import {FormControl} from "@angular/forms";
 import {search} from "ionicons/icons";
+import {ThreadCreationComponent} from "../thread-creation/thread-creation.component";
 
 @Component({
   selector: 'topic',
@@ -19,7 +20,7 @@ import {search} from "ionicons/icons";
         </ion-item>
         <div *ngFor="let thread of service.threads">
           <ion-card id="threadCard" style="--background: none; background: black">
-            <ion-title (click)="openThread(thread)" style="color: white; cursor: pointer"> {{thread.title}} </ion-title>
+            <ion-title (click)="openThread(thread.topicid)" style="color: white; cursor: pointer"> {{thread.title}} </ion-title>
           </ion-card>
         </div>
       </div>
@@ -42,8 +43,8 @@ export class TopicComponent {
     });
   }
 
-  async openThread(thread: Thread) {
-    this.router.navigate(['thread', thread.id])
+  async openThread(threadId: number) {
+    this.router.navigate(['thread', threadId])
   }
 
   async createNewThread() {
