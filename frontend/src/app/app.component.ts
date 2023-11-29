@@ -24,7 +24,7 @@ import {logOut} from "ionicons/icons";
           <p>9+</p>
           </ion-button>
         </ion-buttons>
-        <ion-buttons id="ionButton" style = "margin-left: 0.6%">
+        <ion-buttons id="ionButton" style = "margin-left: 0.6%" (click)="navigateToProfilePage()">
           <ion-button>
           <ion-icon id = "icons" name="person"></ion-icon>
           <p>Profil</p>
@@ -68,8 +68,12 @@ export class AppComponent {
   async navigateToLoginPage(){
     await this.router.navigate(['login-page']);
   }
-  async logOut(){
 
+  async navigateToProfilePage(){
+    await this.router.navigate(['profile'])
+  }
+   logOut(){
+    localStorage.clear()
   }
 
 }
