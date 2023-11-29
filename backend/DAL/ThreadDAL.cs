@@ -66,7 +66,7 @@ public class ThreadDAL
         }
     }
 
-    public IEnumerable<Threads> getThreadDetails(int id)
+    public Threads getThreadDetails(int id)
     {
         var sql = $@"SELECT id as {nameof(Threads.id)},
         title as {nameof(Threads.title)},
@@ -78,7 +78,7 @@ public class ThreadDAL
 
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.Query<Threads>(sql, new { id = id });
+            return conn.QueryFirst<Threads>(sql, new { id = id });
         }
     }
 }
