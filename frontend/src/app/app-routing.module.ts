@@ -8,6 +8,7 @@ import {ThreadCreationComponent} from "./thread-creation/thread-creation.compone
 import {TopicModerationComponent} from "./topic-moderation/topic-moderation.component";
 import {ThreadDetailComponent} from "./thread-detail/thread-detail.component";
 import {TopicUpdateComponent} from "./topic-update/topic-update.component";
+import {ProfileComponent} from "./profile/profile.component";
 
 
 const routes: Routes = [
@@ -46,7 +47,12 @@ const routes: Routes = [
   {
     path: 'topic-update/:id',
     component: TopicUpdateComponent
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent
   }
+
 
 ];
 

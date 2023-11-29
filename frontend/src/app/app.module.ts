@@ -18,9 +18,10 @@ import {ThreadCreationComponent} from "./thread-creation/thread-creation.compone
 import {TopicModerationComponent} from "./topic-moderation/topic-moderation.component";
 import {TopicUpdateComponent} from "./topic-update/topic-update.component";
 import {ThreadDetailComponent} from "./thread-detail/thread-detail.component";
+import {ProfileComponent} from "./profile/profile.component";
 
 @NgModule({
-  declarations: [AppComponent, LoginPageComponent, RegisterComponent, TopicComponent,TopicCreationComponent, ThreadCreationComponent, TopicModerationComponent, TopicUpdateComponent, ThreadDetailComponent],
+  declarations: [AppComponent, LoginPageComponent, RegisterComponent, TopicComponent,TopicCreationComponent, ThreadCreationComponent, TopicModerationComponent, TopicUpdateComponent, ThreadDetailComponent, ProfileComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule],
   providers:
     [ { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
