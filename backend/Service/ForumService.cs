@@ -56,4 +56,9 @@ public class ForumService
         }
         return null;
     }
+
+    public IEnumerable<Threads> getThreadsBasedOnUserId(int userId)
+    {
+        return _forumDal.getThreadsBasedOnUserId(userId);
+    }
 }

@@ -76,17 +76,12 @@ public class ForumController : ControllerBase
 
     [HttpPost]
     [Authorize]
-    [Route("/TestValidationToken")]
-    public IActionResult tokenTest()
+    [Route("/profile")]
+    public IEnumerable<Threads> profileThreadsBasedOnUserId()
     {
         var user = HttpContext.Items["User"] as User;
-        if (user != null)
-        {
-            // Use the user object as needed
-            return Ok();
-        }
-            // User was not found in HttpContext.Items. This might be due to improper token validation.
-            return Unauthorized();
+        
+        return _forumService.getThreadsBasedOnUserId(user.Id);
     }
     
 }

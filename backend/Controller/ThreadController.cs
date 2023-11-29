@@ -26,10 +26,15 @@ public class ThreadController : ControllerBase
     
 
     [HttpPost]
+    [Authorize]
     [Route("/threads")]
     public void createThread([FromBody] Threads threads)
     {
+        var user = HttpContext.Items["User"] as User;
+
+        threads.userId = user.Id;
         threads.deleted = false;
+        
         _threadService.createThread(threads);
     }
 
