@@ -73,15 +73,17 @@ public class ThreadDAL
     public Threads getThreadDetails(int id)
     {
         var sql = $@"
-        SELECT id as {nameof(Threads.id)},
+        SELECT threads.id as {nameof(Threads.id)},
         title as {nameof(Threads.title)},
         topicId as {nameof(Threads.topicId)},
         body as {nameof(Threads.body)},
         likes as {nameof(Threads.likes)},
-        deleted as {nameof(Threads.deleted)},
-        userid as {nameof(Threads.userId)}
+        threads.deleted as {nameof(Threads.deleted)},
+        userid as {nameof(Threads.userId)},
+        u.username as {nameof(Threads.username)}
         FROM forum.threads
-        WHERE id = @id;";
+        join forum.users u on u.id = threads.userid
+        WHERE threads.id = @id;";
 
         using (var conn = _dataSource.OpenConnection())
         {

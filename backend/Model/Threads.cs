@@ -15,4 +15,6 @@ public class Threads
     public Boolean deleted { get; set;}
     
     public int userId { get; set; }
+    
+    public string username { get; set; }
 }

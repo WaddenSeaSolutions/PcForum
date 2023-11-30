@@ -17,6 +17,7 @@ export interface Thread{
   body: string
   likes: number
   deleted: boolean
+  username: string;
 }
 
 export interface UsersRegister {
