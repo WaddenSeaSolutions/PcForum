@@ -76,17 +76,17 @@ public class ForumDAL
     public IEnumerable<Threads> getThreadsBasedOnUserId(int userId)
     {
         var sql = $@"SELECT id as {nameof(Threads.id)},
-              title as {nameof(Threads.title)},
-              topicId as {nameof(Threads.topicId)},
-              body as {nameof(Threads.body)},
-              likes as {nameof(Threads.likes)},
-              deleted as {nameof(Threads.deleted)}
-              FROM forum.threads
-              WHERE userid = @userid";
+          title as {nameof(Threads.title)},
+          topicId as {nameof(Threads.topicId)},
+          body as {nameof(Threads.body)},
+          likes as {nameof(Threads.likes)},
+          deleted as {nameof(Threads.deleted)}
+          FROM forum.threads
+          WHERE userid = @userid";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.Query<Threads>(sql, new { userid = userId});
+            return conn.Query<Threads>(sql, new { userid = userId });
         }
     }
 }
