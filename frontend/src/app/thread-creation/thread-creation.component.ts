@@ -9,15 +9,15 @@ import {ActivatedRoute, Router} from "@angular/router";
 @Component({
   selector: 'app-thread-creation',
   template: `
-    <div class="background"></div>
-    <ion-content style="--background: none; position: absolute; top: 40%">
-      <div style="margin-left: 40%; margin-right: 40%">
-        <ion-item>
-          <ion-input style="text-align: center" placeholder="Titel" [formControl]="title"></ion-input>
+    <ion-content style="--background: none; text-align: center; position: absolute; top: 20%">
+      <b style="font-size: 250%;">Opret din nye tråd</b>
+      <div style="margin-left: 20%; margin-right: 20%; background-color: #1e1e1e; padding: 1%">
+        <ion-item >
+          <ion-input style="text-align: center; height: 100px; width: 100%; background-color: black" placeholder="Titel" [formControl]="title"></ion-input>
         </ion-item>
         <br>
         <ion-item>
-          <ion-input style="text-align: center" placeholder="Tekst" [formControl]="body"></ion-input>
+          <ion-textarea style="text-align: center; height: 300px; width: 100%; background-color: black" placeholder="Tekst" [formControl]="body"></ion-textarea>
         </ion-item>
         <br>
         <div>
