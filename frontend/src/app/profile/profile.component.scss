@@ -14,3 +14,9 @@
 ion-item {
   --padding-start: 0;
 }
+
+.btnBackground{
+  --background: none;
+  background-color: grey;
+  display: flex;
+}

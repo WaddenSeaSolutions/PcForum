@@ -74,7 +74,7 @@ public class ForumController : ControllerBase
         return _forumService.getUserFeed();
     }
 
-    [HttpPost]
+    [HttpGet]
     [Authorize]
     [Route("/profile")]
     public IEnumerable<Threads> profileThreadsBasedOnUserId()
