@@ -49,7 +49,6 @@ export class ProfileComponent {
 
   public checkIfLoggedIn: boolean;
   constructor(private http: HttpClient, public service: Service, private route: ActivatedRoute, private toastController: ToastController) {
-    this.getThreads()
     this.checkIfLoggedIn = localStorage.getItem('token') != null;
     this.getThreads()
   }
