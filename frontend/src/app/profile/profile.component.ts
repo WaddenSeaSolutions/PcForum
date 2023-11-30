@@ -14,43 +14,57 @@ import {ActivatedRoute} from "@angular/router";
       <ion-card id="cards" *ngIf="checkIfLoggedIn">
 
 
-<!--        <ion-card-content *ngIf="user">-->
         <ion-card-content>
           <ion-list>
             <ion-item>
                 <ion-text>Email</ion-text>
-<!--                <ion-text>{{user.email}}</ion-text>-->
+
             </ion-item>
             <ion-item>
-                <ion-input id="inputs">Brugernavn</ion-input>
+              <ion-text>{{service.users?.email}}</ion-text>
             </ion-item>
-            <ion-button> rofl</ion-button>
+            <ion-item>
+                <ion-text>Brugernavn</ion-text>
+            </ion-item>
+            <ion-item>
+              <ion-text>{{service.users?.username}}</ion-text>
+            </ion-item>
           </ion-list>
         </ion-card-content>
         <ion-list>
           <ion-item>
         <ion-text>Mine tråde</ion-text>
           </ion-item>
+          <div style="height: 80%; overflow-y: scroll;">
           <div *ngFor="let thread of service.threads">
           <ion-item>
-            <ion-button class="btnBackground">
-          <ion-text>{{thread.title}}</ion-text>
-            </ion-button>
+              <ion-card>
+          <u>{{thread.title}} - Comments:</u>
+              </ion-card>
             </ion-item>
           </div>
+          </div>
           </ion-list>
+        <ion-list>
+            <ion-item>
+              <ion-text>Mine kommentarer</ion-text>
+            </ion-item>
+        </ion-list>
       </ion-card>
     </ion-content>
   `,
   styleUrls: ['./profile.component.scss'],
 })
-export class ProfileComponent {
-  user: Users | undefined;
+
+export class ProfileComponent{
+
 
   public checkIfLoggedIn: boolean;
   constructor(private http: HttpClient, public service: Service, private route: ActivatedRoute, private toastController: ToastController) {
     this.checkIfLoggedIn = localStorage.getItem('token') != null;
     this.getThreads()
+    this.getUserInformation()
+
   }
 
   async getThreads() {
@@ -75,6 +89,20 @@ export class ProfileComponent {
   }
 
   async getUserInformation(){
-
+    let token = localStorage.getItem('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      })
+    };
+    this.http.get(`${environment.baseUrl}/userprofile/`, httpOptions).toPromise().then(
+      (response: any) => {   // using any type here to bypass TypeScript strict type checking.
+        this.service.users = response;
+      }
+    ).catch(
+      (error) => {console.error('En fejl skete ved afhenting af bruger information', error)}
+    );
   }
+
 }

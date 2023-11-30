@@ -83,5 +83,15 @@ public class ForumController : ControllerBase
         
         return _forumService.getThreadsBasedOnUserId(user.Id);
     }
+
+    [HttpGet]
+    [Authorize]
+    [Route("/userprofile")]
+    public User getUserInformation()
+    {
+        var user = HttpContext.Items["User"] as User;
+
+        return _forumService.getUserInformation(user.Id).FirstOrDefault();
+    }
     
 }

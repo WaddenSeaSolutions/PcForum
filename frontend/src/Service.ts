@@ -6,6 +6,7 @@ import {Thread, Topic, Users} from "./Interface";
 })
 export class Service{
   users: Users | undefined;
+  userlist: Users[] = [];
   topic: Topic | undefined;
   topics: Topic[] = [];
   thread: Thread | undefined;

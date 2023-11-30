@@ -61,4 +61,9 @@ public class ForumService
     {
         return _forumDal.getThreadsBasedOnUserId(userId);
     }
+
+    public IEnumerable<User> getUserInformation(int id)
+    {
+        return _forumDal.getUserInformation(id);
+    }
 }
