@@ -18,9 +18,3 @@ export interface Thread{
   likes: number
   deleted: boolean
 }
-
-export interface UsersRegister {
-  email: string;
-  username: string;
-  password: string;
-}

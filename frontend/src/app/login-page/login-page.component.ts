@@ -3,7 +3,6 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Router} from "@angular/router";
-import {Users} from "../../Interface";
 
 @Component({
   selector: 'login-page',
@@ -33,39 +32,41 @@ import {Users} from "../../Interface";
   styleUrls: ['./login-page.component.scss'],
 })
 export class LoginPageComponent {
-  username = new FormControl('',Validators.compose([Validators.min(5),Validators.max(20)]))
-  password = new FormControl('',Validators.compose([Validators.min(8),Validators.max(30),Validators.required]))
+    username = new FormControl('', Validators.compose([Validators.min(5), Validators.max(20)]))
+    password = new FormControl('', Validators.compose([Validators.min(8), Validators.max(30), Validators.required]))
 
-  myFormGroup = new FormGroup({
-    username: this.username,
-    password: this.password,
-  })
-  constructor(private http: HttpClient, private router: Router) { }
+    myFormGroup = new FormGroup({
+        username: this.username,
+        password: this.password,
+    })
 
-  login() {
-    if (this.myFormGroup.valid || true) {
-      this.http.post(environment.baseUrl + '/login', this.myFormGroup.value, {responseType: 'text'})
-        .subscribe({
-          next: (response) => {
-            if(response){
-              // store token
-              localStorage.setItem('token', response);
-              let payload = JSON.parse(atob(response.split(".")[1]))
-              //Store the role, only allows for visual admin controls
-              localStorage.setItem('role',payload.role)
-              //Go to homepage after successful login
-              this.router.navigate(["home"])
-            }
-          },
-          error: (err) => {
-            // Handle error here
-            console.error(err);
-          }
-        });
+    constructor(private http: HttpClient, private router: Router) {
     }
-  }
 
- async registerNewUser() {
-    await this.router.navigate(['register'])
- }
+    login() {
+        if (this.myFormGroup.valid || true) {
+            this.http.post(environment.baseUrl + '/login', this.myFormGroup.value, {responseType: 'text'})
+                .subscribe({
+                    next: (response) => {
+                        if (response) {
+                            // store token
+                            localStorage.setItem('token', response);
+                            let payload = JSON.parse(atob(response.split(".")[1]))
+                            //Store the role, only allows for visual admin controls
+                            localStorage.setItem('role', payload.role)
+                            //Go to homepage after successful login
+                            this.router.navigate(["home"])
+                        }
+                    },
+                    error: (err) => {
+                        // Handle error here
+                        console.error(err);
+                    }
+                });
+        }
+    }
+
+    async registerNewUser() {
+        await this.router.navigate(['register'])
+    }
 }
