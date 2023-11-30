@@ -25,7 +25,7 @@ public class AuthorizeAdminAttribute : Attribute, IAuthorizationFilter
 
             // Additional step to confirm the user has an admin role
             // Adjust this part based on how you determine whether a user is an admin
-            if (user.UserRole == "Admin")
+            if (user.UserRole == "admin")
             {
                 context.HttpContext.Items["User"] = user;
                 context.Result = new UnauthorizedResult();
