@@ -5,6 +5,7 @@ import {environment} from "../../environments/environment";
 import {navigate} from "ionicons/icons";
 import {Router} from "@angular/router";
 import {ToastController} from "@ionic/angular";
+import {UsersRegister} from "../../Interface";
 
 
 
@@ -141,11 +142,5 @@ export class RegisterComponent{
     toast.present();
   }
 
-}
-
-export interface UsersRegister {
-  email: string;
-  username: string;
-  password: string;
 }
 

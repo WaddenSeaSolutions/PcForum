@@ -35,7 +35,9 @@ public class ThreadDAL
     public void createThread(Threads threads)
     {
         var sql =
-            $@"INSERT INTO forum.threads (title, topicid, body, likes, deleted) VALUES (@title, @topicId, @body, @likes, @deleted);";
+            $@"INSERT INTO forum.threads 
+                           (title, topicid, body, likes, deleted, userid) 
+                            VALUES (@title, @topicId, @body, @likes, @deleted, @userid);";
 
         using (var conn = _dataSource.OpenConnection())
         {
@@ -43,7 +45,7 @@ public class ThreadDAL
                 new
                 {
                     title = threads.title, topicId = threads.topicId, body = threads.body, likes = threads.likes,
-                    deleted = threads.deleted
+                    deleted = threads.deleted, userid = threads.userId
                 });
         }
     }
