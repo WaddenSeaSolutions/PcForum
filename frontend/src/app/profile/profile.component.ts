@@ -4,7 +4,7 @@ import {Thread, Users} from "../../Interface";
 import {Service} from "../../Service";
 import {environment} from "../../environments/environment";
 import {firstValueFrom} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
 
 @Component({
@@ -33,7 +33,7 @@ import {ActivatedRoute} from "@angular/router";
           </ion-item>
           <div *ngFor="let thread of service.threads">
           <ion-item>
-            <ion-button>
+            <ion-button class="btnBackground">
           <ion-text>{{thread.title}}</ion-text>
             </ion-button>
             </ion-item>
@@ -49,18 +49,21 @@ export class ProfileComponent {
 
   public checkIfLoggedIn: boolean;
   constructor(private http: HttpClient, public service: Service, private route: ActivatedRoute, private toastController: ToastController) {
+    this.getThreads()
     this.checkIfLoggedIn = localStorage.getItem('token') != null;
-    console.log(localStorage.getItem('nameid'))
     this.getThreads()
   }
 
   async getThreads() {
-    this.route.params.subscribe(async (params) => {
-      const userId = params['id'];
-
-      const call = this.http.get<Thread[]>(`${environment.baseUrl}/profile/${userId}`);
+    let token = localStorage.getItem('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      })
+    };
+      const call = this.http.get<Thread[]>(`${environment.baseUrl}/profile/`, httpOptions);
       this.service.threads = await firstValueFrom<Thread[]>(call);
-    });
   }
 
 
