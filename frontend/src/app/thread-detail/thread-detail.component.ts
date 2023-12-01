@@ -11,10 +11,14 @@ import {firstValueFrom} from "rxjs";
   template: `
     <ion-content style="--background: none; top: 20%">
       <div style="background: #1e1e1e; padding: 2%; margin-left: 10%; margin-right: 10%; border: 1px solid grey">
-        <p style="color: white;">Thread Ejer: {{service.thread?.username}}</p>
+        <u style="color: white;">Tråd starter: {{service.thread?.username}}</u>
         <p style="color: white;">Titel: {{service.thread?.title}}</p>
         <p style="color: white;">Tekst: {{service.thread?.body}}</p>
-        <ion-button id="DeleteButton">Delete this thread</ion-button>
+        <ion-item>
+          <ion-textarea class="styled-textarea" placeholder="Enter your comment here..."></ion-textarea>
+      </ion-item>
+        <ion-button (click)="postComment()">Submit Comment</ion-button>
+
         <ion-item style="border: 1px solid grey">
 
         </ion-item>
@@ -27,16 +31,23 @@ export class ThreadDetailComponent {
 
   constructor(private http: HttpClient, public service: Service, private route: ActivatedRoute, private router: Router) {
     this.getThread();
-
   }
 
   async getThread() {
     this.route.params.subscribe(async (params) => {
       const threadId = params['id'];
+      const threadCall = this.http.get<Thread>(`${environment.baseUrl}/thread/${threadId}`);
+      this.service.thread = await firstValueFrom<Thread>(threadCall);
+    });
+  }
 
-      const call = this.http.get<Thread>(`${environment.baseUrl}/thread/${threadId}`);
-      this.service.thread = await firstValueFrom<Thread>(call);
-
+  async postComment() {
+    this.route.params.subscribe(async (params) => {
+      const threadId = params['id'];
+      const url = `http://localhost:4200/comment/${threadId}`;
+      this.http.post<Comment>(url, this.service.comment).subscribe(response => {
+        this.getThread();
+      });
     });
   }
 }

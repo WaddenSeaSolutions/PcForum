@@ -18,3 +18,8 @@
 .page-container {
   overflow-y: auto; /* Enable vertical scrolling if content exceeds the container height */
 }
+.styled-textarea {
+  border: 1px solid grey;
+  padding: 10px;
+  margin: 10px;
+}

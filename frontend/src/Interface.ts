@@ -18,4 +18,20 @@ export interface Thread{
   likes: number
   deleted: boolean
   username: string;
+  comments: Comment[];
 }
+
+export interface UsersRegister {
+  email: string;
+  username: string;
+  password: string;
+}
+
+export interface Comment {
+  id: number;
+  username: string;
+  text: string;
+  userId: number;
+  threadId: number;
+}
+
