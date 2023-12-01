@@ -19,9 +19,3 @@ export interface Thread{
   deleted: boolean
   username: string;
 }
-
-export interface UsersRegister {
-  email: string;
-  username: string;
-  password: string;
-}
