@@ -89,4 +89,18 @@ public class ForumDAL
             return conn.Query<Threads>(sql, new { userid = userId });
         }
     }
+
+    public IEnumerable<User> getUserInformation(int id)
+    {
+        var sql = $@"SELECT id as {nameof(User.Id)},
+            username as {nameof(User.Username)},
+            email as {nameof(User.Email)}
+            FROM forum.users
+            WHERE id = @id";
+
+        using (var conn = _dataSource.OpenConnection())
+        {
+            return conn.Query<User>(sql, new { id = id });
+        }
+    }
 }

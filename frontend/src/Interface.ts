@@ -34,3 +34,4 @@ export interface Comment {
   userId: number;
   threadId: number;
 }
+
