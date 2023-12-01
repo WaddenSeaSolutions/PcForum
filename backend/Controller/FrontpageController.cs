@@ -1,3 +1,4 @@
+using backend.Attributes;
 using backend.Model;
 using backend.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +24,7 @@ public class FrontpageController : ControllerBase
     }
 
     [HttpPost]
+    [AuthorizeAdmin]
     [Route("/topics")]
     public void createTopic([FromBody] Topic topic)
     {
@@ -31,6 +33,7 @@ public class FrontpageController : ControllerBase
     }
 
     [HttpPut]
+    [AuthorizeAdmin]
     [Route("/topics/{id}")]
     public void deleteTopic([FromRoute] int id)
     {
@@ -46,6 +49,7 @@ public class FrontpageController : ControllerBase
     }
 
     [HttpPut]
+    [AuthorizeAdmin]
     [Route("/topic-update/{id}")]
     public void updateTopic(int id, [FromBody] Topic topic)
     {

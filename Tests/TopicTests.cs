@@ -1,6 +1,7 @@
 
 
 using System.Data;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using Dapper;
@@ -11,10 +12,17 @@ namespace Tests;
 
 public class Tests
 {
+    
 
     [TestCase("TestTitle", "TestImage", false)]
     public async Task topicCreationTest(string title, string image, Boolean deleted)
     {
+        var token =
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
+            "eyJuYW1laWQiOiI1NiIsInVuaXF1ZV9uYW1lIjoidGVzdHVzZXIiLCJlbWFpbCI6InF3ZXJ0eWpAZWF3cnR5Iiwicm9sZSI6ImFkbWluI" +
+            "iwibmJmIjoxNzAxNDIzNDcwLCJleHAiOjE4MDgyNzAwMDAsImlhdCI6MTcwMTQyMzQ3MH0.pTkBo2Ufr3RodGJsCrx2ARA_gGkyhh1VD5pz1F_oVUQ";
+        var client = new HttpClient();
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         // Arrange
         var testTopic = new Topic()
         {
@@ -24,8 +32,8 @@ public class Tests
         };
 
         // Act: Send POST request to create a topic
-        var httpResponse = await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "topics", testTopic);
-        var json = await httpResponse.Content.ReadAsStringAsync();
+        var httpResponse = await client.PostAsJsonAsync(Helper.ApiBaseUrl + "topics", testTopic);
+        httpResponse.EnsureSuccessStatusCode();  
         
 
         // Assert: Retrieve data from the database and compare
@@ -51,6 +59,10 @@ public class Tests
     [Test] 
     public async Task createThenDeleteTopicTest() 
     { 
+        var token =
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
+            "eyJuYW1laWQiOiI1NiIsInVuaXF1ZV9uYW1lIjoidGVzdHVzZXIiLCJlbWFpbCI6InF3ZXJ0eWpAZWF3cnR5Iiwicm9sZSI6ImFkbWluI" +
+            "iwibmJmIjoxNzAxNDIzNDcwLCJleHAiOjE4MDgyNzAwMDAsImlhdCI6MTcwMTQyMzQ3MH0.pTkBo2Ufr3RodGJsCrx2ARA_gGkyhh1VD5pz1F_oVUQ";
         var testTopic = new Topic()
         {
             deleted = false,
@@ -60,6 +72,7 @@ public class Tests
 
         // HttpClient for API requests
         var client = new HttpClient();
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
         // API POST request to create a new topic
         var httpResponse = await client.PostAsJsonAsync(Helper.ApiBaseUrl + "topics", testTopic);
@@ -103,6 +116,10 @@ public class Tests
     [Test]
     public async Task createThenUpdateTopic()
     {
+        var token =
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
+            "eyJuYW1laWQiOiI1NiIsInVuaXF1ZV9uYW1lIjoidGVzdHVzZXIiLCJlbWFpbCI6InF3ZXJ0eWpAZWF3cnR5Iiwicm9sZSI6ImFkbWluI" +
+            "iwibmJmIjoxNzAxNDIzNDcwLCJleHAiOjE4MDgyNzAwMDAsImlhdCI6MTcwMTQyMzQ3MH0.pTkBo2Ufr3RodGJsCrx2ARA_gGkyhh1VD5pz1F_oVUQ";
         var testTopic = new Topic()
         {
             deleted = false,
@@ -112,6 +129,7 @@ public class Tests
 
         // HttpClient for API requests
         var client = new HttpClient();
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
         // API POST request to create a new topic
         var httpResponse = await client.PostAsJsonAsync(Helper.ApiBaseUrl + "topics", testTopic);
