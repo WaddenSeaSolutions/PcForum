@@ -10,5 +10,7 @@ export class Service{
   topics: Topic[] = [];
   thread: Thread | undefined;
   threads: Thread[] = [];
+  comment: Comment | undefined;
+  comments: Comment[] = [];
 }
 
