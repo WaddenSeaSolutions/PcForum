@@ -13,13 +13,16 @@ import {catchError, map, Observable, of} from "rxjs";
   selector: 'register',
   template:
     `<div class="background"></div>
-    <ion-content style="--background: none; position: absolute; top: 40%">
+    <ion-content style="--background: none; position: absolute; top: 30%">
       <div style="margin-left: 25%; margin-right: 25%; background-color: #1E1E1E; padding: 2%; border: 1px solid grey ; text-align: center; ">
       <header style="text-align: center; font-size: 20px"> Registrer en konto</header>
           <br>
           <ion-item>
             <ion-input style="text-align: center" [debounce]="1500" placeholder="Email" [formControl]="email"> </ion-input>
           </ion-item>
+            <div *ngIf="email.hasError('email')">
+           <p>Ikke en korrekt email</p>
+            </div>
           <div *ngIf="email.hasError('minlength')">
             <p>Email skal være over 3 tegn</p>
           </div>
@@ -50,8 +53,14 @@ import {catchError, map, Observable, of} from "rxjs";
           <ion-item>
             <ion-input type="password" style="text-align: center" placeholder="Gentag Kodeord" [formControl]="password2"> </ion-input>
           </ion-item>
+         <div *ngIf="password.hasError('minlength')" >
+          <p>Kodeordet skal være minimum 8 lang</p>
+         </div>
+         <div *ngIf="password.hasError('maxlength')" >
+          <p>Kodeordet må maks være 30 tegn</p>
+         </div>
           <div *ngIf="password2.hasError('passwordsNotMatch')">
-            <p>Passwords do not match</p>
+            <p>De indtastede kodeord er ikke ens</p>
           </div>
           <br>
           <ion-button class="btnBackground" style="display: flex" (click)="registerUser()">Registrer din konto</ion-button>
@@ -67,7 +76,8 @@ export class RegisterComponent{
     validators: [
       Validators.required,
       Validators.maxLength(30),
-      Validators.minLength(5)],
+      Validators.minLength(5),
+      Validators.email],
       asyncValidators: [this.emailValidator(this.http)],
       updateOn: 'change' // Validation will be triggered after changes
   });
