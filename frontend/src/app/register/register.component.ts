@@ -14,8 +14,8 @@ import {catchError, map, Observable, of} from "rxjs";
   template:
     `<div class="background"></div>
     <ion-content style="--background: none; position: absolute; top: 40%">
-        <div style="margin-left: 20%; margin-right: 20%;">
-          <header style="text-align: center; font-size: 20px"> Registrer en konto</header>
+      <div style="margin-left: 25%; margin-right: 25%; background-color: #1E1E1E; padding: 2%; border: 1px solid grey ; text-align: center; ">
+      <header style="text-align: center; font-size: 20px"> Registrer en konto</header>
           <br>
           <ion-item>
             <ion-input style="text-align: center" [debounce]="1500" placeholder="Email" [formControl]="email"> </ion-input>
