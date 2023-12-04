@@ -14,11 +14,12 @@ public class TokenService
 {
     private TokenDAL _tokenDal;
 
-    private static readonly byte[] Secret = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("jwtKey")!);
+    private static byte[] Secret;
 
     public TokenService(TokenDAL tokenDal)
     {
         _tokenDal = tokenDal;
+        Secret = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("jwtKey")!);
     }
 
     public string CreateToken(User user)
