@@ -91,8 +91,7 @@ public class Tests
             var createdTopicId = conn.QueryFirstOrDefault<int>(query); 
 
             var responseBody = await httpResponse.Content.ReadAsStringAsync();
-            Console.WriteLine(responseBody); 
-            var createdTopic = JsonConvert.DeserializeObject<Topic>(responseBody);
+            Console.WriteLine(responseBody);
             
 
 
