@@ -32,10 +32,10 @@ public class ThreadController : ControllerBase
     {
         var user = HttpContext.Items["User"] as User;
         
-        Console.WriteLine("halløj");
         rtc.utcTime = DateTime.UtcNow;
         rtc.userId = user.Id;
         rtc.deleted = false;
+        Console.WriteLine(rtc.topicId);
         
         _threadService.createThread(rtc);
     }
