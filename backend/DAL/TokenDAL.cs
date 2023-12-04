@@ -4,13 +4,13 @@ using Npgsql;
 
 namespace backend.DAL;
 
-public class TokenDal
+public class TokenDAL
 {
     
     private readonly NpgsqlDataSource _dataSource;
 
 
-    public TokenDal(NpgsqlDataSource dataSource)
+    public TokenDAL(NpgsqlDataSource dataSource)
     {
         _dataSource = dataSource;
     }
