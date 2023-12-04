@@ -53,8 +53,7 @@ export class ThreadCreationComponent {
       topicId
     };
 
-    let token = localStorage.getItem('token'); // Collect token
-
+    let token = localStorage.getItem('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

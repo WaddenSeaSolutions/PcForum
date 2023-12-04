@@ -18,9 +18,9 @@ public class ThreadService
         return _threadDal.GetThreadsForTopic(topicId);
     }
 
-    public void createThread(Threads threads)
+    public void createThread(ResponseThreadCreate rtc)
     {
-        _threadDal.createThread(threads);
+        _threadDal.createThread(rtc);
     }
 
     public IEnumerable<Threads> searchOnThreads(string searchTerm)
