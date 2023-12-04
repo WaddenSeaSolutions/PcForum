@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Service} from "../../Service";
 import {Router} from "@angular/router";
 import {Topic} from "../../Interface";
@@ -45,13 +45,20 @@ export class TopicCreationComponent  {
     this.checkIfAdmin = localStorage.getItem('role') === 'admin';
   }
   async createTopic(){
+    let token = localStorage.getItem('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      })
+    };
     if (this.checkIfAdmin){
     const newTopic = {
       title: this.title.value,
       image:this.image.value
     };
     try {
-      await this.http.post<Topic[]>(environment.baseUrl + '/topics/', newTopic).toPromise();
+      await this.http.post<Topic[]>(environment.baseUrl + '/topics/', newTopic,httpOptions).toPromise();
       await this.router.navigate(['home'])
     }
     catch (e){

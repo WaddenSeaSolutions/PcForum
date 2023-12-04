@@ -11,7 +11,6 @@ public class AuthorizeAdminAttribute : Attribute, IAuthorizationFilter
     {
         var tokenService = (TokenService)context.HttpContext.RequestServices.GetService(typeof(TokenService));
         var token = context.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-
         if (token == null)
         {
             context.Result = new UnauthorizedResult();
@@ -28,7 +27,6 @@ public class AuthorizeAdminAttribute : Attribute, IAuthorizationFilter
             if (user.UserRole == "admin")
             {
                 context.HttpContext.Items["User"] = user;
-                context.Result = new UnauthorizedResult();
                 return;
             }
 

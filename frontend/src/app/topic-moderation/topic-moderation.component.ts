@@ -39,10 +39,17 @@ export class TopicModerationComponent {
   }
 
   async deleteTopic(topic: Topic) {
+    let token = localStorage.getItem('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      })
+    };
     const softDeleteUrl = `${environment.baseUrl}/topics/${topic.id}`;
 
     try {
-      await this.http.put(softDeleteUrl, { deleted: true }).toPromise();
+      await this.http.put(softDeleteUrl, { deleted: true }, httpOptions).toPromise();
 
       const call = this.http.get<Topic[]>(`${environment.baseUrl}/topics/`);
       this.service.topics = await firstValueFrom<Topic[]>(call);
