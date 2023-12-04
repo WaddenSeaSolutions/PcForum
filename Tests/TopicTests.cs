@@ -59,10 +59,17 @@ public class Tests
     [Test] 
     public async Task createThenDeleteTopicTest() 
     { 
-        var token =
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
-            "eyJuYW1laWQiOiI1NiIsInVuaXF1ZV9uYW1lIjoidGVzdHVzZXIiLCJlbWFpbCI6InF3ZXJ0eWpAZWF3cnR5Iiwicm9sZSI6ImFkbWluI" +
-            "iwibmJmIjoxNzAxNDIzNDcwLCJleHAiOjE4MDgyNzAwMDAsImlhdCI6MTcwMTQyMzQ3MH0.pTkBo2Ufr3RodGJsCrx2ARA_gGkyhh1VD5pz1F_oVUQ";
+        
+        var envVarKeyName = "tokenfortests";
+        var token = Environment.GetEnvironmentVariable(envVarKeyName);
+        
+        
+        // var token =
+        //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
+        //     "eyJuYW1laWQiOiI1NiIsInVuaXF1ZV9uYW1lIjoidGVzdHVzZXIiLCJlbWFpbCI6InF3ZXJ0eWpAZWF3cnR5Iiwicm9sZSI6ImFkbWluI" +
+        //     "iwibmJmIjoxNzAxNDIzNDcwLCJleHAiOjE4MDgyNzAwMDAsImlhdCI6MTcwMTQyMzQ3MH0.pTkBo2Ufr3RodGJsCrx2ARA_gGkyhh1VD5pz1F_oVUQ";
+        
+        
         var testTopic = new Topic()
         {
             deleted = false,

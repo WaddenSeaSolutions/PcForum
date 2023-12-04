@@ -37,14 +37,10 @@ jobs:
           npm i
           ng build --configuration="development"
 
-      - name: Start Angular Frontend
-        run: |
-          cd frontend
-          ng serve --host 0.0.0.0 --port 4200 --disable-host-check > /dev/null 2>&1 &
 
 
       - name: Build test code and install playwright test browser
-        run: cd Tests && dotnet build && pwsh bin/Debug/net8.0/playwright.ps1 install --with-deps
+        run: cd Tests && dotnet build
 
 
       - name: Build and run Web API + getting process ID for shutting down later
@@ -56,6 +52,7 @@ jobs:
         run: dotnet test Tests
         env:
           pgconn: ${{secrets.pgconn}}
+          tokenfortests: ${{secrets.tokenfortests}}
 
       - name: Shutdown Web API
         run: npx kill-port 5000
