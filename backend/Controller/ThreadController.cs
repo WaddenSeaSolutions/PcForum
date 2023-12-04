@@ -28,15 +28,16 @@ public class ThreadController : ControllerBase
     [HttpPost]
     [Authorize]
     [Route("/threads")]
-    public void createThread([FromBody] Threads threads)
+    public void createThread([FromBody] ResponseThreadCreate rtc)
     {
         var user = HttpContext.Items["User"] as User;
-
-        threads.utcTime = DateTime.UtcNow;
-        threads.userId = user.Id;
-        threads.deleted = false;
         
-        _threadService.createThread(threads);
+        rtc.utcTime = DateTime.UtcNow;
+        rtc.userId = user.Id;
+        rtc.deleted = false;
+        Console.WriteLine(rtc.topicId);
+        
+        _threadService.createThread(rtc);
     }
 
     [HttpGet]

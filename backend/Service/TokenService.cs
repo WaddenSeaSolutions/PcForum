@@ -59,7 +59,6 @@ public class TokenService
 
         User userFromToken = _tokenDal.userFromUsername(nameClaim.Value);
 
-        Console.WriteLine(userFromToken.Email);
         if (userFromToken.Deleted == false)
             return userFromToken;
 

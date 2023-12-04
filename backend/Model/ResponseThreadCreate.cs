@@ -1,6 +1,6 @@
 namespace backend.Model;
 
-public class Threads
+public class ResponseThreadCreate
 {
     public int id { get; set; }
     
@@ -16,6 +16,5 @@ public class Threads
     
     public int userId { get; set; }
     
-    public string username { get; set; }
     public DateTime utcTime { get; set; }
 }

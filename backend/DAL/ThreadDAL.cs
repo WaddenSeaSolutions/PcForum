@@ -24,8 +24,8 @@ public class ThreadDAL
         userid as {nameof(Threads.userId)},
         utctime as {nameof(Threads.utcTime)}
         FROM forum.threads
-        WHERE topicid = @topicId;";
-
+        WHERE topicid = @topicId and deleted = false
+        ORDER BY utctime DESC;";
         using (var conn = _dataSource.OpenConnection())
         {
             return conn.Query<Threads>(sql, new {topicId = topicId});
@@ -33,7 +33,7 @@ public class ThreadDAL
     }
 
 
-    public void createThread(Threads threads)
+    public void createThread(ResponseThreadCreate rtc)
     {
         var sql =
             $@"INSERT INTO forum.threads 
@@ -45,8 +45,8 @@ public class ThreadDAL
             conn.Execute(sql,
                 new
                 {
-                    title = threads.title, topicId = threads.topicId, body = threads.body, likes = threads.likes,
-                    deleted = threads.deleted, userid = threads.userId, utctime = threads.utcTime
+                    title = rtc.title, topicId = rtc.topicId, body = rtc.body, likes = rtc.likes,
+                    deleted = rtc.deleted, userid = rtc.userId, utctime = rtc.utcTime
                 });
         }
     }
@@ -62,7 +62,8 @@ public class ThreadDAL
               userid as {nameof(Threads.userId)},
               utctime as {nameof(Threads.utcTime)}
               FROM forum.threads
-              WHERE (LOWER(body) LIKE @searchTerm OR LOWER(title) LIKE @searchTerm)";
+              WHERE (LOWER(body) LIKE @searchTerm OR LOWER(title) LIKE @searchTerm) and deleted = false
+              ORDER BY utctime DESC;";
         using (var conn = _dataSource.OpenConnection())
         {
             return conn.Query<Threads>(sql, new

@@ -42,7 +42,6 @@ export class ThreadCreationComponent {
   }
 
   async createThread() {
-
     let topicId = 1;
     this.route.params.subscribe((params) => {
       topicId = params['id']
@@ -53,15 +52,13 @@ export class ThreadCreationComponent {
       topicId
     };
 
-    let token = localStorage.getItem('token'); // Collect token
-
+    let token = localStorage.getItem('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
       })
     };
-
     try {
       await this.http.post<Thread[]>(environment.baseUrl + '/threads/', newThread, httpOptions).toPromise();
       await this.router.navigate(['topic', topicId])
