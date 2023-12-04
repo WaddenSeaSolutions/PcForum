@@ -59,8 +59,10 @@ public class Tests
     [Test] 
     public async Task createThenDeleteTopicTest() 
     { 
+        
         var envVarKeyName = "tokenfortests";
         var token = Environment.GetEnvironmentVariable(envVarKeyName);
+        
         
         // var token =
         //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
