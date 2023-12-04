@@ -17,4 +17,6 @@ public class Threads
     public int userId { get; set; }
     
     public string username { get; set; }
+    
+    public DateTime utcTime { get; set; }
 }

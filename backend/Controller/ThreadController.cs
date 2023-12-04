@@ -32,6 +32,7 @@ public class ThreadController : ControllerBase
     {
         var user = HttpContext.Items["User"] as User;
 
+        threads.utcTime = DateTime.UtcNow;
         threads.userId = user.Id;
         threads.deleted = false;
         
