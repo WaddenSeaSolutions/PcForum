@@ -23,7 +23,7 @@ builder.Services.AddSingleton<FrontpageDAL>();
 builder.Services.AddSingleton<EmailService>();
 
 builder.Services.AddSingleton<TokenService>();
-builder.Services.AddSingleton<TokenDal>();
+builder.Services.AddSingleton<TokenDAL>();
 
 builder.Services.AddSingleton<ThreadService>();
 builder.Services.AddSingleton<ThreadDAL>();
