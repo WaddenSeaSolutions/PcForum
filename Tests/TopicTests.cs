@@ -32,7 +32,7 @@ public class Tests
 
         // Act: Send POST request to create a topic
         var httpResponse = await client.PostAsJsonAsync(Helper.ApiBaseUrl + "topics", testTopic);
-        // httpResponse.EnsureSuccessStatusCode();  
+        httpResponse.EnsureSuccessStatusCode();  
         
 
         // Assert: Retrieve data from the database and compare
@@ -82,7 +82,7 @@ public class Tests
 
         // API POST request to create a new topic
         var httpResponse = await client.PostAsJsonAsync(Helper.ApiBaseUrl + "topics", testTopic);
-        // httpResponse.EnsureSuccessStatusCode();  
+        httpResponse.EnsureSuccessStatusCode();  
 
 // Separate query to fetch the topic with the highest ID
         await using (var conn = Helper.DataSource.OpenConnection())
@@ -137,7 +137,7 @@ public class Tests
 
         // API POST request to create a new topic
         var httpResponse = await client.PostAsJsonAsync(Helper.ApiBaseUrl + "topics", testTopic);
-         
+        httpResponse.EnsureSuccessStatusCode();  
         
         await using (var conn = Helper.DataSource.OpenConnection())
         {
@@ -154,8 +154,7 @@ public class Tests
                 title = "UpdatedTitle",
                 image = "https://i.imgur.com/PNaYuFd.png"
             };
- 
-            
+
             var json = JsonConvert.SerializeObject(updatedTopic);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
             // API PUT request to update the topic
