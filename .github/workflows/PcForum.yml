@@ -42,8 +42,8 @@ jobs:
 
 
 
-      - name: Build test code and install playwright test browser
-        run: cd Tests & dotnet add package NetEscapades.AspNetCore.SecurityHeaders && dotnet add package system.IdentityModel.tokens.jwt && sleep 20 & dotnet build
+      - name: Build test code
+        run: cd Tests && dotnet add package NetEscapades.AspNetCore.SecurityHeaders && dotnet add package system.IdentityModel.tokens.jwt && sleep 20 && dotnet build
 
 
       - name: Build and run Web API + getting process ID for shutting down later
