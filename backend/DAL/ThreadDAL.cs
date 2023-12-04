@@ -21,7 +21,8 @@ public class ThreadDAL
         body as {nameof(Threads.body)},
         likes as {nameof(Threads.likes)},
         deleted as {nameof(Threads.deleted)},
-        userid as {nameof(Threads.userId)}
+        userid as {nameof(Threads.userId)},
+        utctime as {nameof(Threads.utcTime)}
         FROM forum.threads
         WHERE topicid = @topicId;";
 
@@ -36,8 +37,8 @@ public class ThreadDAL
     {
         var sql =
             $@"INSERT INTO forum.threads 
-                           (title, topicid, body, likes, deleted, userid) 
-                            VALUES (@title, @topicId, @body, @likes, @deleted, @userid);";
+                           (title, topicid, body, likes, deleted, userid, utctime) 
+                            VALUES (@title, @topicId, @body, @likes, @deleted, @userid, @utctime);";
 
         using (var conn = _dataSource.OpenConnection())
         {
@@ -45,7 +46,7 @@ public class ThreadDAL
                 new
                 {
                     title = threads.title, topicId = threads.topicId, body = threads.body, likes = threads.likes,
-                    deleted = threads.deleted, userid = threads.userId
+                    deleted = threads.deleted, userid = threads.userId, utctime = threads.utcTime
                 });
         }
     }
@@ -58,7 +59,8 @@ public class ThreadDAL
               body as {nameof(Threads.body)},
               likes as {nameof(Threads.likes)},
               deleted as {nameof(Threads.deleted)},
-              userid as {nameof(Threads.userId)}
+              userid as {nameof(Threads.userId)},
+              utctime as {nameof(Threads.utcTime)}
               FROM forum.threads
               WHERE (LOWER(body) LIKE @searchTerm OR LOWER(title) LIKE @searchTerm)";
         using (var conn = _dataSource.OpenConnection())
@@ -80,6 +82,7 @@ public class ThreadDAL
         likes as {nameof(Threads.likes)},
         threads.deleted as {nameof(Threads.deleted)},
         userid as {nameof(Threads.userId)},
+        utctime as {nameof(Threads.utcTime)}
         u.username as {nameof(Threads.username)}
         FROM forum.threads
         join forum.users u on u.id = threads.userid
