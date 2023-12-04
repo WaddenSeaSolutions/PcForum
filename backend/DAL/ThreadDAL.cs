@@ -83,7 +83,7 @@ public class ThreadDAL
         likes as {nameof(Threads.likes)},
         threads.deleted as {nameof(Threads.deleted)},
         userid as {nameof(Threads.userId)},
-        utctime as {nameof(Threads.utcTime)}
+        utctime as {nameof(Threads.utcTime)},
         u.username as {nameof(Threads.username)}
         FROM forum.threads
         join forum.users u on u.id = threads.userid
