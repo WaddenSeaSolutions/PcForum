@@ -14,7 +14,7 @@ public class TokenService
 {
     private TokenDal _tokenDal;
 
-    private static readonly byte[] Secret = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("jwtKey")!);
+    private static readonly byte[] Secret = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("jwtKey"));
 
     public TokenService(TokenDal tokenDal)
     {
