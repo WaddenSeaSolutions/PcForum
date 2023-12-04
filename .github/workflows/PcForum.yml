@@ -51,6 +51,7 @@ jobs:
         run: cd backend && dotnet run backend --disable-host-check > /dev/null 2>&1 & sleep 20
         env:
           pgconn: ${{secrets.PGCONN}}
+          jwtKey: ${{secrets.JWTKEY}}
           
       - name: Run the tests
         run: dotnet test Tests
