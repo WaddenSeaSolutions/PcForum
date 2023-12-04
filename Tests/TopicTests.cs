@@ -154,7 +154,8 @@ public class Tests
                 title = "UpdatedTitle",
                 image = "https://i.imgur.com/PNaYuFd.png"
             };
-
+ 
+            
             var json = JsonConvert.SerializeObject(updatedTopic);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
             // API PUT request to update the topic
