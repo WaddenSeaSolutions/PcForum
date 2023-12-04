@@ -14,13 +14,13 @@ public class CommentController : ControllerBase
     {
         _commentService = commentService;
     }
-
+    
     [HttpPost]
     [Authorize]
     [Route("/comment/{threadId}")]
-    public void createComment([Frombody] Comment comment)
+    public void createComment([FromBody] Comment comment)
     {
-        
+        _commentService.createComment(comment);
     }
 
 

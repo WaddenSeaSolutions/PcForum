@@ -42,12 +42,7 @@ export class ThreadDetailComponent {
   }
 
   async postComment() {
-    this.route.params.subscribe(async (params) => {
-      const threadId = params['id'];
-      const url = `http://localhost:4200/comment/${threadId}`;
-      this.http.post<Comment>(url, this.service.comment).subscribe(response => {
-        this.getThread();
-      });
-    });
+      const commentCall = this.http.get<Comment>(`${environment.baseUrl}/comment/${this.service.thread?.topicid}`);
+      this.service.comment = await firstValueFrom<Comment>(commentCall);
   }
 }
