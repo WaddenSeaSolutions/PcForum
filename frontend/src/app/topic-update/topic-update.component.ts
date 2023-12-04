@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Service} from "../../Service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Topic} from "../../Interface";
@@ -61,9 +61,16 @@ export class TopicUpdateComponent {
 
 
   async updateTopic() {
+    let token = localStorage.getItem('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      })
+    };
       const newTopic = this.myFormGroup.value as Topic;
     try {
-      await this.http.put<Topic[]>(environment.baseUrl + `/topic-update/${this.topic?.id}`, newTopic).toPromise();
+      await this.http.put<Topic[]>(environment.baseUrl + `/topic-update/${this.topic?.id}`, newTopic, httpOptions).toPromise();
       await this.router.navigate(['topic-moderation'])
     }
     catch (e){
