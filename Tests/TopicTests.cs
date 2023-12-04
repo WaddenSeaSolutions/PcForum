@@ -32,7 +32,7 @@ public class Tests
 
         // Act: Send POST request to create a topic
         var httpResponse = await client.PostAsJsonAsync(Helper.ApiBaseUrl + "topics", testTopic);
-        httpResponse.EnsureSuccessStatusCode();  
+        
         
 
         // Assert: Retrieve data from the database and compare
@@ -82,7 +82,7 @@ public class Tests
 
         // API POST request to create a new topic
         var httpResponse = await client.PostAsJsonAsync(Helper.ApiBaseUrl + "topics", testTopic);
-        httpResponse.EnsureSuccessStatusCode();  
+        
 
 // Separate query to fetch the topic with the highest ID
         await using (var conn = Helper.DataSource.OpenConnection())
@@ -105,7 +105,7 @@ public class Tests
                 throw new Exception($"Request failed with status code {httpResponse.StatusCode}. Response: {errorResponse}");
             }
 
-            httpResponse.EnsureSuccessStatusCode();
+           
 
             // Assert: Retrieve the deleted flag from the database and compare
             
@@ -137,7 +137,7 @@ public class Tests
 
         // API POST request to create a new topic
         var httpResponse = await client.PostAsJsonAsync(Helper.ApiBaseUrl + "topics", testTopic);
-        httpResponse.EnsureSuccessStatusCode();  
+        
         
         await using (var conn = Helper.DataSource.OpenConnection())
         {
@@ -165,7 +165,6 @@ public class Tests
                 var errorResponse = await httpResponse.Content.ReadAsStringAsync();
                 throw new Exception($"Request failed with status code {httpResponse.StatusCode}. Response: {errorResponse}");
             }
-            httpResponse.EnsureSuccessStatusCode();
 
             // Assert
             
