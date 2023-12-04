@@ -38,10 +38,15 @@ jobs:
           npm i
           ng build --configuration="development"
 
+      
+
 
 
       - name: Build test code and install playwright test browser
         run: cd Tests && dotnet build
+
+      - name: Install NetEscapades.AspNetCore.SecurityHeaders
+        run: dotnet add package NetEscapades.AspNetCore.SecurityHeaders
 
 
       - name: Build and run Web API + getting process ID for shutting down later
