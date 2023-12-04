@@ -57,7 +57,6 @@ public class TokenService
     
         var nameClaim = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name); // Saves the id of the user with the token
 
-        //bool isUserDeleted = _tokenDal.isUserDeleted(nameClaim.Value); // Gets the deleted bool from the DB
         User userFromToken = _tokenDal.userFromUsername(nameClaim.Value);
 
         Console.WriteLine(userFromToken.Email);
