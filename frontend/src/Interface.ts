@@ -18,6 +18,7 @@ export interface Thread{
   likes: number
   deleted: boolean
   username: string;
+  utctime: string;
   comments: Comment[];
 }
 
