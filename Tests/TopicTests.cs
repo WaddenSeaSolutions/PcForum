@@ -18,13 +18,9 @@ public class Tests
     public async Task topicCreationTest(string title, string image, Boolean deleted)
     {
         
-        // var envVarKeyName = "tokenfortests";
-        // var token = Environment.GetEnvironmentVariable(envVarKeyName);
+        var envVarKeyName = "tokenfortests";
+        var token = Environment.GetEnvironmentVariable(envVarKeyName);
         
-        var token =
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
-            "eyJuYW1laWQiOiI1NiIsInVuaXF1ZV9uYW1lIjoidGVzdHVzZXIiLCJlbWFpbCI6InF3ZXJ0eWpAZWF3cnR5Iiwicm9sZSI6ImFkbWluI" +
-            "iwibmJmIjoxNzAxNDIzNDcwLCJleHAiOjE4MDgyNzAwMDAsImlhdCI6MTcwMTQyMzQ3MH0.pTkBo2Ufr3RodGJsCrx2ARA_gGkyhh1VD5pz1F_oVUQ";
 
         
         var client = new HttpClient();
@@ -66,14 +62,10 @@ public class Tests
     public async Task createThenDeleteTopicTest() 
     { 
         
-        // var envVarKeyName = "tokenfortests";
-        // var token = Environment.GetEnvironmentVariable(envVarKeyName);
+        var envVarKeyName = "tokenfortests";
+        var token = Environment.GetEnvironmentVariable(envVarKeyName);
         
         
-        var token =
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
-            "eyJuYW1laWQiOiI1NiIsInVuaXF1ZV9uYW1lIjoidGVzdHVzZXIiLCJlbWFpbCI6InF3ZXJ0eWpAZWF3cnR5Iiwicm9sZSI6ImFkbWluI" +
-            "iwibmJmIjoxNzAxNDIzNDcwLCJleHAiOjE4MDgyNzAwMDAsImlhdCI6MTcwMTQyMzQ3MH0.pTkBo2Ufr3RodGJsCrx2ARA_gGkyhh1VD5pz1F_oVUQ";
         
         
         var testTopic = new Topic()
@@ -128,12 +120,9 @@ public class Tests
     [Test]
     public async Task createThenUpdateTopic()
     {
-        // var envVarKeyName = "tokenfortests";
-        // var token = Environment.GetEnvironmentVariable(envVarKeyName);
-        var token =
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
-            "eyJuYW1laWQiOiI1NiIsInVuaXF1ZV9uYW1lIjoidGVzdHVzZXIiLCJlbWFpbCI6InF3ZXJ0eWpAZWF3cnR5Iiwicm9sZSI6ImFkbWluI" +
-            "iwibmJmIjoxNzAxNDIzNDcwLCJleHAiOjE4MDgyNzAwMDAsImlhdCI6MTcwMTQyMzQ3MH0.pTkBo2Ufr3RodGJsCrx2ARA_gGkyhh1VD5pz1F_oVUQ";
+        var envVarKeyName = "tokenfortests";
+        var token = Environment.GetEnvironmentVariable(envVarKeyName);
+        
 
         
         var testTopic = new Topic()
