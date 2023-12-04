@@ -43,11 +43,11 @@ jobs:
 
 
       - name: Build test code and install playwright test browser
-        run: cd Tests && dotnet add package NetEscapades.AspNetCore.SecurityHeaders && dotnet build
+        run: cd Tests && dotnet build
 
 
       - name: Build and run Web API + getting process ID for shutting down later
-        run: cd backend && dotnet run backend --disable-host-check > /dev/null 2>&1 & sleep 20
+        run: cd backend && dotnet add package NetEscapades.AspNetCore.SecurityHeaders && sleep 20 & dotnet run backend --disable-host-check > /dev/null 2>&1 & sleep 20
         env:
           pgconn: ${{secrets.PGCONN}}
           
