@@ -15,7 +15,7 @@ public class ThreadTests
         var token = Environment.GetEnvironmentVariable(envVarKeyName);
 
 
-        Console.WriteLine(token);
+        Console.WriteLine("THE TOKEN IS: "+token);
         var client = new HttpClient();
         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         // Arrange
