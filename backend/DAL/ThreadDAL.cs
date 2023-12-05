@@ -22,7 +22,7 @@ public class ThreadDAL
         likes as {nameof(Threads.likes)},
         deleted as {nameof(Threads.deleted)},
         userid as {nameof(Threads.userId)},
-        utctime as {nameof(Threads.utcTime)}
+        utctime as {nameof(Threads.utctime)}
         FROM forum.threads
         WHERE topicid = @topicId and deleted = false
         ORDER BY utctime DESC;";
@@ -60,7 +60,7 @@ public class ThreadDAL
               likes as {nameof(Threads.likes)},
               deleted as {nameof(Threads.deleted)},
               userid as {nameof(Threads.userId)},
-              utctime as {nameof(Threads.utcTime)}
+              utctime as {nameof(Threads.utctime)}
               FROM forum.threads
               WHERE (LOWER(body) LIKE @searchTerm OR LOWER(title) LIKE @searchTerm) and deleted = false
               ORDER BY utctime DESC;";
@@ -83,7 +83,7 @@ public class ThreadDAL
         likes as {nameof(Threads.likes)},
         threads.deleted as {nameof(Threads.deleted)},
         userid as {nameof(Threads.userId)},
-        utctime as {nameof(Threads.utcTime)},
+        utctime as {nameof(Threads.utctime)},
         u.username as {nameof(Threads.username)}
         FROM forum.threads
         join forum.users u on u.id = threads.userid
