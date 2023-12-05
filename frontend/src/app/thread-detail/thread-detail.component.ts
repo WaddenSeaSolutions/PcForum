@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Service} from "../../Service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Thread} from "../../Interface";
 import {environment} from "../../environments/environment";
 import {firstValueFrom} from "rxjs";
+import {FormControl, FormGroup} from "@angular/forms";
+import {body} from "ionicons/icons";
 
 @Component({
   selector: 'app-thread-detail',
@@ -16,7 +18,7 @@ import {firstValueFrom} from "rxjs";
         <p style="color: white;">Tekst: {{service.thread?.body}}</p>
         <p> {{getTimeAgo(service.thread?.utctime)}}</p>
         <ion-item>
-          <ion-textarea class="styled-textarea" placeholder="Enter your comment here..."></ion-textarea>
+          <ion-textarea class="styled-textarea" [formControl]="body" placeholder="Enter your comment here..."></ion-textarea>
         </ion-item>
         <ion-button (click)="postComment()">Submit Comment</ion-button>
 
@@ -29,6 +31,12 @@ import {firstValueFrom} from "rxjs";
   styleUrls: ['./thread-detail.component.scss'],
 })
 export class ThreadDetailComponent {
+
+  body = new FormControl('');
+
+  myFormgroup = new FormGroup({
+    body: this.body
+  })
 
   constructor(private http: HttpClient, public service: Service, private route: ActivatedRoute, private router: Router) {
     this.getThread();
@@ -43,8 +51,23 @@ export class ThreadDetailComponent {
   }
 
   async postComment() {
-      const commentCall = this.http.get<Comment>(`${environment.baseUrl}/comment/${this.service.thread?.topicid}`);
+    this.route.params.subscribe(async (params) => {
+      const threadId = params['id'];
+
+      // Get the token from local storage.
+      const token = localStorage.getItem('YourTokenKey');
+
+      // Create headers and add the Authorization header.
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Authorization': `Bearer ${token}`
+        })
+      };
+
+      // Use httpOptions and commentData in your HTTP call.
+      const commentCall = this.http.post<Comment>(`${environment.baseUrl}/comment/${threadId}`, this.body.value, httpOptions);
       this.service.comment = await firstValueFrom<Comment>(commentCall);
+    });
   }
 
   getTimeAgo(timeStamp: string | undefined): string {

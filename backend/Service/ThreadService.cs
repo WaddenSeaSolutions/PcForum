@@ -23,9 +23,9 @@ public class ThreadService
         _threadDal.createThread(rtc);
     }
 
-    public IEnumerable<Threads> searchOnThreads(string searchTerm)
+    public IEnumerable<Threads> searchOnThreads(string searchTerm, int topicId)
     {
-        return _threadDal.searchOnThreads(searchTerm);
+        return _threadDal.searchOnThreads(searchTerm, topicId);
     }
 
     public Threads getThreadDetails(int id)

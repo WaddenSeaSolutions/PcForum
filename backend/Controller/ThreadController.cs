@@ -42,9 +42,9 @@ public class ThreadController : ControllerBase
 
     [HttpGet]
     [Route("/searchOnThreads")]
-    public IEnumerable<Threads> searchOnThreads([FromQuery] string searchTerm)
+    public IEnumerable<Threads> searchOnThreads([FromQuery] string searchTerm, [FromQuery] int topicId)
     {
-        return _threadService.searchOnThreads(searchTerm);
+        return _threadService.searchOnThreads(searchTerm, topicId);
     }
 
     [HttpGet]
