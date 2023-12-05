@@ -39,9 +39,6 @@ jobs:
           ng build --configuration="development"
 
 
-      
-
-
 
       - name: Build test code
         run: cd Tests && sleep 20 && dotnet build
@@ -60,6 +57,7 @@ jobs:
           tokenfortests: ${{secrets.TOKENFORTESTS}}
           jwtKey: ${{secrets.JWTKEY}}
 
+          
       - name: Shutdown Web API
         run: npx kill-port 5000
 
