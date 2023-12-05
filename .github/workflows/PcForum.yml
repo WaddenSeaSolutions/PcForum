@@ -39,12 +39,11 @@ jobs:
           ng build --configuration="development"
 
 
-      
 
 
 
       - name: Build test code
-        run: cd Tests && sleep 20 && dotnet build
+        run: cd Tests && dotnet add package NetEscapades.AspNetCore.SecurityHeaders && dotnet add package system.IdentityModel.tokens.jwt && dotnet add package Swashbuckle.AspNetCore && sleep 20 && dotnet build
 
 
       - name: Build and run Web API + getting process ID for shutting down later
