@@ -16,13 +16,13 @@ public class CommentDAL
     public void createComment(Comment comment)
     {
         var sql = $@"INSERT INTO forum.comment
-        (body, userId, utcTime, deleted)
-        VALUES (@body, @userId, @utcTime, @deleted);";
+        (body, userId, utcTime, deleted, threadid)
+        VALUES (@body, @userId, @utcTime, @deleted, @threadId);";
         using (var conn = _dataSource.OpenConnection())
         {
             conn.Execute(sql, new
             {
-                body = comment.body, userId = comment.userId, utcTime = comment.utcTime, comment.deleted
+                body = comment.body, userId = comment.userId, utcTime = comment.utcTime, comment.deleted, threadId = comment.ThreadId
             });
         }
     }
