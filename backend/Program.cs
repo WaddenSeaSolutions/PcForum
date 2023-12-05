@@ -31,8 +31,10 @@ builder.Services.AddSingleton<ThreadDAL>();
 builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<UserDal>();
 
-
+builder.Services.AddSingleton<CommentService>();
+builder.Services.AddSingleton<CommentDAL>();
 builder.Services.AddControllers();
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

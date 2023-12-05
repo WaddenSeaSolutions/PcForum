@@ -31,19 +31,18 @@ jobs:
         with:
           node-version: 18.x.x
 
-      - name: Install Angular program dependencies and build
-        run: |
-          cd frontend
-          npm i -g @angular/cli
-          npm i
-          ng build --configuration="development"
-
-
+   #   - name: Install Angular program dependencies and build
+     #   run: |
+     #     cd frontend
+     #     npm i -g @angular/cli
+     #     npm i
+     #     ng build --configuration="development"
 
 
 
       - name: Build test code
-        run: cd Tests && dotnet add package NetEscapades.AspNetCore.SecurityHeaders && dotnet add package system.IdentityModel.tokens.jwt && dotnet add package Swashbuckle.AspNetCore && sleep 20 && dotnet build
+        run: cd Tests && sleep 60 && dotnet build
+
 
 
       - name: Build and run Web API + getting process ID for shutting down later
@@ -59,6 +58,7 @@ jobs:
           tokenfortests: ${{secrets.TOKENFORTESTS}}
           jwtKey: ${{secrets.JWTKEY}}
 
+          
       - name: Shutdown Web API
         run: npx kill-port 5000
 
