@@ -13,8 +13,8 @@ namespace backend.Service;
 public class TokenService
 {
     private TokenDAL _tokenDal;
-
-    private static readonly byte[] Secret = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("jwtKey"));
+    
+    private static readonly byte[] Secret = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("jwtkey")!);
 
     public TokenService(TokenDAL tokenDal)
     {

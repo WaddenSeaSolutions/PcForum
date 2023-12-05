@@ -14,9 +14,10 @@ import {firstValueFrom} from "rxjs";
         <u style="color: white;">Tråd starter: {{service.thread?.username}}</u>
         <p style="color: white;">Titel: {{service.thread?.title}}</p>
         <p style="color: white;">Tekst: {{service.thread?.body}}</p>
+        <p> {{getTimeAgo(service.thread?.utctime)}}</p>
         <ion-item>
           <ion-textarea class="styled-textarea" placeholder="Enter your comment here..."></ion-textarea>
-      </ion-item>
+        </ion-item>
         <ion-button (click)="postComment()">Submit Comment</ion-button>
 
         <ion-item style="border: 1px solid grey">
@@ -45,4 +46,36 @@ export class ThreadDetailComponent {
       const commentCall = this.http.get<Comment>(`${environment.baseUrl}/comment/${this.service.thread?.topicid}`);
       this.service.comment = await firstValueFrom<Comment>(commentCall);
   }
+
+  getTimeAgo(timeStamp: string | undefined): string {
+    if (!timeStamp) {
+      return 'Henter tidsstempel';
+    }
+
+    const oldDate = new Date(timeStamp);
+    const currentDate = new Date();
+
+    const secondsPassed = Math.floor((currentDate.getTime() - oldDate.getTime()) / 1000);
+
+    if (secondsPassed < 60) {
+      return `${secondsPassed} sekunder siden`;
+    }
+
+    const minutesPassed = Math.floor(secondsPassed / 60);
+
+    if (minutesPassed < 60) {
+      return minutesPassed === 1 ? '1 minut siden' : `${minutesPassed} minutter siden`;
+    }
+
+    const hoursPassed = Math.floor(minutesPassed / 60);
+
+    if (hoursPassed < 24) {
+      return hoursPassed === 1 ? '1 time siden' : `${hoursPassed} timer siden`;
+    }
+
+    const daysPassed = Math.floor(hoursPassed / 24);
+
+    return daysPassed === 1 ? '1 dag siden' : `${daysPassed} dage siden`;
+  }
+
 }
