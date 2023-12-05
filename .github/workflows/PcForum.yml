@@ -57,8 +57,8 @@ jobs:
         env:
           pgconn: ${{secrets.PGCONN}}
           tokenfortests: ${{secrets.TOKENFORTESTS}}
-          jwtKey: ${{secrets.JWTKEY}}
 
+          
       - name: Shutdown Web API
         run: npx kill-port 5000
 
