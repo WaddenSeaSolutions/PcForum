@@ -35,7 +35,6 @@ public class ThreadController : ControllerBase
         rtc.utcTime = DateTime.UtcNow;
         rtc.userId = user.Id;
         rtc.deleted = false;
-        Console.WriteLine(rtc.topicId);
         
         _threadService.createThread(rtc);
     }

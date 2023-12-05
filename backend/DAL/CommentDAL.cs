@@ -22,7 +22,7 @@ public class CommentDAL
         {
             conn.Execute(sql, new
             {
-                body = comment.body, userId = comment.userId, utcTime = comment.utcTime, comment.deleted, threadId = comment.ThreadId
+                body = comment.body, userId = comment.userId, utcTime = comment.utcTime, comment.deleted, threadId = comment.threadId
             });
         }
     }

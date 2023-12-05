@@ -34,6 +34,7 @@ export class ThreadDetailComponent {
 
   body = new FormControl('');
 
+
   myFormgroup = new FormGroup({
     body: this.body
   })
@@ -54,18 +55,15 @@ export class ThreadDetailComponent {
     this.route.params.subscribe(async (params) => {
       const threadId = params['id'];
 
-      // Get the token from local storage.
-      const token = localStorage.getItem('YourTokenKey');
-
-      // Create headers and add the Authorization header.
+      let token = localStorage.getItem('token');
       const httpOptions = {
         headers: new HttpHeaders({
-          'Authorization': `Bearer ${token}`
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
         })
       };
 
-      // Use httpOptions and commentData in your HTTP call.
-      const commentCall = this.http.post<Comment>(`${environment.baseUrl}/comment/${threadId}`, this.body.value, httpOptions);
+      const commentCall = this.http.post<Comment>(`${environment.baseUrl}/comment/${threadId}`, this.myFormgroup.value, httpOptions);
       this.service.comment = await firstValueFrom<Comment>(commentCall);
     });
   }
