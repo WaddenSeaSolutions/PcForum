@@ -35,16 +35,15 @@ public class ThreadController : ControllerBase
         rtc.utcTime = DateTime.UtcNow;
         rtc.userId = user.Id;
         rtc.deleted = false;
-        Console.WriteLine(rtc.topicId);
         
         _threadService.createThread(rtc);
     }
 
     [HttpGet]
     [Route("/searchOnThreads")]
-    public IEnumerable<Threads> searchOnThreads([FromQuery] string searchTerm)
+    public IEnumerable<Threads> searchOnThreads([FromQuery] string searchTerm, [FromQuery] int topicId)
     {
-        return _threadService.searchOnThreads(searchTerm);
+        return _threadService.searchOnThreads(searchTerm, topicId);
     }
 
     [HttpGet]

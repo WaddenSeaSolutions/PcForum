@@ -19,10 +19,18 @@ public class CommentController : ControllerBase
     [HttpPost]
     [Authorize]
     [Route("/comment/{threadId}")]
-    public void createComment([FromBody] Comment comment, [FromRoute]int threadId)
+    public void CreateComment([FromBody] Comment comment, int threadId)
     {
+        var user = HttpContext.Items["User"] as User;
+
+        comment.threadId = threadId;
+
         comment.deleted = false;
-        comment.ThreadId = threadId;
+
+        comment.userId = user.Id;
+        
+        comment.utcTime = DateTime.UtcNow;
+        
         _commentService.createComment(comment);
     }
 
