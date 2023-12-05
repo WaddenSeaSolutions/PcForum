@@ -40,10 +40,9 @@ jobs:
 
 
 
-
-
       - name: Build test code
         run: cd Tests && sleep 60 && dotnet build
+
 
 
       - name: Build and run Web API + getting process ID for shutting down later
@@ -59,6 +58,7 @@ jobs:
           tokenfortests: ${{secrets.TOKENFORTESTS}}
           jwtKey: ${{secrets.JWTKEY}}
 
+          
       - name: Shutdown Web API
         run: npx kill-port 5000
 

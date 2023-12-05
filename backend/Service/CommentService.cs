@@ -14,7 +14,7 @@ public class CommentService
 
     public void createComment(Comment comment)
     {
-        _commentDal.createComment(comment);
+        _commentDal.createComment(comment); 
     }
 
 }
