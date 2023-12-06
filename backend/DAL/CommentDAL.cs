@@ -38,7 +38,7 @@ public class CommentDAL
         threadId as {nameof(UserComment.threadId)}
         FROM forum.comment
         WHERE threadid = @threadId and deleted = false
-        ORDER BY utctime DESC;";
+        ";
         using (var conn = _dataSource.OpenConnection())
         {
             return conn.Query<UserComment>(sql, new { threadId = threadId });
