@@ -12,9 +12,14 @@ public class CommentService
         _commentDal = commentDal;
     }
 
-    public void createComment(Comment comment)
+    public void createComment(UserComment userComment)
     {
-        _commentDal.createComment(comment); 
+        _commentDal.createComment(userComment); 
+    }
+
+    public IEnumerable<UserComment> getCommentForThreads(int threadId)
+    {
+        return _commentDal.getCommentForThreads(threadId);
     }
 
 }

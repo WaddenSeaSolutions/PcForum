@@ -13,17 +13,37 @@ public class CommentDAL
         _dataSource = dataSource;
     }
 
-    public void createComment(Comment comment)
+    public void createComment(UserComment userComment)
     {
         var sql = $@"INSERT INTO forum.comment
-        (body, userId, utcTime, deleted, threadid)
+        (body, userId, utcTime, deleted, threadId)
         VALUES (@body, @userId, @utcTime, @deleted, @threadId);";
         using (var conn = _dataSource.OpenConnection())
         {
             conn.Execute(sql, new
             {
-                body = comment.body, userId = comment.userId, utcTime = comment.utcTime, comment.deleted, threadId = comment.ThreadId
+                body = userComment.body, userId = userComment.userId, utcTime = userComment.utcTime, userComment.deleted, threadId = userComment.ThreadId
             });
         }
     }
+
+    public IEnumerable<UserComment> getCommentForThreads(int threadId)
+    {
+        var sql = $@"SELECT id as {nameof(UserComment.id)},
+        body as {nameof(UserComment.body)},
+        userid as {nameof(UserComment.userId)},
+        utctime as {nameof(UserComment.utcTime)},
+        deleted as {nameof(UserComment.deleted)},
+        threadId as {nameof(UserComment.ThreadId)}
+        FROM forum.comment
+        WHERE threadid = @threadId and deleted = false
+        ORDER BY utctime DESC;";
+        using (var conn = _dataSource.OpenConnection())
+        {
+            return conn.Query<UserComment>(sql, new { threadId = threadId });
+        }
+    }
+    
+    
+    
 }

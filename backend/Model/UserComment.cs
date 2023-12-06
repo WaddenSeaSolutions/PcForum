@@ -1,6 +1,6 @@
 namespace backend.Model;
 
-public class Comment
+public class UserComment
 {
     public int id { get; set; }
 
