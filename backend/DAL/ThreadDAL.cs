@@ -24,7 +24,7 @@ public class ThreadDAL
         userid as {nameof(Threads.userId)},
         utctime as {nameof(Threads.utctime)}
         FROM forum.threads
-        WHERE topicid = @topicId and deleted = false
+        WHERE topicId = @topicId and deleted = false
         ORDER BY utctime DESC;";
         using (var conn = _dataSource.OpenConnection())
         {
