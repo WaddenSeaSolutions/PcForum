@@ -15,22 +15,32 @@ public class CommentController : ControllerBase
     {
         _commentService = commentService;
     }
-    
-    [HttpPost]
-    [Authorize]
-    [Route("/comment/{threadId}")]
-    public void createComment([FromBody] UserComment userComment, [FromRoute]int threadId)
-    {
-        userComment.deleted = false;
-        userComment.ThreadId = threadId;
-        _commentService.createComment(userComment);
-    }
+
 
     [HttpGet]
     [Route("/getComment/{threadId}")]
     public IEnumerable<UserComment> getCommentForThreads([FromRoute] int threadId)
     {
         return _commentService.getCommentForThreads(threadId);
+    }
+    
+    
+    [HttpPost]
+    [Authorize]
+    [Route("/comment/{threadId}")]
+    public void CreateComment([FromBody] UserComment userComment, int threadId)
+    {
+        var user = HttpContext.Items["User"] as User;
+
+        userComment.threadId = threadId;
+
+        userComment.deleted = false;
+
+        userComment.userId = user.Id;
+        
+        userComment.utcTime = DateTime.UtcNow;
+        
+        _commentService.createComment(userComment);
     }
 
 

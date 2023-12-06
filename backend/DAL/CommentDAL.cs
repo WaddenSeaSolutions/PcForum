@@ -22,7 +22,8 @@ public class CommentDAL
         {
             conn.Execute(sql, new
             {
-                body = userComment.body, userId = userComment.userId, utcTime = userComment.utcTime, userComment.deleted, threadId = userComment.ThreadId
+
+                body = userComment.body, userId = userComment.userId, utcTime = userComment.utcTime, deleted = userComment.deleted, threadId = userComment.threadId
             });
         }
     }
@@ -34,7 +35,7 @@ public class CommentDAL
         userid as {nameof(UserComment.userId)},
         utctime as {nameof(UserComment.utcTime)},
         deleted as {nameof(UserComment.deleted)},
-        threadId as {nameof(UserComment.ThreadId)}
+        threadId as {nameof(UserComment.threadId)}
         FROM forum.comment
         WHERE threadid = @threadId and deleted = false
         ORDER BY utctime DESC;";

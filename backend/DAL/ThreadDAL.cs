@@ -51,7 +51,7 @@ public class ThreadDAL
         }
     }
 
-    public IEnumerable<Threads> searchOnThreads(string searchTerm)
+    public IEnumerable<Threads> searchOnThreads(string searchTerm, int topicId)
     {
         var sql = $@"SELECT id as {nameof(Threads.id)},
               title as {nameof(Threads.title)},
@@ -62,13 +62,13 @@ public class ThreadDAL
               userid as {nameof(Threads.userId)},
               utctime as {nameof(Threads.utctime)}
               FROM forum.threads
-              WHERE (LOWER(body) LIKE @searchTerm OR LOWER(title) LIKE @searchTerm) and deleted = false
+              WHERE (LOWER(body) LIKE @searchTerm OR LOWER(title) LIKE @searchTerm) and deleted = false and topicid = @topicid
               ORDER BY utctime DESC;";
         using (var conn = _dataSource.OpenConnection())
         {
             return conn.Query<Threads>(sql, new
             {
-                searchTerm = $"%{searchTerm.ToLower()}%"
+                searchTerm = $"%{searchTerm.ToLower()}%", topicid = topicId
             });
         }
     }
