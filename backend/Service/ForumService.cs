@@ -66,4 +66,9 @@ public class ForumService
     {
         return _forumDal.getUserInformation(id);
     }
+
+    public IEnumerable<UserComment> getUserComments(int userId)
+    {
+        return _forumDal.getUserComments(userId);
+    }
 }

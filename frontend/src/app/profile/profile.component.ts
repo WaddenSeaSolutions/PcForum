@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {ToastController} from "@ionic/angular";
-import {Thread, Users} from "../../Interface";
+import {Thread, Users, UserComment} from "../../Interface";
 import {Service} from "../../Service";
 import {environment} from "../../environments/environment";
 import {firstValueFrom} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
+import {comment} from "postcss";
 
 @Component({
   selector: 'app-profile',
@@ -49,6 +50,15 @@ import {ActivatedRoute} from "@angular/router";
             <ion-item>
               <ion-text>Mine kommentarer</ion-text>
             </ion-item>
+          <div style="height: 80%; overflow-y: scroll;">
+            <div *ngFor="let userComment of service.userComments">
+              <ion-item>
+                <ion-card>
+                  <u>{{userComment.body}}</u>
+                </ion-card>
+              </ion-item>
+            </div>
+          </div>
         </ion-list>
       </ion-card>
     </ion-content>
@@ -64,6 +74,7 @@ export class ProfileComponent{
     this.checkIfLoggedIn = localStorage.getItem('token') != null;
     this.getThreads()
     this.getUserInformation()
+    this.getUserComments()
 
   }
 
@@ -77,6 +88,18 @@ export class ProfileComponent{
     };
       const call = this.http.get<Thread[]>(`${environment.baseUrl}/profile/`, httpOptions);
       this.service.threads = await firstValueFrom<Thread[]>(call);
+  }
+
+  async getUserComments(){
+    let token = localStorage.getItem('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      })
+    };
+    const call = this.http.get<UserComment[]>(`${environment.baseUrl}/usercomments`, httpOptions);
+    this.service.userComments = await firstValueFrom<UserComment[]>(call)
   }
 
 
@@ -105,4 +128,5 @@ export class ProfileComponent{
     );
   }
 
+  protected readonly comment = comment;
 }

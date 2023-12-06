@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Service} from "../../Service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Thread} from "../../Interface";
+import {Thread, UserComment} from "../../Interface";
 import {environment} from "../../environments/environment";
 import {firstValueFrom} from "rxjs";
 import {FormControl, FormGroup} from "@angular/forms";
@@ -63,8 +63,8 @@ export class ThreadDetailComponent {
         })
       };
 
-      const commentCall = this.http.post<Comment>(`${environment.baseUrl}/comment/${threadId}`, this.myFormgroup.value, httpOptions);
-      this.service.comment = await firstValueFrom<Comment>(commentCall);
+      const commentCall = this.http.post<UserComment>(`${environment.baseUrl}/comment/${threadId}`, this.myFormgroup.value, httpOptions);
+      this.service.userComment = await firstValueFrom<UserComment>(commentCall);
     });
   }
 

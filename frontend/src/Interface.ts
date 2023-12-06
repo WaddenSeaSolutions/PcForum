@@ -28,10 +28,10 @@ export interface UsersRegister {
   password: string;
 }
 
-export interface Comment {
+export interface UserComment {
   id: number;
   username: string;
-  text: string;
+  body: string;
   userId: number;
   threadId: number;
 }

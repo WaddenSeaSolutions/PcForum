@@ -103,4 +103,19 @@ public class ForumDAL
             return conn.Query<User>(sql, new { id = id });
         }
     }
+
+    public IEnumerable<UserComment> getUserComments(int userId)
+    {
+        var sql = $@"SELECT id as {nameof(UserComment.id)},
+        body as {nameof(UserComment.body)},
+        userid as {nameof(UserComment.userId)},
+        utctime as {nameof(UserComment.utcTime)},
+        deleted as {nameof(UserComment.deleted)}
+        FROM forum.comment WHERE userid = @userid AND deleted = false";
+
+        using (var conn = _dataSource.OpenConnection())
+        {
+            return conn.Query<UserComment>(sql, new { userid = userId });
+        }
+    }
 }

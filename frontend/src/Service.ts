@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Thread, Topic, Users} from "./Interface";
+import {Thread, Topic, UserComment, Users} from "./Interface";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class Service{
   topics: Topic[] = [];
   thread: Thread | undefined;
   threads: Thread[] = [];
-  comment: Comment | undefined;
-  comments: Comment[] = [];
+  userComment: UserComment | undefined;
+  userComments: UserComment[] = [];
 }
 
