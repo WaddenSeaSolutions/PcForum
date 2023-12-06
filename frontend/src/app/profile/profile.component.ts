@@ -5,7 +5,7 @@ import {Service} from "../../Service";
 import {environment} from "../../environments/environment";
 import {firstValueFrom} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {comment} from "postcss";
 
 @Component({
@@ -40,7 +40,7 @@ import {comment} from "postcss";
           <div *ngFor="let thread of service.threads">
           <ion-item>
               <ion-card>
-          <u>{{thread.title}} - Comments:</u>
+          <u (click)="navigateToThread(thread.id)" style="cursor: pointer;">{{thread.title}} - Comments:</u>
               </ion-card>
             </ion-item>
           </div>
@@ -54,7 +54,7 @@ import {comment} from "postcss";
             <div *ngFor="let userComment of service.userComments">
               <ion-item>
                 <ion-card>
-                  <u>{{userComment.body}}</u>
+                  <u (click)="navigateToComment(userComment.threadId)" style="cursor: pointer;">{{userComment.body}}</u>
                 </ion-card>
               </ion-item>
             </div>
@@ -70,7 +70,7 @@ export class ProfileComponent{
 
 
   public checkIfLoggedIn: boolean;
-  constructor(private http: HttpClient, public service: Service, private route: ActivatedRoute, private toastController: ToastController) {
+  constructor(private http: HttpClient, public service: Service, private route: ActivatedRoute, private toastController: ToastController, private router: Router) {
     this.checkIfLoggedIn = localStorage.getItem('token') != null;
     this.getThreads()
     this.getUserInformation()
@@ -109,6 +109,14 @@ export class ProfileComponent{
       duration: 4000
     });
     toast.present();
+  }
+
+  async navigateToThread(threadId: number){
+    this.router.navigate(["thread", threadId])
+  }
+
+  async navigateToComment(threadId: number){
+    this.router.navigate(["thread", threadId])
   }
 
   async getUserInformation(){
