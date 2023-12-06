@@ -93,5 +93,15 @@ public class ForumController : ControllerBase
 
         return _forumService.getUserInformation(user.Id).FirstOrDefault();
     }
+
+    [HttpGet]
+    [Authorize]
+    [Route("/usercomments")]
+    public IEnumerable<UserComment> getUserComments()
+    {
+        var user = HttpContext.Items["User"] as User;
+
+        return _forumService.getUserComments(user.Id);
+    }
     
 }
