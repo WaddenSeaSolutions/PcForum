@@ -35,4 +35,3 @@ export interface UserComment {
   userId: number;
   threadId: number;
 }
-

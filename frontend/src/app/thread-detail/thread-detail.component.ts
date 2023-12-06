@@ -22,9 +22,13 @@ import {body} from "ionicons/icons";
         </ion-item>
         <ion-button (click)="postComment()">Submit Comment</ion-button>
 
+        <div *ngFor="let userComment of service.userComments">
         <ion-item style="border: 1px solid grey">
-
+        <ion-card>
+            <u>{{userComment.body}}</u>
+        </ion-card>
         </ion-item>
+      </div>
       </div>
     </ion-content>
   `,
@@ -41,6 +45,7 @@ export class ThreadDetailComponent {
 
   constructor(private http: HttpClient, public service: Service, private route: ActivatedRoute, private router: Router) {
     this.getThread();
+    this.getComments();
   }
 
   async getThread() {
@@ -66,6 +71,14 @@ export class ThreadDetailComponent {
       const commentCall = this.http.post<UserComment>(`${environment.baseUrl}/comment/${threadId}`, this.myFormgroup.value, httpOptions);
       this.service.userComment = await firstValueFrom<UserComment>(commentCall);
     });
+  }
+
+  async getComments(){
+    this.route.params.subscribe(async (params) => {
+      const threadId = params['id'];
+    const call = this.http.get<UserComment[]>(`${environment.baseUrl}/getComment/${threadId}`);
+    this.service.userComments = await firstValueFrom<UserComment[]>(call)
+  });
   }
 
   getTimeAgo(timeStamp: string | undefined): string {
