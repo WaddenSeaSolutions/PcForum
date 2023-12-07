@@ -63,7 +63,7 @@ import {catchError, map, Observable, of} from "rxjs";
             <p>De indtastede kodeord er ikke ens</p>
           </div>
           <br>
-          <ion-button class="btnBackground" style="display: flex" (click)="registerUser()">Registrer din konto</ion-button>
+        <ion-button class="btnBackground" style="display: flex" (click)="registerUser()" [disabled]="!formIsValid()">Registrer din konto</ion-button>
         </div>
       </ion-content>
 
@@ -71,6 +71,12 @@ import {catchError, map, Observable, of} from "rxjs";
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent{
+
+  formIsValid(): boolean {
+    // Here you can add other checks if necessary
+    return this.email.valid && this.username.valid && this.password.valid && this.password2.valid;
+  }
+
   //Adds validators to formcontrol
   email = new FormControl('',{
     validators: [
@@ -99,6 +105,8 @@ export class RegisterComponent{
     password: this.password,
   });
 
+  public checkIfLoggedIn: boolean;
+
   // Method that validates that the password matches and ensures no typos in password
   matchingPasswords(control: FormControl): { [key: string]: boolean } | null {
     if (this.password && control.value !== this.password.value) {
@@ -107,7 +115,12 @@ export class RegisterComponent{
     return null;
   }
 
-  constructor(private http : HttpClient, private router: Router, private toastController : ToastController) { }
+  constructor(private http : HttpClient, private router: Router, private toastController : ToastController) {
+    this.checkIfLoggedIn = localStorage.getItem('token') != null;
+    if (this.checkIfLoggedIn){
+      this.router.navigate(['home'])
+    }
+  }
 
   nameValidator(http: HttpClient) {
     return (control: AbstractControl) => {
@@ -197,6 +210,9 @@ export class RegisterComponent{
   }
 
 }
+
+
+
 export interface UsersRegister {
   email: string;
   username: string;

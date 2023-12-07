@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {Router} from "@angular/router";
 import {logOut} from "ionicons/icons";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-root',
@@ -20,11 +21,29 @@ import {logOut} from "ionicons/icons";
         </ion-buttons>
         <ion-buttons id="ionButton">
           <ion-button>
-          <ion-icon id = "icons" name="notifications"></ion-icon>
-          <p>9+</p>
+            <ion-icon id = "icons" name="logo-twitter"></ion-icon>
+
           </ion-button>
         </ion-buttons>
-        <ion-buttons id="ionButton" style = "margin-left: 0.6%" (click)="navigateToProfilePage()">
+        <ion-buttons id="ionButton" (click)="navigateToDiscord()">
+          <ion-button>
+            <ion-icon id = "icons" name="logo-discord"></ion-icon>
+
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons id="ionButton" (click)="navigateToFacebook()">
+          <ion-button>
+            <ion-icon id = "icons" name="logo-facebook"></ion-icon>
+
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons id="ionButton" (click)="navigateToGithub()">
+          <ion-button>
+            <ion-icon id = "icons" name="logo-github"></ion-icon>
+
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons id="ionButton" style = "margin-left: 0.6%" *ngIf="checkIfLoggedIn" (click)="navigateToProfilePage()">
           <ion-button>
           <ion-icon id = "icons" name="person"></ion-icon>
           <p>Profil</p>
@@ -53,6 +72,7 @@ import {logOut} from "ionicons/icons";
 })
 export class AppComponent {
 
+
   public checkIfLoggedIn: boolean;
   public checkIfLoggedOut: boolean;
 
@@ -63,6 +83,8 @@ export class AppComponent {
 
   async navigateToFrontpage(){
     await this.router.navigate(['home'])
+
+
   }
 
   async navigateToLoginPage(){
@@ -72,8 +94,21 @@ export class AppComponent {
   async navigateToProfilePage(){
     await this.router.navigate(['profile'])
   }
-   logOut(){
+   async logOut(){
     localStorage.clear()
+     await this.router.navigate(['home'])
+     location.reload();
+  }
+
+  async navigateToGithub(){
+    window.open('https://github.com/WaddenSeaSolutions', '_blank');
+  }
+
+  async navigateToFacebook(){
+    window.open('https://facebook.com', '_blank');
+  }
+  async navigateToDiscord(){
+    window.open('https://discord.com', '_blank');
   }
 
 }

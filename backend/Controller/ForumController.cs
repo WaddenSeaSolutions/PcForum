@@ -4,6 +4,7 @@ using System.Text.Json.Serialization;
 using backend.Model;
 using backend.Service;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.IdentityModel.Tokens;
 
 namespace backend.Controller;
@@ -25,6 +26,7 @@ public class ForumController : ControllerBase
     }
 
     [HttpPost]
+    [EnableRateLimiting("register")]
     [Route("/register")]
     public IActionResult Register(User user)
     {
@@ -46,6 +48,7 @@ public class ForumController : ControllerBase
     }
 
     [HttpPost]
+    [EnableRateLimiting("login")]
     [Route("/login")]
     public IActionResult Login([FromBody] UserLogin userToBeLoggedIn)
     {
@@ -68,6 +71,7 @@ public class ForumController : ControllerBase
     }
 
     [HttpGet]
+    [EnableRateLimiting("get")]
     [Route("/GetFeed")]
     public IEnumerable<User> getUserFeed()
     {
@@ -75,6 +79,7 @@ public class ForumController : ControllerBase
     }
 
     [HttpGet]
+    [EnableRateLimiting("get")]
     [Authorize]
     [Route("/profile")]
     public IEnumerable<Threads> profileThreadsBasedOnUserId()
@@ -85,6 +90,7 @@ public class ForumController : ControllerBase
     }
 
     [HttpGet]
+    [EnableRateLimiting("get")]
     [Authorize]
     [Route("/userprofile")]
     public User getUserInformation()
@@ -95,6 +101,7 @@ public class ForumController : ControllerBase
     }
 
     [HttpGet]
+    [EnableRateLimiting("get")]
     [Authorize]
     [Route("/usercomments")]
     public IEnumerable<UserCommentCreate> getUserComments()
