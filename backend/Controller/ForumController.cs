@@ -97,7 +97,7 @@ public class ForumController : ControllerBase
     [HttpGet]
     [Authorize]
     [Route("/usercomments")]
-    public IEnumerable<UserComment> getUserComments()
+    public IEnumerable<UserCommentCreate> getUserComments()
     {
         var user = HttpContext.Items["User"] as User;
 

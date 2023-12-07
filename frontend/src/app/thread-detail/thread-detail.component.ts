@@ -26,13 +26,14 @@ import {DomSanitizer} from "@angular/platform-browser";
         <ion-button (click)="postComment()">Submit Comment</ion-button>
 
         <div *ngFor="let userComment of service.userComments">
-          <ion-item style="border: 1px solid grey">
-            <div style="display: flex; flex-wrap: wrap; align-items: flex-start;">
-              <div>
-                <p>{{userComment.username}}</p>
+          <ion-item style="border: 1px solid grey;">
+              <div style="padding: 2%; border-right: 2px solid grey; width: 15%;">
+                <u>{{userComment.username}}</u>
+                <p>{{getTimeAgo(userComment.utctime)}}</p>
               </div>
+              <div style="display: flex; flex-wrap: wrap; margin-left: 1%;">
               <p [innerHtml]="extractAndDisplayImages(userComment.body)"> {{userComment.username}}</p>
-            </div>
+                </div>
           </ion-item>
         </div>
       </div>

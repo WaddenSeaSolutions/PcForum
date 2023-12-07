@@ -13,7 +13,7 @@ public class CommentDAL
         _dataSource = dataSource;
     }
 
-    public void createComment(UserComment userComment)
+    public void createComment(UserCommentCreate userCommentCreate)
     {
         var sql = $@"INSERT INTO forum.comment
         (body, userId, utcTime, deleted, threadId)
@@ -23,25 +23,28 @@ public class CommentDAL
             conn.Execute(sql, new
             {
 
-                body = userComment.body, userId = userComment.userId, utcTime = userComment.utcTime, deleted = userComment.deleted, threadId = userComment.threadId
+                body = userCommentCreate.body, userId = userCommentCreate.userId, utcTime = userCommentCreate.utcTime, deleted = userCommentCreate.deleted, threadId = userCommentCreate.threadId
             });
         }
     }
 
-    public IEnumerable<UserComment> getCommentForThreads(int threadId)
+    public IEnumerable<UserCommentGet> getCommentForThreads(int threadId)
     {
-        var sql = $@"SELECT id as {nameof(UserComment.id)},
-        body as {nameof(UserComment.body)},
-        userid as {nameof(UserComment.userId)},
-        utctime as {nameof(UserComment.utcTime)},
-        deleted as {nameof(UserComment.deleted)},
-        threadId as {nameof(UserComment.threadId)}
-        FROM forum.comment
-        WHERE threadid = @threadId and deleted = false
-        ";
+        var sql = $@"
+    SELECT comment.id as {nameof(UserCommentGet.id)}, 
+    comment.body as {nameof(UserCommentGet.body)}, 
+    comment.userid as {nameof(UserCommentGet.userId)}, 
+    comment.utctime as {nameof(UserCommentGet.utctime)}, 
+    comment.deleted as {nameof(UserCommentGet.deleted)},
+    comment.threadId as {nameof(UserCommentGet.threadId)}, 
+    u.username as {nameof(UserCommentGet.username)} 
+    FROM forum.comment 
+    join forum.users u on u.id = comment.userid 
+    WHERE comment.threadid = @threadId and comment.deleted = false 
+    ";
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.Query<UserComment>(sql, new { threadId = threadId });
+            return conn.Query<UserCommentGet>(sql, new { threadId = threadId });
         }
     }
     

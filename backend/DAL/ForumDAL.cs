@@ -104,18 +104,18 @@ public class ForumDAL
         }
     }
 
-    public IEnumerable<UserComment> getUserComments(int userId)
+    public IEnumerable<UserCommentCreate> getUserComments(int userId)
     {
-        var sql = $@"SELECT id as {nameof(UserComment.id)},
-        body as {nameof(UserComment.body)},
-        userid as {nameof(UserComment.userId)},
-        utctime as {nameof(UserComment.utcTime)},
-        deleted as {nameof(UserComment.deleted)}
+        var sql = $@"SELECT id as {nameof(UserCommentCreate.id)},
+        body as {nameof(UserCommentCreate.body)},
+        userid as {nameof(UserCommentCreate.userId)},
+        utctime as {nameof(UserCommentCreate.utcTime)},
+        deleted as {nameof(UserCommentCreate.deleted)}
         FROM forum.comment WHERE userid = @userid AND deleted = false";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.Query<UserComment>(sql, new { userid = userId });
+            return conn.Query<UserCommentCreate>(sql, new { userid = userId });
         }
     }
 }
