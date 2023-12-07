@@ -35,6 +35,7 @@ public class ThreadDAL
 
     public void createThread(ResponseThreadCreate rtc)
     {
+        var sqlCheck = "SELECT deleted from forum.topics where id = @topicId;";
         var sql =
             $@"INSERT INTO forum.threads 
                            (title, topicid, body, likes, deleted, userid, utctime) 
@@ -42,7 +43,9 @@ public class ThreadDAL
 
         using (var conn = _dataSource.OpenConnection())
         {
-            conn.Execute(sql,
+           var isDeleted = conn.ExecuteScalar<bool>(sqlCheck, new { topicId = rtc.topicId });
+           if (isDeleted) throw new Exception("This topic is no longer amoung us");
+           conn.Execute(sql,
                 new
                 {
                     title = rtc.title, topicId = rtc.topicId, body = rtc.body, likes = rtc.likes,
