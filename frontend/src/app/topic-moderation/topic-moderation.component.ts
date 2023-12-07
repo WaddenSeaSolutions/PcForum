@@ -25,8 +25,17 @@ import {firstValueFrom} from "rxjs";
 })
 export class TopicModerationComponent {
 
+  public checkIfAdmin: boolean;
+
   constructor(private http: HttpClient, public service: Service, private router: Router) {
-    this.getTopics();
+    this.checkIfAdmin = localStorage.getItem('role') === 'admin';
+    if (!this.checkIfAdmin){
+      this.router.navigate(['home'])
+    }else {
+      this.getTopics();
+    }
+
+
   }
 
   async getTopics(){
