@@ -18,17 +18,18 @@ import {body} from "ionicons/icons";
         <p style="color: white;">Tekst: {{service.thread?.body}}</p>
         <p> {{getTimeAgo(service.thread?.utctime)}}</p>
         <ion-item>
-          <ion-textarea class="styled-textarea" [formControl]="body" placeholder="Enter your comment here..."></ion-textarea>
+          <ion-textarea class="styled-textarea" [formControl]="body"
+                        placeholder="Enter your comment here..."></ion-textarea>
         </ion-item>
         <ion-button (click)="postComment()">Submit Comment</ion-button>
 
         <div *ngFor="let userComment of service.userComments">
-        <ion-item style="border: 1px solid grey">
-        <ion-card>
-            <u>{{userComment.body}}</u>
-        </ion-card>
-        </ion-item>
-      </div>
+          <ion-item style="border: 1px solid grey">
+            <ion-card>
+              <p>{{service.thread?.username}} - {{userComment.body}}</p>
+            </ion-card>
+          </ion-item>
+        </div>
       </div>
     </ion-content>
   `,
@@ -70,6 +71,10 @@ export class ThreadDetailComponent {
 
       const commentCall = this.http.post<UserComment>(`${environment.baseUrl}/comment/${threadId}`, this.myFormgroup.value, httpOptions);
       this.service.userComment = await firstValueFrom<UserComment>(commentCall);
+
+      // Refresh comments after posting
+      this.getComments();
+      this.body.reset();
     });
   }
 
