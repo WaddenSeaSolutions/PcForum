@@ -32,6 +32,7 @@ export interface UserComment {
   id: number;
   username: string;
   body: string;
+  utctime: string;
   userId: number;
   threadId: number;
 }

@@ -104,7 +104,7 @@ public class ForumController : ControllerBase
     [EnableRateLimiting("get")]
     [Authorize]
     [Route("/usercomments")]
-    public IEnumerable<UserComment> getUserComments()
+    public IEnumerable<UserCommentCreate> getUserComments()
     {
         var user = HttpContext.Items["User"] as User;
 

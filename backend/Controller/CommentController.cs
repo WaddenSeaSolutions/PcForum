@@ -21,7 +21,7 @@ public class CommentController : ControllerBase
     [HttpGet]
     [EnableRateLimiting("get")]
     [Route("/getComment/{threadId}")]
-    public IEnumerable<UserComment> getCommentForThreads([FromRoute] int threadId)
+    public IEnumerable<UserCommentGet> getCommentForThreads([FromRoute] int threadId)
     {
         return _commentService.getCommentForThreads(threadId);
     }
@@ -31,19 +31,19 @@ public class CommentController : ControllerBase
     [EnableRateLimiting("comment")]
     [Authorize]
     [Route("/comment/{threadId}")]
-    public void CreateComment([FromBody] UserComment userComment, int threadId)
+    public void CreateComment([FromBody] UserCommentCreate userCommentCreate, int threadId)
     {
         var user = HttpContext.Items["User"] as User;
 
-        userComment.threadId = threadId;
+        userCommentCreate.threadId = threadId;
 
-        userComment.deleted = false;
+        userCommentCreate.deleted = false;
 
-        userComment.userId = user.Id;
+        userCommentCreate.userId = user.Id;
         
-        userComment.utcTime = DateTime.UtcNow;
+        userCommentCreate.utcTime = DateTime.UtcNow;
         
-        _commentService.createComment(userComment);
+        _commentService.createComment(userCommentCreate);
     }
 
 
