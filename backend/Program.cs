@@ -1,6 +1,8 @@
+using System.Threading.RateLimiting;
 using backend;
 using backend.DAL;
 using backend.Service;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,6 +41,37 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+var fixedPolicy = "fixed";
+var commentPolicy = "comment";
+var getPolicy = "get";
+
+builder.Services.AddRateLimiter(_ => _
+    .AddFixedWindowLimiter(policyName: fixedPolicy, options =>
+    {
+        options.PermitLimit = 2;
+        options.Window = TimeSpan.FromSeconds(30);
+        options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        options.QueueLimit = 1;
+    }));
+
+builder.Services.AddRateLimiter(_ => _
+    .AddFixedWindowLimiter(policyName: commentPolicy, options =>
+    {
+        options.PermitLimit = 5;
+        options.Window = TimeSpan.FromSeconds(30);
+        options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        options.QueueLimit = 1;
+    }));
+
+builder.Services.AddRateLimiter(_ => _
+    .AddFixedWindowLimiter(policyName: getPolicy, options =>
+    {
+        options.PermitLimit = 75;
+        options.Window = TimeSpan.FromSeconds(40);
+        options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        options.QueueLimit = 1;
+    }));
+
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
@@ -55,6 +88,7 @@ app.UseCors(options =>
         .AllowCredentials();
 });
 
+app.UseRateLimiter();
 
 app.MapControllers();
 app.Run();
