@@ -68,7 +68,11 @@ export class ThreadCreationComponent {
   }
 
   async cancel() {
-    await this.router.navigate(['topics'])
+    let topicId = 1;
+    this.route.params.subscribe((params) => {
+      topicId = params['id']
+    });
+    await this.router.navigate(['topic', topicId]);
   }
 
 }
