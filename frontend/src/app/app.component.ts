@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {Router} from "@angular/router";
 import {logOut} from "ionicons/icons";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-root',
@@ -24,7 +25,7 @@ import {logOut} from "ionicons/icons";
           <p>9+</p>
           </ion-button>
         </ion-buttons>
-        <ion-buttons id="ionButton" style = "margin-left: 0.6%" (click)="navigateToProfilePage()">
+        <ion-buttons id="ionButton" style = "margin-left: 0.6%" *ngIf="checkIfLoggedIn" (click)="navigateToProfilePage()">
           <ion-button>
           <ion-icon id = "icons" name="person"></ion-icon>
           <p>Profil</p>
@@ -53,6 +54,7 @@ import {logOut} from "ionicons/icons";
 })
 export class AppComponent {
 
+
   public checkIfLoggedIn: boolean;
   public checkIfLoggedOut: boolean;
 
@@ -63,6 +65,8 @@ export class AppComponent {
 
   async navigateToFrontpage(){
     await this.router.navigate(['home'])
+
+
   }
 
   async navigateToLoginPage(){
@@ -72,8 +76,10 @@ export class AppComponent {
   async navigateToProfilePage(){
     await this.router.navigate(['profile'])
   }
-   logOut(){
+   async logOut(){
     localStorage.clear()
+     await this.router.navigate(['home'])
+     location.reload();
   }
 
 }

@@ -105,6 +105,8 @@ export class RegisterComponent{
     password: this.password,
   });
 
+  public checkIfLoggedIn: boolean;
+
   // Method that validates that the password matches and ensures no typos in password
   matchingPasswords(control: FormControl): { [key: string]: boolean } | null {
     if (this.password && control.value !== this.password.value) {
@@ -113,7 +115,12 @@ export class RegisterComponent{
     return null;
   }
 
-  constructor(private http : HttpClient, private router: Router, private toastController : ToastController) { }
+  constructor(private http : HttpClient, private router: Router, private toastController : ToastController) {
+    this.checkIfLoggedIn = localStorage.getItem('token') != null;
+    if (this.checkIfLoggedIn){
+      this.router.navigate(['home'])
+    }
+  }
 
   nameValidator(http: HttpClient) {
     return (control: AbstractControl) => {
