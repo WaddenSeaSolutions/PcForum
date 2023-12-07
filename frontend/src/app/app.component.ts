@@ -21,8 +21,26 @@ import {FormControl} from "@angular/forms";
         </ion-buttons>
         <ion-buttons id="ionButton">
           <ion-button>
-          <ion-icon id = "icons" name="notifications"></ion-icon>
-          <p>9+</p>
+            <ion-icon id = "icons" name="logo-twitter"></ion-icon>
+
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons id="ionButton" (click)="navigateToDiscord()">
+          <ion-button>
+            <ion-icon id = "icons" name="logo-discord"></ion-icon>
+
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons id="ionButton" (click)="navigateToFacebook()">
+          <ion-button>
+            <ion-icon id = "icons" name="logo-facebook"></ion-icon>
+
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons id="ionButton" (click)="navigateToGithub()">
+          <ion-button>
+            <ion-icon id = "icons" name="logo-github"></ion-icon>
+
           </ion-button>
         </ion-buttons>
         <ion-buttons id="ionButton" style = "margin-left: 0.6%" *ngIf="checkIfLoggedIn" (click)="navigateToProfilePage()">
@@ -80,6 +98,17 @@ export class AppComponent {
     localStorage.clear()
      await this.router.navigate(['home'])
      location.reload();
+  }
+
+  async navigateToGithub(){
+    window.open('https://github.com/WaddenSeaSolutions', '_blank');
+  }
+
+  async navigateToFacebook(){
+    window.open('https://facebook.com', '_blank');
+  }
+  async navigateToDiscord(){
+    window.open('https://discord.com', '_blank');
   }
 
 }

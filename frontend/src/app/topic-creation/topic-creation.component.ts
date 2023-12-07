@@ -43,6 +43,9 @@ export class TopicCreationComponent  {
 
   constructor(private http: HttpClient, public service: Service, private router: Router, private toastController: ToastController) {
     this.checkIfAdmin = localStorage.getItem('role') === 'admin';
+    if (!this.checkIfAdmin){
+      this.router.navigate(['home'])
+    }
   }
   async createTopic(){
     let token = localStorage.getItem('token');
