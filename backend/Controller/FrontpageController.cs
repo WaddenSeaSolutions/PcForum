@@ -2,6 +2,7 @@ using backend.Attributes;
 using backend.Model;
 using backend.Service;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace backend.Controller;
 
@@ -16,6 +17,7 @@ public class FrontpageController : ControllerBase
     }
 
     [HttpGet]
+    [EnableRateLimiting("get")]
     [Route("/topics")]
     public IEnumerable<Topic> getTopics()
     {

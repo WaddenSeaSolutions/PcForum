@@ -2,6 +2,7 @@ using backend.DAL;
 using backend.Model;
 using backend.Service;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace backend.Controller;
 
@@ -18,6 +19,7 @@ public class CommentController : ControllerBase
 
 
     [HttpGet]
+    [EnableRateLimiting("get")]
     [Route("/getComment/{threadId}")]
     public IEnumerable<UserComment> getCommentForThreads([FromRoute] int threadId)
     {
@@ -26,6 +28,7 @@ public class CommentController : ControllerBase
     
     
     [HttpPost]
+    [EnableRateLimiting("comment")]
     [Authorize]
     [Route("/comment/{threadId}")]
     public void CreateComment([FromBody] UserComment userComment, int threadId)

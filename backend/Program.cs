@@ -44,6 +44,8 @@ builder.Services.AddSwaggerGen();
 var fixedPolicy = "fixed";
 var commentPolicy = "comment";
 var getPolicy = "get";
+var loginPolicy = "login";
+var registerPolicy = "register";
 
 builder.Services.AddRateLimiter(_ => _
     .AddFixedWindowLimiter(policyName: fixedPolicy, options =>
@@ -72,6 +74,22 @@ builder.Services.AddRateLimiter(_ => _
         options.QueueLimit = 1;
     }));
 
+builder.Services.AddRateLimiter(_ => _
+    .AddFixedWindowLimiter(policyName: loginPolicy, options =>
+    {
+        options.PermitLimit = 5;
+        options.Window = TimeSpan.FromSeconds(180);
+        options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        options.QueueLimit = 1;
+    }));
+builder.Services.AddRateLimiter(_ => _
+    .AddFixedWindowLimiter(policyName: registerPolicy, options =>
+    {
+        options.PermitLimit = 1;
+        options.Window = TimeSpan.FromSeconds(300);
+        options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        options.QueueLimit = 1;
+    }));
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
