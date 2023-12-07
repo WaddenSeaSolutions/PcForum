@@ -35,12 +35,19 @@ export class LoginPageComponent {
     username = new FormControl('', Validators.compose([Validators.min(5), Validators.max(20)]))
     password = new FormControl('', Validators.compose([Validators.min(8), Validators.max(30), Validators.required]))
 
+  public checkIfLoggedIn: boolean;
+
     myFormGroup = new FormGroup({
         username: this.username,
         password: this.password,
     })
 
     constructor(private http: HttpClient, private router: Router) {
+      this.checkIfLoggedIn = localStorage.getItem('token') != null;
+
+      if (this.checkIfLoggedIn){
+        this.router.navigate(['home'])
+      }
     }
 
     login() {
@@ -56,6 +63,7 @@ export class LoginPageComponent {
                             localStorage.setItem('role', payload.role)
                             //Go to homepage after successful login
                             this.router.navigate(["home"])
+                          location.reload();
                         }
                     },
                     error: (err) => {
