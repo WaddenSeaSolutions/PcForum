@@ -40,7 +40,8 @@ public class CommentDAL
     u.username as {nameof(UserCommentGet.username)} 
     FROM forum.comment 
     join forum.users u on u.id = comment.userid 
-    WHERE comment.threadid = @threadId and comment.deleted = false 
+    WHERE comment.threadid = @threadId and comment.deleted = false
+    ORDER BY utctime ASC;
     ";
         using (var conn = _dataSource.OpenConnection())
         {

@@ -13,8 +13,7 @@ import {DomSanitizer} from "@angular/platform-browser";
   selector: 'app-thread-detail',
   template: `
     <ion-content style="--background: none; top: 20%;">
-      <div
-        style="background: #1e1e1e; padding: 1%; margin-left: 5%; margin-right: 5%; border: 1px solid grey; overflow: auto; height: 78%">
+      <div style="background: #1e1e1e; padding: 1%; margin-left: 5%; margin-right: 5%; border: 1px solid grey; overflow: auto; height: 78%">
         <u style="color: white;">Tråd starter: {{service.thread?.username}}</u>
         <p style="color: white;">Titel: {{service.thread?.title}}</p>
         <p style="color: white;">Tekst: {{service.thread?.body}}</p>
@@ -27,7 +26,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 
         <div *ngFor="let userComment of service.userComments">
           <ion-item style="border: 1px solid grey;">
-              <div style="padding: 2%; border-right: 2px solid grey; width: 15%;">
+              <div style="padding: 2%; border-right: 2px solid grey; width: 15%; height: 100%">
                 <u>{{userComment.username}}</u>
                 <p>{{getTimeAgo(userComment.utctime)}}</p>
               </div>
