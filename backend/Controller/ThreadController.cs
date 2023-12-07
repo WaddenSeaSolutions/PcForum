@@ -1,10 +1,12 @@
 using backend.Model;
 using backend.Service;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace backend.Controller;
 
 [ApiController]
+
 
 public class ThreadController : ControllerBase
 {
@@ -17,6 +19,7 @@ public class ThreadController : ControllerBase
     }
     
     [HttpGet]
+    [EnableRateLimiting("get")]
     [Route("/threads/{topicId}")]
     public IEnumerable<Threads> GetThreadsForTopic([FromRoute]int topicId)
     {
@@ -26,6 +29,7 @@ public class ThreadController : ControllerBase
     
 
     [HttpPost]
+    [EnableRateLimiting("fixed")]
     [Authorize]
     [Route("/threads")]
     public void createThread([FromBody] ResponseThreadCreate rtc)
@@ -40,6 +44,7 @@ public class ThreadController : ControllerBase
     }
 
     [HttpGet]
+    [EnableRateLimiting("get")]
     [Route("/searchOnThreads")]
     public IEnumerable<Threads> searchOnThreads([FromQuery] string searchTerm, [FromQuery] int topicId)
     {
@@ -47,6 +52,7 @@ public class ThreadController : ControllerBase
     }
 
     [HttpGet]
+    [EnableRateLimiting("get")]
     [Route("thread/{id}")]
     public Threads getThreadDetails([FromRoute] int id)
     {
