@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Service} from "../../Service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Thread, UserComment} from "../../Interface";
+import {Thread, Topic, UserComment} from "../../Interface";
 import {environment} from "../../environments/environment";
 import {firstValueFrom} from "rxjs";
 import {FormControl, FormGroup} from "@angular/forms";
@@ -31,11 +31,12 @@ import {DomSanitizer} from "@angular/platform-browser";
 
         <div *ngFor="let userComment of service.userComments">
           <ion-item style="border: 1px solid grey;">
-            <div style="padding: 2%; border-right: 2px solid grey; width: 15%; height: 100%">
-              <u>{{userComment.username}}</u>
-              <p>{{getTimeAgo(userComment.utctime)}}</p>
-            </div>
-            <div style="display: flex; flex-wrap: wrap; margin-left: 1%;">
+              <div style="padding: 2%; border-right: 2px solid grey; width: 15%; height: 100%">
+                <u>{{userComment.username}}</u>
+                <p>{{getTimeAgo(userComment.utctime)}}</p>
+                <ion-button *ngIf="checkIfAdmin" color="danger" style=" cursor: pointer; " (click)="deleteComment(userComment.id)">Delete comment</ion-button>
+              </div>
+              <div style="display: flex; flex-wrap: wrap; margin-left: 1%;">
               <p [innerHtml]="extractAndDisplayImages(userComment.body)"> {{userComment.username}}</p>
             </div>
           </ion-item>
@@ -46,6 +47,7 @@ import {DomSanitizer} from "@angular/platform-browser";
   styleUrls: ['./thread-detail.component.scss'],
 })
 export class ThreadDetailComponent {
+  public checkIfAdmin: boolean;
 
   body = new FormControl('');
 
@@ -54,6 +56,8 @@ export class ThreadDetailComponent {
   })
 
   constructor(private http: HttpClient, public service: Service, private route: ActivatedRoute, private router: Router, private sanitizer: DomSanitizer) {
+    this.checkIfAdmin = localStorage.getItem('role') === 'admin';
+    this.checkIfAdmin = true;
     this.getThread();
     this.getComments();
   }
@@ -145,4 +149,23 @@ export class ThreadDetailComponent {
   }
 
   protected readonly console = console;
+
+  async deleteComment(id: number) {
+    let token = localStorage.getItem('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      })
+    };
+    const softDeleteUrl = `${environment.baseUrl}/comment/${id}`;
+
+    try {
+      await this.http.put(softDeleteUrl, { deleted: true }, httpOptions).toPromise();
+
+       this.getComments();
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
