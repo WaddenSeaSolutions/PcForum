@@ -14,10 +14,15 @@ import {DomSanitizer} from "@angular/platform-browser";
   template: `
     <ion-content style="--background: none; top: 20%;">
       <div style="background: #1e1e1e; padding: 1%; margin-left: 5%; margin-right: 5%; border: 1px solid grey; overflow: auto; height: 78%">
+        <div style="text-align: center">
+        <ion-title style="color: white; ">{{service.thread?.title}}</ion-title>
+        </div>
+        <div style="border-bottom: 2px solid grey; width: 100%">
+          <br>
         <u style="color: white;">Tråd starter: {{service.thread?.username}}</u>
-        <p style="color: white;">Titel: {{service.thread?.title}}</p>
-        <p style="color: white;">Tekst: {{service.thread?.body}}</p>
         <p> {{getTimeAgo(service.thread?.utctime)}}</p>
+        </div>
+        <p style="color: white;" [innerHTML]="service.thread ? extractAndDisplayImages(service.thread.body) : ''"></p>
         <ion-item>
           <ion-textarea class="styled-textarea" [formControl]="body"
                         placeholder="Indsæt din kommentar her...."></ion-textarea>
@@ -33,7 +38,7 @@ import {DomSanitizer} from "@angular/platform-browser";
               </div>
               <div style="display: flex; flex-wrap: wrap; margin-left: 1%;">
               <p [innerHtml]="extractAndDisplayImages(userComment.body)"> {{userComment.username}}</p>
-                </div>
+            </div>
           </ion-item>
         </div>
       </div>
@@ -127,13 +132,19 @@ export class ThreadDetailComponent {
 
   extractAndDisplayImages(text: string) : any {
     let updatedText = text;
-    const urlPattern = /(https?:\/\/[^\s]+)/g;
+
+    const urlPattern = /(https?:\/\/[^\s]+)/g;  // Matches urls
     const matchedUrls = text.match(urlPattern);
+
     if (matchedUrls) {
       matchedUrls.forEach(url => {
         updatedText = updatedText.replace(url, `<br> <img src="${url}" alt="Billedet kunne ikke vises"> <br>`);
       });
     }
+
+    const paragraphs = updatedText.split(/\n{1,}/);  // Splits the text into paragraphs at every two consecutive line breaks
+    updatedText = paragraphs.map(paragraph => `<p>${paragraph}</p>`).join('');  // Wraps each paragraph in <p> tags
+
     return updatedText;
   }
 
