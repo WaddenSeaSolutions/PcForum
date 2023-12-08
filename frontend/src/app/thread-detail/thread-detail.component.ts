@@ -57,7 +57,6 @@ export class ThreadDetailComponent {
 
   constructor(private http: HttpClient, public service: Service, private route: ActivatedRoute, private router: Router, private sanitizer: DomSanitizer) {
     this.checkIfAdmin = localStorage.getItem('role') === 'admin';
-    this.checkIfAdmin = true;
     this.getThread();
     this.getComments();
   }
