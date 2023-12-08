@@ -57,7 +57,6 @@ public class ForumController : ControllerBase
         {
             throw new Exception("Could not log in. User could not be authenticated.");
         }
-        Console.WriteLine(userToBeAuthenticated.Email);
         var token = _tokenService.createToken(userToBeAuthenticated);
 
         return Ok(token); // Successful login (200 OK)
