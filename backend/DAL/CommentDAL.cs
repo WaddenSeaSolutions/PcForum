@@ -48,7 +48,15 @@ public class CommentDAL
             return conn.Query<UserCommentGet>(sql, new { threadId = threadId });
         }
     }
-    
-    
-    
+
+
+    public void deleteComment(int id)
+    {
+        var sql = @"UPDATE forum.comment SET deleted = true WHERE id = @id";
+        
+        using (var conn = _dataSource.OpenConnection())
+        {
+            conn.Execute(sql, new { id });
+        }
+    }
 }

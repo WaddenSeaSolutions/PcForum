@@ -22,4 +22,8 @@ public class CommentService
         return _commentDal.getCommentForThreads(threadId);
     }
 
+    public void deleteComment(int id)
+    {
+        _commentDal.deleteComment(id);
+    }
 }
