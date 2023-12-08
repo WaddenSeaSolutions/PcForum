@@ -13,7 +13,7 @@ public class ThreadDAL
         _dataSource = dataSource;
     }
 
-    public IEnumerable<Threads> GetThreadsForTopic(int topicId)
+    public IEnumerable<Threads> getThreadsForTopic(int topicId)
     {
         var sql = $@"SELECT id as {nameof(Threads.id)},
         title as {nameof(Threads.title)},

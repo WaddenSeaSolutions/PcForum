@@ -18,29 +18,29 @@ public class ForumService
      * //Encrypts the password with a workFactor of 15.
      * WorkFactor slows the encryption ensuring brute-forcing takes longer amounts of time
      */
-    public bool Register(User user) 
+    public bool register(User user) 
     {
         string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.Password, 12);
 
         //Replaces existing password with an encrypted created by Bcrypt
         user.Password = hashedPassword;
         
-       return _forumDal.Register(user);
+       return _forumDal.register(user);
     }
     
 
 
-    public void DeleteUser(int id)
+    public void deleteUser(int id)
     {
-        _forumDal.DeleteUser(id);
+        _forumDal.deleteUser(id);
     }
     
     public IEnumerable<User> getUserFeed()
     {
-        return _forumDal.GetUserFeed();
+        return _forumDal.getUserFeed();
     }
 
-    public User Login(UserLogin userToBeLoggedIn)
+    public User login(UserLogin userToBeLoggedIn)
     {
         try
         {

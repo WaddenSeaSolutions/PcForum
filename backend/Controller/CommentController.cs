@@ -31,7 +31,7 @@ public class CommentController : ControllerBase
     [EnableRateLimiting("comment")]
     [Authorize]
     [Route("/comment/{threadId}")]
-    public void CreateComment([FromBody] UserCommentCreate userCommentCreate, int threadId)
+    public void createComment([FromBody] UserCommentCreate userCommentCreate, int threadId)
     {
         var user = HttpContext.Items["User"] as User;
 

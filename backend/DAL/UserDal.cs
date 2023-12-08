@@ -15,7 +15,7 @@ public class UserDal
     }
 
 
-    public bool CheckIfUsernameExist(string username)
+    public bool checkIfUsernameExist(string username)
     {
         string sql = "SELECT username FROM forum.users WHERE username = @username;";
 

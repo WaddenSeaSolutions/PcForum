@@ -14,7 +14,7 @@ public class UserService
 
     public bool checkIfUsernameExist(string username)
     {
-        return _userDal.CheckIfUsernameExist(username);
+        return _userDal.checkIfUsernameExist(username);
     }
 
     public bool checkIfEmailExist(string email)
