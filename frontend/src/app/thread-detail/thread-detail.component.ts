@@ -59,7 +59,6 @@ export class ThreadDetailComponent {
     this.service.thread = null;
     this.service.userComments = [];
     this.checkIfAdmin = localStorage.getItem('role') === 'admin';
-    this.checkIfAdmin = true;
     this.getThread();
     this.getComments();
   }
