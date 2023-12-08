@@ -20,7 +20,6 @@ import {navigate} from "ionicons/icons";
         <ion-card id="topicCards">
           <ion-img id="topicImage" src="{{topic.image}}"></ion-img>
             <ion-title id="topicTitle" (click)="openTopic(topic)">{{topic.title}}</ion-title>
-          <p>Antal af tråde: </p>
         </ion-card>
       </div>
     </ion-content>

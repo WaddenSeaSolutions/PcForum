@@ -22,11 +22,6 @@ export interface Thread{
   comments: Comment[];
 }
 
-export interface UsersRegister {
-  email: string;
-  username: string;
-  password: string;
-}
 
 export interface UserComment {
   id: number;
