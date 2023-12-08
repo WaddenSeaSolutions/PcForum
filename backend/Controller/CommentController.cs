@@ -1,3 +1,4 @@
+using backend.Attributes;
 using backend.DAL;
 using backend.Model;
 using backend.Service;
@@ -44,6 +45,14 @@ public class CommentController : ControllerBase
         userCommentCreate.utcTime = DateTime.UtcNow;
         
         _commentService.createComment(userCommentCreate);
+    }
+
+    [HttpPut]
+    [AuthorizeAdmin]
+    [Route("/comment/{id}")]
+    public void deleteComment([FromRoute] int id)
+    {
+        _commentService.deleteComment(id);
     }
 
 
