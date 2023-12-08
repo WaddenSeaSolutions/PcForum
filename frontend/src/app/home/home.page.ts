@@ -16,11 +16,13 @@ import {navigate} from "ionicons/icons";
         <ion-button (click)="openCreateTopic()" style="--background: none;">Opret nyt emne</ion-button>
         <ion-button (click)="openTopicModeration()" style="--background: none;">Administrere emner</ion-button>
       </ion-card>
+      <div style="overflow: auto; height: 85%;">
       <div *ngFor="let topic of service.topics">
         <ion-card id="topicCards">
           <ion-img id="topicImage" src="{{topic.image}}"></ion-img>
             <ion-title id="topicTitle" (click)="openTopic(topic)">{{topic.title}}</ion-title>
         </ion-card>
+      </div>
       </div>
     </ion-content>
   ` ,
