@@ -14,7 +14,7 @@ public class ForumDAL
         _dataSource = dataSource;
     }
 
-    public bool Register(User user)
+    public bool register(User user)
     {
         var sql = $@"INSERT INTO forum.users (username, password, email, userrole, deleted)
         VALUES (@username, @password, @email, @userrole, @deleted);";
@@ -30,7 +30,7 @@ public class ForumDAL
         return false;
     }
 
-    public void DeleteUser(int id)
+    public void deleteUser(int id)
     {
         var sql = $@"UPDATE forum.users
                   SET deleted = true
@@ -42,7 +42,7 @@ public class ForumDAL
         }
     }
 
-    public IEnumerable<User> GetUserFeed()
+    public IEnumerable<User> getUserFeed()
     {
         var sql = $@"SELECT id as {nameof(User.Id)},
                  username as {nameof(User.Username)},

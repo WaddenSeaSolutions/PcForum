@@ -7,7 +7,7 @@ namespace backend.Service;
 public class EmailService
 {
     
-    public void SendEmail(User user)
+    public void sendEmail(User user)
     {
         var message = new MimeMessage();
         message.From.Add(new MailboxAddress("PcForum","EmailPcForumOrganisation"));
