@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {Thread} from "../../Interface";
 import {environment} from "../../environments/environment";
-import {FormControl} from "@angular/forms";
+import {FormControl, Validators} from "@angular/forms";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Service} from "../../Service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {ToastController} from "@ionic/angular";
 
 @Component({
   selector: 'app-thread-creation',
@@ -33,37 +34,41 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class ThreadCreationComponent {
 
-  title = new FormControl('');
-  body = new FormControl('');
+  title = new FormControl('', Validators.required);
+  body = new FormControl('', Validators.required);
   id = new FormControl('')
 
-  constructor(private http: HttpClient, public service: Service, private route: ActivatedRoute, private router: Router) {
+  constructor(private http: HttpClient, public service: Service, private route: ActivatedRoute, private router: Router, private toastController: ToastController) {
 
   }
 
   async createThread() {
-    let topicId = 1;
-    this.route.params.subscribe((params) => {
-      topicId = params['id']
-    });
-    const newThread = {
-      title: this.title.value,
-      body: this.body.value,
-      topicId
-    };
+    if (this.title.valid && this.body.valid) {
+      let topicId = 1;
+      this.route.params.subscribe((params) => {
+        topicId = params['id']
+      });
+      const newThread = {
+        title: this.title.value,
+        body: this.body.value,
+        topicId
+      };
 
-    let token = localStorage.getItem('token');
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      })
-    };
-    try {
-      await this.http.post<Thread[]>(environment.baseUrl + '/threads/', newThread, httpOptions).toPromise();
-      await this.router.navigate(['topic', topicId])
-    } catch (e) {
-      console.error(e)
+      let token = localStorage.getItem('token');
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        })
+      };
+      try {
+        await this.http.post<Thread[]>(environment.baseUrl + '/threads/', newThread, httpOptions).toPromise();
+        await this.router.navigate(['topic', topicId])
+      } catch (e) {
+        console.error(e)
+      }
+    } else {
+      this.tellUserNotAllowed()
     }
   }
 
@@ -73,6 +78,14 @@ export class ThreadCreationComponent {
       topicId = params['id']
     });
     await this.router.navigate(['topic', topicId]);
+  }
+
+  async tellUserNotAllowed(){
+    const toast = await this.toastController.create({
+      message: 'Du skal udfylde felterne.',
+      duration: 2000
+    });
+    toast.present();
   }
 
 }
