@@ -21,7 +21,7 @@ public class TokenService
         _tokenDal = tokenDal;
     }
 
-    public string CreateToken(User user)
+    public string createToken(User user)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
 
@@ -53,7 +53,7 @@ public class TokenService
 
     public User validateTokenAndReturnUserIfNotDeleted(string token)
     {
-        var principal = ValidateAndReturnToken(token); //Validating the token has not been tampered
+        var principal = validateAndReturnToken(token); //Validating the token has not been tampered
     
         var nameClaim = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name); // Saves the id of the user with the token
 
@@ -66,7 +66,7 @@ public class TokenService
     }
     
 
-    private ClaimsPrincipal ValidateAndReturnToken(string token)
+    private ClaimsPrincipal validateAndReturnToken(string token)
     {
         try
         {

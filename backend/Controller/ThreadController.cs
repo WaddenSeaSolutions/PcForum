@@ -21,9 +21,9 @@ public class ThreadController : ControllerBase
     [HttpGet]
     [EnableRateLimiting("get")]
     [Route("/threads/{topicId}")]
-    public IEnumerable<Threads> GetThreadsForTopic([FromRoute]int topicId)
+    public IEnumerable<Threads> getThreadsForTopic([FromRoute]int topicId)
     {
-        return _threadService.GetThreadsForTopic(topicId);
+        return _threadService.getThreadsForTopic(topicId);
     }
 
     

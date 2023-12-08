@@ -13,9 +13,9 @@ public class ThreadService
         _threadDal = threadDal;
     }
 
-    public IEnumerable<Threads> GetThreadsForTopic(int topicId)
+    public IEnumerable<Threads> getThreadsForTopic(int topicId)
     {
-        return _threadDal.GetThreadsForTopic(topicId);
+        return _threadDal.getThreadsForTopic(topicId);
     }
 
     public void createThread(ResponseThreadCreate rtc)
