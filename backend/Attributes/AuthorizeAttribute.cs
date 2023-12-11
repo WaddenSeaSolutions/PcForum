@@ -21,7 +21,7 @@ public class AuthorizeAttribute : Attribute, IAuthorizationFilter
             // Validate the token and get the user
             var user = tokenService.validateTokenAndReturnUserIfNotDeleted(token);
 
-            // Store the user in HttpContext if you need it in your controller later
+            // Store the user in HttpContext, so we can retrieve it later on
             context.HttpContext.Items["User"] = user;
         }
         catch (SecurityTokenException)
