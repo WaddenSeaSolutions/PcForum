@@ -5,7 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Thread, Topic, UserComment} from "../../Interface";
 import {environment} from "../../environments/environment";
 import {firstValueFrom} from "rxjs";
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {body} from "ionicons/icons";
 import {DomSanitizer} from "@angular/platform-browser";
 
@@ -49,7 +49,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 export class ThreadDetailComponent {
   public checkIfAdmin: boolean;
 
-  body = new FormControl('');
+  body = new FormControl('',[Validators.required, Validators.minLength(1)]);
 
   myFormgroup = new FormGroup({
     body: this.body
