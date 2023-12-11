@@ -140,12 +140,12 @@ export class ThreadDetailComponent {
 
     if (matchedUrls) {
       matchedUrls.forEach(url => {
-        updatedText = updatedText.replace(url, `<br> <img src="${url}" alt="Billedet kunne ikke vises"> <br>`);
+        updatedText = updatedText.replace(url, `<br> <img src="${url}" alt="Ikke tilgængeligt billede"> <br>`);
       });
     }
 
     const paragraphs = updatedText.split(/\n{1,}/);  // Splits the text into paragraphs at every two consecutive line breaks
-    updatedText = paragraphs.map(paragraph => `<p>${paragraph}</p>`).join('');  // Wraps each paragraph in <p> tags
+    updatedText = paragraphs.map(paragraph => `<p>${paragraph}</p>`).join('');  
 
     return updatedText;
   }
