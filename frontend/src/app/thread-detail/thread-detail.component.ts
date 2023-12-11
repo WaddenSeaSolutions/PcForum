@@ -5,7 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Thread, Topic, UserComment} from "../../Interface";
 import {environment} from "../../environments/environment";
 import {firstValueFrom} from "rxjs";
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {body} from "ionicons/icons";
 import {DomSanitizer} from "@angular/platform-browser";
 
@@ -37,7 +37,7 @@ import {DomSanitizer} from "@angular/platform-browser";
                 <ion-button *ngIf="checkIfAdmin" color="danger" style=" cursor: pointer; " (click)="deleteComment(userComment.id)">Delete comment</ion-button>
               </div>
               <div style="display: flex; flex-wrap: wrap; margin-left: 1%;">
-              <p [innerHtml]="extractAndDisplayImages(userComment.body)"> {{userComment.username}}</p>
+              <p [innerHtml]="extractAndDisplayImages(userComment.body)"></p>
             </div>
           </ion-item>
         </div>
@@ -49,7 +49,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 export class ThreadDetailComponent {
   public checkIfAdmin: boolean;
 
-  body = new FormControl('');
+  body = new FormControl('',[Validators.required, Validators.minLength(1)]);
 
   myFormgroup = new FormGroup({
     body: this.body
@@ -100,6 +100,9 @@ export class ThreadDetailComponent {
     this.service.userComments = await firstValueFrom<UserComment[]>(call)
   });
   }
+  /*
+   A method that recieves a timestamp and uses it to calculate the time since it was written
+   */
 
   getTimeAgo(timeStamp: string | undefined): string {
     if (!timeStamp) {
@@ -132,6 +135,10 @@ export class ThreadDetailComponent {
     return daysPassed === 1 ? '1 dag siden' : `${daysPassed} dage siden`;
   }
 
+  /*
+  Method to extract images from text and display them and the text accordingly to how it was written.
+  Used instead of image input
+   */
   extractAndDisplayImages(text: string) : any {
     let updatedText = text;
 
@@ -140,12 +147,12 @@ export class ThreadDetailComponent {
 
     if (matchedUrls) {
       matchedUrls.forEach(url => {
-        updatedText = updatedText.replace(url, `<br> <img src="${url}" alt="Billedet kunne ikke vises"> <br>`);
+        updatedText = updatedText.replace(url, `<br> <img src="${url}" alt="Ikke tilgængeligt billede"> <br>`);
       });
     }
 
     const paragraphs = updatedText.split(/\n{1,}/);  // Splits the text into paragraphs at every two consecutive line breaks
-    updatedText = paragraphs.map(paragraph => `<p>${paragraph}</p>`).join('');  // Wraps each paragraph in <p> tags
+    updatedText = paragraphs.map(paragraph => `<p>${paragraph}</p>`).join('');
 
     return updatedText;
   }

@@ -96,7 +96,7 @@ export class RegisterComponent{
     asyncValidators: [this.nameValidator(this.http)],
     updateOn: 'change' // Validation will be triggered after changes
   });
-  password = new FormControl('',[Validators.required, Validators.minLength(8),Validators.maxLength(30)],);
+  password = new FormControl('',[Validators.required, Validators.minLength(8),Validators.maxLength(30)]);
   password2 = new FormControl('', [Validators.required, this.matchingPasswords.bind(this)]);
 
   myFormGroup = new FormControl({

@@ -34,8 +34,8 @@ import {ToastController} from "@ionic/angular";
 })
 export class ThreadCreationComponent {
 
-  title = new FormControl('', Validators.required);
-  body = new FormControl('', Validators.required);
+  title = new FormControl('', [Validators.required, Validators.minLength(1),Validators.maxLength(50)]);
+  body = new FormControl('', [Validators.required, Validators.minLength(1)]);
   id = new FormControl('')
 
   constructor(private http: HttpClient, public service: Service, private route: ActivatedRoute, private router: Router, private toastController: ToastController) {
