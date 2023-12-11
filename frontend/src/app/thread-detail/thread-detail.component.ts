@@ -83,7 +83,8 @@ export class ThreadDetailComponent {
         })
       };
 
-      const commentCall = this.http.post<UserComment>(`${environment.baseUrl}/comment/${threadId}`, this.myFormgroup.value, httpOptions);
+      const commentCall = this.http.post<UserComment>(`${environment.baseUrl}/comment/${threadId}`,
+        this.myFormgroup.value, httpOptions);
       this.service.userComment = await firstValueFrom<UserComment>(commentCall);
 
       // Refresh comments after posting

@@ -19,18 +19,17 @@ public class AuthorizeAdminAttribute : Attribute, IAuthorizationFilter
         
         try
         {
-            // Validate the token and get the user
+            // Validate the token and get the admin user
             var user = tokenService.validateTokenAndReturnUserIfNotDeleted(token);
 
             // Additional step to confirm the user has an admin role
-            // Adjust this part based on how you determine whether a user is an admin
             if (user.UserRole == "admin")
             {
+                // Store the admin user in HttpContext so we can retrieve it later on
                 context.HttpContext.Items["User"] = user;
                 return;
             }
-
-            // Store the user in HttpContext if you need it in your controller later
+            
             context.Result = new UnauthorizedResult();
         }
         catch (SecurityTokenException)
