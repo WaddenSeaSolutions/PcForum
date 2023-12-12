@@ -25,7 +25,7 @@ public class TokenDAL
             userrole as {nameof(User.UserRole)},
             deleted as {nameof(User.Deleted)}
             FROM forum.users
-            WHERE username = @Username;";
+            WHERE username = @Username and deleted = false;";
         
         using (var conn = _dataSource.OpenConnection())
         {
