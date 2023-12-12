@@ -55,7 +55,7 @@ public class TokenService
     {
         var principal = validateAndReturnToken(token); //Validating the token has not been tampered
     
-        var nameClaim = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name); // Saves the id of the user with the token
+        var nameClaim = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name); // Saves username of the user
 
         User userFromToken = _tokenDal.userFromUsername(nameClaim.Value);
 
@@ -75,9 +75,9 @@ public class TokenService
             {
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(Secret),
-                ValidateIssuer = false, // No Issuer
+                ValidateIssuer = false, // No Issuer, not needed for this scale of program
                 ValidateAudience = false, // No targeted audience
-                ClockSkew = TimeSpan.Zero // Amount the token can be over date
+                ClockSkew = TimeSpan.Zero // Amount of time the token can be over date
             };
 
             SecurityToken validatedToken;
