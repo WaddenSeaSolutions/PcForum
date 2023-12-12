@@ -32,4 +32,9 @@ public class ThreadService
     {
         return _threadDal.getThreadDetails(id);
     }
+
+    public void deleteThread(int id)
+    {
+        _threadDal.deleteThread(id);
+    }
 }

@@ -13,16 +13,19 @@ import {DomSanitizer} from "@angular/platform-browser";
   selector: 'app-thread-detail',
   template: `
     <ion-content style="--background: none; top: 20%;">
-      <div style="background: #1e1e1e; padding: 1%; margin-left: 5%; margin-right: 5%; border: 1px solid grey; overflow: auto; height: 78%">
+      <div style="background: #1e1e1e; padding: 1%; margin-left: 5%; margin-right: 5%; border: 1px solid grey; overflow: auto; height: 78%" *ngIf="service.thread; else noThreadTemplate">
         <div style="text-align: center">
         <ion-title style="color: white; ">{{service.thread?.title}}</ion-title>
         </div>
         <div style="border-bottom: 2px solid grey; width: 100%">
           <br>
         <u style="color: white;">Tråd starter: {{service.thread?.username}}</u>
+          <br>
+          <ion-button color="danger" *ngIf="checkIfAdmin" (click)="banUser(service.thread.username)">Bandlys bruger</ion-button>
         <p> {{getTimeAgo(service.thread?.utctime)}}</p>
         </div>
         <p style="color: white;" [innerHTML]="service.thread ? extractAndDisplayImages(service.thread.body) : ''"></p>
+        <ion-button color="danger" *ngIf="checkIfAdmin" (click)="deleteThread(service.thread.id)">Slet Tråd</ion-button>
         <ion-item>
           <ion-textarea class="styled-textarea" [formControl]="body"
                         placeholder="Indsæt din kommentar her...."></ion-textarea>
@@ -42,6 +45,11 @@ import {DomSanitizer} from "@angular/platform-browser";
           </ion-item>
         </div>
       </div>
+      <ng-template #noThreadTemplate>
+        <div>
+          <ion-title>Denne tråd findes ikke</ion-title>
+        </div>
+      </ng-template>
     </ion-content>
   `,
   styleUrls: ['./thread-detail.component.scss'],
@@ -175,6 +183,43 @@ export class ThreadDetailComponent {
        this.getComments();
     } catch (error) {
       console.error(error);
+    }
+  }
+
+  async deleteThread(id: number) {
+    let token = localStorage.getItem('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      })
+    };
+    const softDeleteUrl = `${environment.baseUrl}/thread/${id}`;
+    try {
+      await this.http.put(softDeleteUrl, { deleted: true }, httpOptions).toPromise();
+
+      location.reload();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async banUser(username: string) {
+    let token = localStorage.getItem('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      })
+    };
+    const softDeleteUrl = `${environment.baseUrl}/user`;
+    console.log(username)
+    let payload = { username: username };
+    try {
+      const response = await this.http.put(softDeleteUrl, payload,httpOptions).toPromise();
+    }
+    catch (error){
+      console.error(error)
     }
   }
 }
