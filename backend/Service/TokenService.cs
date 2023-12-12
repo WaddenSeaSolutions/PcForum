@@ -51,7 +51,7 @@ public class TokenService
 
     }
 
-    public User validateTokenAndReturnUserIfNotDeleted(string token)
+    public User validateTokenAndReturnUser(string token)
     {
         var principal = validateAndReturnToken(token); //Validating the token has not been tampered
     
@@ -59,10 +59,7 @@ public class TokenService
 
         User userFromToken = _tokenDal.userFromUsername(nameClaim.Value);
 
-        if (userFromToken.Deleted == false)
-            return userFromToken;
-
-        throw new Exception("User is deleted");
+        return userFromToken;
     }
     
 
