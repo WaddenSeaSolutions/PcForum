@@ -90,11 +90,20 @@ public class ThreadDAL
         u.username as {nameof(Threads.username)}
         FROM forum.threads
         join forum.users u on u.id = threads.userid
-        WHERE threads.id = @id;";
+        WHERE threads.id = @id AND threads.deleted = false;";
 
         using (var conn = _dataSource.OpenConnection())
         {
             return conn.QueryFirst<Threads>(sql, new { id = id });
+        }
+    }
+
+    public void deleteThread(int id)
+    {
+        var sql = $@"UPDATE forum.threads SET deleted = true WHERE id = @id";
+        using (var conn = _dataSource.OpenConnection())
+        {
+            conn.Execute(sql, new { id });
         }
     }
 }

@@ -21,4 +21,9 @@ public class UserService
     {
         return _userDal.checkIfEmailExist(email);
     }
+
+    public void banUser(string username)
+    {
+        _userDal.banUser(username);
+    }
 }

@@ -1,3 +1,5 @@
+using backend.Attributes;
+using backend.Model;
 using backend.Service;
 using Microsoft.AspNetCore.Mvc;
 
@@ -37,6 +39,14 @@ public class UserController : ControllerBase
             return true;
 
         return false;
+    }
+
+    [HttpPut]
+    [AuthorizeAdmin]
+    [Route("/user")]
+    public void banUser([FromBody] UsernameModel model)
+    {
+        _userService.banUser(model.Username);
     }
     
 }

@@ -1,3 +1,4 @@
+using backend.Attributes;
 using backend.Model;
 using backend.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -57,5 +58,13 @@ public class ThreadController : ControllerBase
     public Threads getThreadDetails([FromRoute] int id)
     {
         return _threadService.getThreadDetails(id);
+    }
+
+    [HttpPut]
+    [Route("thread/{id}")]
+    [AuthorizeAdmin]
+    public void deleteThread([FromRoute] int id)
+    {
+        _threadService.deleteThread(id);
     }
 }

@@ -48,4 +48,15 @@ public class UserDal
 
         return false;
     }
+
+    public void banUser(string username)
+    {
+        
+        string sql = $@"UPDATE forum.users SET deleted = true WHERE username = @username";
+
+        using (var conn = _dataSource.OpenConnection())
+        {
+            conn.Execute(sql, new { username });
+        }
+    }
 }
