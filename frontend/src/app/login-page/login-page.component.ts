@@ -19,7 +19,7 @@ import {Router} from "@angular/router";
           </ion-item>
           <br>
           <ion-item>
-            <ion-input style="text-align: center; background-color: #121212" placeholder="Kodeord" [formControl]="password"></ion-input>
+            <ion-input type="password" style="text-align: center; background-color: #121212" placeholder="Kodeord" [formControl]="password"></ion-input>
           </ion-item>
           <br>
           <div style="display: flex; justify-content: center;">
