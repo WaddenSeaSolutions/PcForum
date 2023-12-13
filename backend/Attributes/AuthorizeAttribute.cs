@@ -19,8 +19,11 @@ public class AuthorizeAttribute : Attribute, IAuthorizationFilter
         try
         {
             // Validate the token and get the user
-            var user = tokenService.validateTokenAndReturnUserIfNotDeleted(token);
+            var user = tokenService.validateTokenAndReturnUser(token);
 
+            if (user.Deleted)
+                context.Result = new UnauthorizedResult();
+            
             // Store the user in HttpContext, so we can retrieve it later on
             context.HttpContext.Items["User"] = user;
         }

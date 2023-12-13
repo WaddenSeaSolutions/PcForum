@@ -15,14 +15,14 @@ import {DomSanitizer} from "@angular/platform-browser";
     <ion-content style="--background: none; top: 20%;">
       <div style="background: #1e1e1e; padding: 1%; margin-left: 5%; margin-right: 5%; border: 1px solid grey; overflow: auto; height: 78%" *ngIf="service.thread; else noThreadTemplate">
         <div style="text-align: center">
-        <ion-title style="color: white; ">{{service.thread?.title}}</ion-title>
+        <ion-title style="color: white; ">{{service.thread.title}}</ion-title>
         </div>
         <div style="border-bottom: 2px solid grey; width: 100%">
           <br>
-        <u style="color: white;">Tråd starter: {{service.thread?.username}}</u>
+        <u style="color: white;">Tråd starter: {{service.thread.username}}</u>
           <br>
           <ion-button color="danger" *ngIf="checkIfAdmin" (click)="banUser(service.thread.username)">Bandlys bruger</ion-button>
-        <p> {{getTimeAgo(service.thread?.utctime)}}</p>
+        <p> {{getTimeAgo(service.thread.utctime)}}</p>
         </div>
         <p style="color: white;" [innerHTML]="service.thread ? extractAndDisplayImages(service.thread.body) : ''"></p>
         <ion-button color="danger" *ngIf="checkIfAdmin" (click)="deleteThread(service.thread.id)">Slet Tråd</ion-button>

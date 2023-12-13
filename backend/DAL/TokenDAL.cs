@@ -17,7 +17,9 @@ public class TokenDAL
     
     public User userFromUsername(string nameClaimValue)
     {
-        var sql = $@"
+        try
+        {
+            var sql = $@"
             SELECT id as {nameof(User.Id)},
             username as {nameof(User.Username)},
             password as {nameof(User.Password)},
@@ -25,11 +27,16 @@ public class TokenDAL
             userrole as {nameof(User.UserRole)},
             deleted as {nameof(User.Deleted)}
             FROM forum.users
-            WHERE username = @Username and deleted = false;";
+            WHERE username = @Username";
         
-        using (var conn = _dataSource.OpenConnection())
+            using (var conn = _dataSource.OpenConnection())
+            {
+                return conn.QueryFirst<User>(sql, new {Username = nameClaimValue});
+            }
+        }
+        catch (Exception e)
         {
-            return conn.QueryFirst<User>(sql, new {Username = nameClaimValue});
+            throw new Exception("User is deleted/banned");
         }
     }
 }
