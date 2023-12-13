@@ -60,7 +60,7 @@ builder.Services.AddRateLimiter(_ => _
     .AddFixedWindowLimiter(policyName: commentPolicy, options =>
     {
         options.PermitLimit = 5;
-        options.Window = TimeSpan.FromSeconds(30);
+        options.Window = TimeSpan.FromSeconds(120);
         options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
         options.QueueLimit = 1;
     }));
