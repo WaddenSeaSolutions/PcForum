@@ -34,7 +34,7 @@ public class Tests
         };
 
         // Act: Send POST request to create a topic
-        var httpResponse = await client.PostAsJsonAsync(Helper.ApiBaseUrl + "topics", testTopic);
+        await client.PostAsJsonAsync(Helper.ApiBaseUrl + "topics", testTopic);
         
         
 
