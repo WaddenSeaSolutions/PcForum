@@ -13,48 +13,11 @@ public class ForumService
     {
         _forumDal = forumDal;
     }
-
-    /*
-     * //Encrypts the password with a workFactor of 15.
-     * WorkFactor slows the encryption ensuring brute-forcing takes longer amounts of time
-     */
-    public bool register(User user) 
-    {
-        string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.Password, 12);
-
-        //Replaces existing password with an encrypted created by Bcrypt
-        user.Password = hashedPassword;
-        
-       return _forumDal.register(user);
-    }
     
-
-
-    public void deleteUser(int id)
-    {
-        _forumDal.deleteUser(id);
-    }
     
     public IEnumerable<User> getUserFeed()
     {
         return _forumDal.getUserFeed();
-    }
-
-    public User login(UserLogin userToBeLoggedIn)
-    {
-        try
-        {
-            var userToCheck = _forumDal.login(userToBeLoggedIn);
-            if (BCrypt.Net.BCrypt.Verify(userToBeLoggedIn.Password, userToCheck.Password))
-            {
-                return userToCheck;
-            }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine("An error occurred during login" + e.Message);
-        }
-        return null;
     }
 
     public IEnumerable<Threads> getThreadsBasedOnUserId(int userId)
