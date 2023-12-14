@@ -26,12 +26,13 @@ import {DomSanitizer} from "@angular/platform-browser";
         </div>
         <p style="color: white;" [innerHTML]="service.thread ? extractAndDisplayImages(service.thread.body) : ''"></p>
         <ion-button color="danger" *ngIf="checkIfAdmin" (click)="deleteThread(service.thread.id)">Slet Tråd</ion-button>
-        <ion-item>
+        <ion-item *ngIf="checkIfLoggedIn">
           <ion-textarea class="styled-textarea" [formControl]="body"
                         placeholder="Indsæt din kommentar her...."></ion-textarea>
         </ion-item>
-        <ion-button (click)="postComment()">Submit Comment</ion-button>
+        <ion-button *ngIf="checkIfLoggedIn" (click)="postComment()">Submit Comment</ion-button>
 
+        <b style="margin-top: 2%; color: yellow" *ngIf="!checkIfLoggedIn"> Du skal være logget ind for, at kunne kommenterer</b>
         <div *ngFor="let userComment of service.userComments">
           <ion-item style="border: 1px solid grey;">
               <div style="padding: 2%; border-right: 2px solid grey; width: 15%; height: 100%">
@@ -56,6 +57,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 })
 export class ThreadDetailComponent {
   public checkIfAdmin: boolean;
+  public checkIfLoggedIn: boolean;
 
   body = new FormControl('',[Validators.required, Validators.minLength(1)]);
 
@@ -66,10 +68,12 @@ export class ThreadDetailComponent {
   constructor(private http: HttpClient, public service: Service, private route: ActivatedRoute) {
     this.service.thread = null;
     this.service.userComments = [];
+    this.checkIfLoggedIn = localStorage.getItem('token') !== null
     this.checkIfAdmin = localStorage.getItem('role') === 'admin';
     this.getThread();
     this.getComments();
   }
+
 
   async getThread() {
     this.route.params.subscribe(async (params) => {
@@ -213,7 +217,6 @@ export class ThreadDetailComponent {
       })
     };
     const softDeleteUrl = `${environment.baseUrl}/user`;
-    console.log(username)
     let payload = { username: username };
     try {
       const response = await this.http.put(softDeleteUrl, payload,httpOptions).toPromise();
