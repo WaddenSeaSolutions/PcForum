@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  // Todo baseUrl: ''
+  baseUrl: 'https://pcforum.azurewebsites.net'
 };
