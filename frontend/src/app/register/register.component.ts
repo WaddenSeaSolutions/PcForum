@@ -151,7 +151,7 @@ export class RegisterComponent{
       email: this.email.value,
       username: this.username.value,
       password: this.password.value,
-      UserRole: "standard",
+      userRole: "standard",
     }
     try {
       let response = new HttpResponse();
