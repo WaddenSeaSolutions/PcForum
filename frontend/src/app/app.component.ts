@@ -19,7 +19,7 @@ import {FormControl} from "@angular/forms";
           <p>Forside</p>
           </ion-button>
         </ion-buttons>
-        <ion-buttons id="ionButton">
+        <ion-buttons id="ionButton" (click)="navigateToTwitter()">
           <ion-button>
             <ion-icon id = "icons" name="logo-twitter"></ion-icon>
 
@@ -101,14 +101,17 @@ export class AppComponent {
   }
 
   async navigateToGithub(){
-    window.open('https://github.com/WaddenSeaSolutions', '_blank');
+    window.open('https://github.com/WaddenSeaSolutions');
   }
 
   async navigateToFacebook(){
-    window.open('https://facebook.com', '_blank');
+    window.open('https://facebook.com');
   }
   async navigateToDiscord(){
-    window.open('https://discord.com', '_blank');
+    window.open('https://discord.com');
+  }
+  async navigateToTwitter(){
+    window.open('https://twitter.com')
   }
 
 }
