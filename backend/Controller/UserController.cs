@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.RateLimiting;
 
 namespace backend.Controller;
 
+[ApiController]
 public class UserController : ControllerBase
 {
     private UserService _userService;
