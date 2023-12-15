@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ToastController } from '@ionic/angular'; // Assuming you are using Ionic ToastController
+import { ToastController } from '@ionic/angular';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -32,7 +32,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       message: errorMessage,
       duration: 3000,
       position: 'bottom',
-      color: 'danger',
+      color: 'warning',
     });
 
     toast.present();
