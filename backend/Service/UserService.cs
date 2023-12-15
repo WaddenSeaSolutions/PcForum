@@ -18,7 +18,6 @@ public class UserService
         try
         {
             return _userDal.checkIfUsernameExist(username);
-
         }
         catch (Exception e)
         {

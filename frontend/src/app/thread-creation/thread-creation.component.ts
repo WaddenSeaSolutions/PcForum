@@ -82,8 +82,9 @@ export class ThreadCreationComponent {
 
   async tellUserNotAllowed(){
     const toast = await this.toastController.create({
-      message: 'Du skal udfylde felterne.',
-      duration: 2000
+      message: 'Felterne må ikke være tomme. Titel må ikke være over 50 tegn.',
+      duration: 2000,
+      color: "warning"
     });
     toast.present();
   }
