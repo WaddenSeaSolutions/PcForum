@@ -15,17 +15,42 @@ public class UserService
 
     public bool checkIfUsernameExist(string username)
     {
-        return _userDal.checkIfUsernameExist(username);
+        try
+        {
+            return _userDal.checkIfUsernameExist(username);
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Failed to check if username exist: "+e.Message);
+            throw new Exception("Failed to check if username exist");
+        }
     }
 
     public bool checkIfEmailExist(string email)
     {
-        return _userDal.checkIfEmailExist(email);
+        try
+        {
+            return _userDal.checkIfEmailExist(email);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Failed to check if email exist: "+ e.Message);
+            throw new Exception("Failed to check if email exist");
+        }
     }
 
     public void banUser(string username)
     {
-        _userDal.banUser(username);
+        try
+        {
+            _userDal.banUser(username);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Failed to ban user: " + e);
+            throw new Exception("Could not ban user");
+        }
     }
 
     public User login(UserLogin userToBeLoggedIn)
@@ -41,21 +66,31 @@ public class UserService
         catch (Exception e)
         {
             Console.WriteLine("An error occurred during login" + e.Message);
+            throw new Exception("Login failed");
         }
         return null;
     }
 
     /*
-     * //Encrypts the password with a workFactor of 15.
+     * Encrypts the password with a workFactor of 15.
      * WorkFactor slows the encryption ensuring brute-forcing takes longer amounts of time
      */
     public bool register(User user) 
     {
+        try
+        {
         string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.Password, 12);
 
         //Replaces existing password with an encrypted created by Bcrypt
         user.Password = hashedPassword;
         
         return _userDal.register(user);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            throw new Exception( "Failed to register");
+        }
+        
     }
 }

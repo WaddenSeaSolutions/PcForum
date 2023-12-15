@@ -23,43 +23,54 @@ public class TokenService
 
     public string createToken(User user)
     {
-        var tokenHandler = new JwtSecurityTokenHandler();
-
-        var tokenDescriptor = new SecurityTokenDescriptor
-        {
-            Subject = new ClaimsIdentity(new[]
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.UserRole),
-            }),
-            Expires = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now.AddDays(7)),
-            SigningCredentials =
-                new SigningCredentials(new SymmetricSecurityKey(Secret), SecurityAlgorithms.HmacSha256Signature)
-        };
-
         try
         {
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[]
+                {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Name, user.Username),
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.Role, user.UserRole),
+                }),
+                Expires = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now.AddDays(7)),
+                SigningCredentials =
+                    new SigningCredentials(new SymmetricSecurityKey(Secret), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+        
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
         catch (Exception e)
         {
-            throw new Exception("Failed to create a token", e.InnerException);
+            Console.WriteLine("An exeption happend when creating token: "+ e.Message);
+            throw new Exception("Failed to create a token");
         }
 
     }
 
     public User validateTokenAndReturnUser(string token)
     {
-        var principal = validateAndReturnToken(token); //Validating the token has not been tampered
+        try
+        {
+            var principal = validateAndReturnToken(token); //Validating the token has not been tampered
     
-        var nameClaim = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name); // Saves username of the user
+            var nameClaim = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name); // Saves username of the user
 
-        User userFromToken = _tokenDal.userFromUsername(nameClaim.Value);
+            User userFromToken = _tokenDal.userFromUsername(nameClaim.Value);
 
-        return userFromToken;
+            return userFromToken;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("validateTokenAndReturnUser failed: " + e.Message);
+            throw new Exception("Could not validate token");
+        }
+        
     }
     
 
@@ -82,10 +93,10 @@ public class TokenService
 
             return principal;
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            // Token validation failed
-            throw new Exception("Token validation failed", ex);
+            Console.WriteLine("Token validation failed: " + e.Message);
+            throw new Exception("Token validation failed");
         }
     }
     
