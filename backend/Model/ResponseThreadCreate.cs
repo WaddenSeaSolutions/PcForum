@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace backend.Model;
 
 public class ResponseThreadCreate
@@ -9,8 +11,6 @@ public class ResponseThreadCreate
     public int topicId { get; set; }
     
     public string body { get; set; }
-    
-    public int likes { get; set; }
     
     public Boolean deleted { get; set;}
     
