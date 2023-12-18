@@ -85,7 +85,7 @@ builder.Services.AddRateLimiter(_ => _
 builder.Services.AddRateLimiter(_ => _
     .AddFixedWindowLimiter(policyName: registerPolicy, options =>
     {
-        options.PermitLimit = 1;
+        options.PermitLimit = 3;
         options.Window = TimeSpan.FromSeconds(300);
         options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
         options.QueueLimit = 1;
@@ -98,13 +98,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(options =>
-{
-    options.SetIsOriginAllowed(origin => true)
-        .AllowAnyMethod()
-        .AllowAnyHeader()
-        .AllowCredentials();
-});
+
+
+
+    app.UseCors(options =>
+    {
+        options.SetIsOriginAllowed(origin => true)
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials();
+    });
 
 app.UseRateLimiter();
 

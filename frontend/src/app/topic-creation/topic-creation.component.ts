@@ -38,8 +38,8 @@ export class TopicCreationComponent  {
 
   public checkIfAdmin: boolean;
 
-  title = new FormControl('');
-  image = new FormControl('');
+  title = new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(60)]);
+  image = new FormControl('', [Validators.required, Validators.maxLength(255)]);
 
   constructor(private http: HttpClient, public service: Service, private router: Router, private toastController: ToastController) {
     this.checkIfAdmin = localStorage.getItem('role') === 'admin';

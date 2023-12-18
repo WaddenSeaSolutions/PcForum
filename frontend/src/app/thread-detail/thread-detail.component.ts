@@ -59,7 +59,7 @@ export class ThreadDetailComponent {
   public checkIfAdmin: boolean;
   public checkIfLoggedIn: boolean;
 
-  body = new FormControl('',[Validators.required, Validators.minLength(1)]);
+  body = new FormControl('',[Validators.required, Validators.minLength(1), Validators.maxLength(2000)]);
 
   myFormgroup = new FormGroup({
     body: this.body

@@ -19,7 +19,6 @@ public class ThreadDAL
         title as {nameof(Threads.title)},
         topicId as {nameof(Threads.topicId)},
         body as {nameof(Threads.body)},
-        likes as {nameof(Threads.likes)},
         deleted as {nameof(Threads.deleted)},
         userid as {nameof(Threads.userId)},
         utctime as {nameof(Threads.utctime)}
@@ -38,8 +37,8 @@ public class ThreadDAL
         var sqlCheck = "SELECT deleted from forum.topics where id = @topicId;";
         var sql =
             $@"INSERT INTO forum.threads 
-                           (title, topicid, body, likes, deleted, userid, utctime) 
-                            VALUES (@title, @topicId, @body, @likes, @deleted, @userid, @utctime);";
+                           (title, topicid, body, deleted, userid, utctime) 
+                            VALUES (@title, @topicId, @body, @deleted, @userid, @utctime);";
 
         using (var conn = _dataSource.OpenConnection())
         {
@@ -48,7 +47,7 @@ public class ThreadDAL
            conn.Execute(sql,
                 new
                 {
-                    title = rtc.title, topicId = rtc.topicId, body = rtc.body, likes = rtc.likes,
+                    title = rtc.title, topicId = rtc.topicId, body = rtc.body,
                     deleted = rtc.deleted, userid = rtc.userId, utctime = rtc.utcTime
                 });
         }
@@ -60,7 +59,6 @@ public class ThreadDAL
               title as {nameof(Threads.title)},
               topicId as {nameof(Threads.topicId)},
               body as {nameof(Threads.body)},
-              likes as {nameof(Threads.likes)},
               deleted as {nameof(Threads.deleted)},
               userid as {nameof(Threads.userId)},
               utctime as {nameof(Threads.utctime)}
@@ -83,7 +81,6 @@ public class ThreadDAL
         title as {nameof(Threads.title)},
         topicId as {nameof(Threads.topicId)},
         body as {nameof(Threads.body)},
-        likes as {nameof(Threads.likes)},
         threads.deleted as {nameof(Threads.deleted)},
         userid as {nameof(Threads.userId)},
         utctime as {nameof(Threads.utctime)},

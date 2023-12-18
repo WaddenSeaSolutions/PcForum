@@ -22,8 +22,11 @@ public class CommentDAL
         {
             conn.Execute(sql, new
             {
-
-                body = userCommentCreate.body, userId = userCommentCreate.userId, utcTime = userCommentCreate.utcTime, deleted = userCommentCreate.deleted, threadId = userCommentCreate.threadId
+                body = userCommentCreate.body, 
+                userId = userCommentCreate.userId, 
+                utcTime = userCommentCreate.utcTime, 
+                deleted = userCommentCreate.deleted, 
+                threadId = userCommentCreate.threadId
             });
         }
     }
@@ -56,7 +59,7 @@ public class CommentDAL
         
         using (var conn = _dataSource.OpenConnection())
         {
-            conn.Execute(sql, new { id });
+               conn.Execute(sql, new { id });
         }
     }
 }

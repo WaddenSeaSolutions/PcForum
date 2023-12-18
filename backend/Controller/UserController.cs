@@ -43,17 +43,22 @@ public class UserController : ControllerBase
     [HttpPost]
     [EnableRateLimiting("register")]
     [Route("/register")]
-    public IActionResult register(User user)
+    public IActionResult register(RegisterDTO registerDto)
     {
-        user.Deleted = false;
-        user.UserRole = "standard";
+        User registrant = new User();
+        registrant.Username = registerDto.Username;
+        registrant.Email = registerDto.Email;
+        registrant.Password = registerDto.Password;
+        
+        registrant.Deleted = false;
+        registrant.UserRole = "standard";
 
         // Attempt to register the user in the database
-        var isUserRegistered = _userService.register(user);
+        var isUserRegistered = _userService.register(registrant);
 
         if (isUserRegistered)
         {
-            _emailService.sendEmail(user);
+            _emailService.sendEmail(registrant);
             // Return a 201 Created status code for successful registration
             return Ok(new { Message = "Registration successful" });
         }
@@ -71,8 +76,6 @@ public class UserController : ControllerBase
     [Route("/checkUsername,{username}")]
     public bool checkIfUsernameExist(string username)
     {
-        Console.WriteLine("hello");
-        throw new Exception("Halløj");
         bool isUserNameInUse = _userService.checkIfUsernameExist(username);
         if (isUserNameInUse) //Returns true if username is in use
             return true;
