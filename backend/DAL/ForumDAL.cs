@@ -36,7 +36,6 @@ public class ForumDAL
           title as {nameof(Threads.title)},
           topicId as {nameof(Threads.topicId)},
           body as {nameof(Threads.body)},
-          likes as {nameof(Threads.likes)},
           deleted as {nameof(Threads.deleted)}
           FROM forum.threads
           WHERE userid = @userid";
