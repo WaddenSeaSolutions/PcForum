@@ -71,8 +71,6 @@ public class UserController : ControllerBase
     [Route("/checkUsername,{username}")]
     public bool checkIfUsernameExist(string username)
     {
-        Console.WriteLine("hello");
-        throw new Exception("Halløj");
         bool isUserNameInUse = _userService.checkIfUsernameExist(username);
         if (isUserNameInUse) //Returns true if username is in use
             return true;
