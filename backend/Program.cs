@@ -85,7 +85,7 @@ builder.Services.AddRateLimiter(_ => _
 builder.Services.AddRateLimiter(_ => _
     .AddFixedWindowLimiter(policyName: registerPolicy, options =>
     {
-        options.PermitLimit = 1;
+        options.PermitLimit = 3;
         options.Window = TimeSpan.FromSeconds(300);
         options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
         options.QueueLimit = 1;
