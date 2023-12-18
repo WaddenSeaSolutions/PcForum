@@ -17,6 +17,9 @@ import {ToastController} from "@ionic/angular";
           <ion-input style="text-align: center; height: 100px; width: 100%; background-color: black" placeholder="Titel" [formControl]="title"></ion-input>
         </ion-item>
         <br>
+        <div *ngIf="body.hasError('maxlength')" >
+          <p style="color: yellow">Du har overskredet de 2000 maks tegn</p>
+        </div>
         <ion-item>
           <ion-textarea style="text-align: center; height: 300px; width: 100%; background-color: black" placeholder="Tekst" [formControl]="body"></ion-textarea>
         </ion-item>
@@ -35,7 +38,7 @@ import {ToastController} from "@ionic/angular";
 export class ThreadCreationComponent {
 
   title = new FormControl('', [Validators.required, Validators.minLength(1),Validators.maxLength(50)]);
-  body = new FormControl('', [Validators.required, Validators.minLength(1)]);
+  body = new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(2000)]);
   id = new FormControl('')
 
   constructor(private http: HttpClient, public service: Service, private route: ActivatedRoute, private router: Router, private toastController: ToastController) {
